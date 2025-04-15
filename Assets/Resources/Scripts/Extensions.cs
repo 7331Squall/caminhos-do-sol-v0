@@ -8,6 +8,6 @@ public static class Extensions
         int value = dropdown.value;
         dropdown.ClearOptions();
         dropdown.AddOptions(options);
-        dropdown.value = Mathf.Max(Mathf.Min(options.Count - 1, value), 0);
+        dropdown.value = Mathf.Clamp(value, 0, options.Count - 1);
     }
 }

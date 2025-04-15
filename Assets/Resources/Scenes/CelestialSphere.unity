@@ -2644,7 +2644,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dateField: {fileID: 1462335732}
   hourField: {fileID: 1757076753}
-  latitudeField: {fileID: 1521972242}
+  latitudeField: {fileID: 1521972243}
   lightGameObject: {fileID: 1946093476}
   actualLight: {fileID: 463424033}
   sphereRadius: 10
@@ -2877,31 +2877,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 751361892}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1521972242}
-        m_TargetAssemblyTypeName: LatitudeField, Assembly-CSharp
-        m_MethodName: LatitudeButtonClicked
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 708894770}
-        m_TargetAssemblyTypeName: SceneManager, Assembly-CSharp
-        m_MethodName: UpdateTime
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &751361892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2952,7 +2928,7 @@ GameObject:
   - component: {fileID: 777582627}
   - component: {fileID: 777582626}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: ButtonText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4478,7 +4454,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1462335731}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: DateField, Assembly-CSharp
         m_MethodName: OnMonthChange
         m_Mode: 0
@@ -4625,7 +4601,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1462335730}
-  - component: {fileID: 1462335731}
   - component: {fileID: 1462335732}
   m_Layer: 5
   m_Name: DateField
@@ -4657,20 +4632,6 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: -85}
   m_SizeDelta: {x: 238, y: 30}
   m_Pivot: {x: 1, y: 1}
---- !u!114 &1462335731
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1462335729}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a21936383b912b4abbec933f7e9ca5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dayDropdown: {fileID: 1768643538}
-  monthDropdown: {fileID: 1411581040}
 --- !u!114 &1462335732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5013,7 +4974,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1521972241}
-  - component: {fileID: 1521972242}
+  - component: {fileID: 1521972243}
   m_Layer: 5
   m_Name: LatitudeField
   m_TagString: Untagged
@@ -5043,7 +5004,7 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: -5}
   m_SizeDelta: {x: 238, y: 30}
   m_Pivot: {x: 1, y: 1}
---- !u!114 &1521972242
+--- !u!114 &1521972243
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5052,12 +5013,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1521972240}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13998658bcab2be42b90ff8183c53753, type: 3}
+  m_Script: {fileID: 11500000, guid: 2f0b84187fe24dc7abfcfed78c85c62b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  latitudeValue: {fileID: 2118014481}
-  latitudeDirection: {fileID: 269991337}
-  latitude: -27.5
+  latitudeNumberField: {fileID: 2118014481}
+  latitudeButton: {fileID: 751361891}
 --- !u!1 &1523551152
 GameObject:
   m_ObjectHideFlags: 0
