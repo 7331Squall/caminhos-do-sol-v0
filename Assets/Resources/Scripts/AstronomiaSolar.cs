@@ -4,7 +4,6 @@ using UnityEngine;
 public static class AstronomiaSolar
 {
     public static Vector3 GetSunPosition(DateTime currentTime, float latitude) {
-        Debug.Log($"Data Updated = {currentTime}, {latitude}");
         double centuryTime = Century(currentTime);
         double declination = SolarDeclination(centuryTime); // graus
 

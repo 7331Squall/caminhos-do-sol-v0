@@ -13,12 +13,12 @@ public class HourField : MonoBehaviour
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
-        hourDropdown.ClearOptions();
-        hourDropdown.AddOptions(PopulateList(24));
+        //hourDropdown.ClearOptions();
+        hourDropdown.SetOptions(PopulateList(24));
         hourDropdown.value = 12;
         hourDropdown.RefreshShownValue();
-        minuteDropdown.ClearOptions();
-        minuteDropdown.AddOptions(PopulateList(60));
+        //minuteDropdown.ClearOptions();
+        minuteDropdown.SetOptions(PopulateList(60));
     }
 
     public static List<string> PopulateList(int amount, int offset = 0) {

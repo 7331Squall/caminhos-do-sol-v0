@@ -4,6 +4,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Rendering;
 
 public class NewDateField : MonoBehaviour
 {
@@ -51,9 +52,9 @@ public class NewDateField : MonoBehaviour
         if (_isUpdating) return;
         _isUpdating = true;
         DateTime newValue = new(2000, monthDropdown.value + 1, dayDropdown.value + 1);
-        _actualValue = newValue;
+        Value = newValue;
         _isUpdating = false;
-        OnValueChanged.Invoke(newValue);
+        // OnValueChanged.Invoke(newValue);
     }
 
     void OnMonthDropdownChanged(int index) {

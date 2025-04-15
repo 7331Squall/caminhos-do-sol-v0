@@ -12,7 +12,7 @@ public class SceneManager : MonoBehaviour
     public HourField hourField;
 
     [FormerlySerializedAs("Latitude")]
-    public LatitudeField latitudeField;
+    public NewLatitudeField latitudeField;
 
     [FormerlySerializedAs("Light Object")]
     public GameObject lightGameObject;
@@ -27,8 +27,9 @@ public class SceneManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
         dateField.Value = new(2000, 03, 26);
-        dateField.OnValueChanged.AddListener(UpdateTime);
-        UpdateTime(new());
+        dateField.OnValueChanged.AddListener(_ => UpdateTime());
+        latitudeField.OnValueChanged.AddListener(_ => UpdateTime());
+        UpdateTime();
     }
 
     void DataUpdated() {
@@ -37,37 +38,13 @@ public class SceneManager : MonoBehaviour
         if (lightGameObject != null) lightGameObject.transform.position = direction.normalized * sphereRadius;
         lightGameObject.transform.rotation =
             Quaternion.LookRotation((Vector3.zero - lightGameObject.transform.position).normalized);
-
-        // actualLight.transform.rotation.SetLookRotation(Vector3.zero, Vector3.up);
-        Debug.Log($"{lightGameObject.transform.position} - {lightGameObject.transform.rotation}");
     }
 
-    void UpdateTime(DateTime time) {
+    void UpdateTime() {
         DateTime date = dateField.Value;
         DateTime hour = hourField.GetValue();
-        _latitude = latitudeField.GetValue();
+        _latitude = latitudeField.Value;
         _currentTime = new DateTime(date.Year, date.Month, date.Day, hour.Hour, hour.Minute, 0);
-        Debug.Log(_latitude);
-        Debug.Log(_currentTime);
         DataUpdated();
     }
-    //
-    // void DataUpdated()
-    // {
-    //     var data = DateUpdateData(_currentTime);
-    //     //TODO: REMOVE FROM HERE
-    //     double declinationRad = GetSunDeclinationRadius(50, data.sunDeclination);
-    //     lightGameObject.transform.position =
-    //         new Vector3(
-    //                     x: (float)(declinationRad * Math.Cos(-DegToRad(90))),
-    //                     z: (float)(declinationRad * Math.Sin(-DegToRad(90))),
-    //                     y: (float)(RadToDeg(data.sunDeclination))
-    //                    );
-    //     lightGameObject.transform.rotation = Quaternion.Euler((float)data.sunDeclination, 0f, 0f);
-    // }
-
-    // Update is called once per frame
-    // void Update()
-    // {
-    // }
 }
