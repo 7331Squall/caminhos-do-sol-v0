@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public static class AstronomiaSolar
+public static class SolarMath
 {
     public static Vector3 GetSunPosition(DateTime currentTime, float latitude) {
         double centuryTime = Century(currentTime);
@@ -47,7 +47,7 @@ public static class AstronomiaSolar
         return elapsedSeconds / 315576000.0; // 100 anos julianos em segundos
     }
 
-    // Obliquidade da eclítica em graus
+    // Obliquidade da eclíptica em graus
     public static double ObliquityOfEcliptic(double t) {
         double e0 = 23 + (26 + (21.448 - t * (46.815 + t * (0.00059 - t * 0.001813))) / 60.0) / 60.0;
         double omega = 125.04 - 1934.136 * t;

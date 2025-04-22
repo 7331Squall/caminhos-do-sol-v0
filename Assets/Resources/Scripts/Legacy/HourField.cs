@@ -11,6 +11,17 @@ public class HourField : MonoBehaviour
     [FormerlySerializedAs("Minute")]
     public TMP_Dropdown minuteDropdown;
 
+    bool _enabled = true;
+
+    public bool Interactable {
+        get => _enabled;
+        set {
+            _enabled = value;
+            hourDropdown.interactable = value;
+            minuteDropdown.interactable = value;
+        }
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
         //hourDropdown.ClearOptions();
