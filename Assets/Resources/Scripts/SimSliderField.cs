@@ -22,7 +22,6 @@ public class SimSliderField : MonoBehaviour
     public SpeedPerSecond Value {
         get => _value;
         set {
-            Debug.Log($"Set Called! New value: {value}");
             _value = value;
             float newValue = (float)_value;
             _slider.value = newValue;
@@ -48,5 +47,8 @@ public class SimSliderField : MonoBehaviour
         _isUpdating = false;
     }
 
-    void UpdateLabel() { _label.text = SpeedSetting.ToDisplayString(Value); }
+    void UpdateLabel() {
+        _label.text = SpeedSetting.ToDisplayString(Value);
+        _label.faceColor = Value >= SpeedPerSecond.OneWeek ? new Color32(50, 0, 0, 255) : new Color32(10, 10, 10, 255);
+    }
 }
