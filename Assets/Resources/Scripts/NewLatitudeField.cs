@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,67 +8,37 @@ public class NewLatitudeField : MonoBehaviour
     public UnityEvent<float> OnValueChanged { get; set; } = new();
     public TMP_InputField latitudeNumberField;
     public Button latitudeButton;
-    TMP_Text _latitudeButtonText;
-    bool _isUpdating;
-    float _value = -27.5f;
+    public TMP_Text _latitudeButtonText;
+    float _actualValue;
+    bool _isUpdating, _interactable = true;
 
-    public float Value {
-        get => _value;
+    public bool Interactable {
+        get => _interactable;
         set {
-            _value = Mathf.Clamp(value, -90, 90);
-            latitudeNumberField.text = Mathf.Abs(_value).ToString("F1");
-            _latitudeButtonText.text = _value < 0 ? "S" : "N";
-            OnValueChanged.Invoke(_value);
+            _interactable = value;
+            latitudeNumberField.interactable = value;
+            latitudeButton.interactable = value;
         }
     }
 
-    public void Awake() {
-        _latitudeButtonText = latitudeButton.GetComponentInChildren<TMP_Text>();
-        latitudeNumberField.onValueChanged.AddListener(UpdateValue);
-        latitudeButton.onClick.AddListener(ButtonClicked);
+    public float Value {
+        get => _actualValue;
+        set {
+            Debug.Log("Latitude Setter Called!");
+            if (_isUpdating || Mathf.Approximately(_actualValue, value)) return;
+            Debug.Log($"Setting Latitude as {value}");
+            _isUpdating = true;
+            _actualValue = Mathf.Clamp(Mathf.Abs(value) * Mathf.Sign(value), -90, 90);
+            latitudeNumberField.text = Mathf.Abs(_actualValue).ToString("F1");
+            _latitudeButtonText.text = _actualValue < 0 ? "S" : "N";
+            OnValueChanged.Invoke(value);
+            _isUpdating = false;
+        }
     }
 
-    void ButtonClicked() { Value *= -1; }
-
-    void UpdateValue(string value) {
-        if (_isUpdating) return;
-        _isUpdating = true;
-        try { Value = float.Parse(value); } catch (FormatException e) { Debug.LogError(e); }
-        _isUpdating = false;
-        OnValueChanged.Invoke(_value);
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start() {
+        latitudeNumberField.onValueChanged.AddListener(value => Value = float.Parse(value));
+        latitudeButton.onClick.AddListener(() => Value *= -1);
     }
 }
-
-// using TMPro;
-// using UnityEngine;
-//
-// public class NewLatitudeField : UIField<string>
-// {
-//     private readonly TMP_InputField _latitudeInputField;
-//     
-//     private readonly TMP_Text _latitudeDirection;
-//     private bool _callbackBlock;
-//     private float _latitude;
-//
-//     public NewLatitudeField(TMP_InputField latitudeInputField, TMP_Text latitudeDirection) {
-//         this._latitudeInputField = latitudeInputField;
-//         this._latitudeDirection = latitudeDirection;
-//         latitudeInputField.onValueChanged.AddListener(OnInputChanged);
-//     }
-//
-//     private void OnInputChanged(string value) {
-//         if (_callbackBlock) return;
-//         if (float.TryParse(value, out var newValue)) { Latitude = newValue; }
-//     }
-//
-//     public float Latitude {
-//         get => _latitude;
-//         set {
-//             _latitude = value;
-//             _callbackBlock = true;
-//             _latitudeInputField.text = Mathf.Abs(_latitude).ToString("F1");
-//             _latitudeDirection.text = _latitude > 0 ? "N" : "S";
-//             _callbackBlock = false;
-//         }
-//     }
-// }

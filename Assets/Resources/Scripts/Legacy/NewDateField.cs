@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Resources.Scripts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Rendering;
 
 public class NewDateField : MonoBehaviour
 {
@@ -13,6 +13,16 @@ public class NewDateField : MonoBehaviour
     public TMP_Dropdown monthDropdown;
     DateTime _actualValue;
     bool _isUpdating;
+    bool _enabled = true;
+
+    public bool Interactable {
+        get => _enabled;
+        set {
+            _enabled = value;
+            dayDropdown.interactable = value;
+            monthDropdown.interactable = value;
+        }
+    }
 
     public DateTime Value {
         get => _actualValue;
@@ -23,10 +33,10 @@ public class NewDateField : MonoBehaviour
             OnValueChanged.Invoke(value);
         }
     }
-    
+
     void Awake() {
         dayDropdown.ClearOptions();
-        dayDropdown.AddOptions(HourField.PopulateList(31, 1));
+        dayDropdown.AddOptions(Utilities.PopulateList(31, 1));
         dayDropdown.onValueChanged.AddListener(OnDayDropdownChanged);
         monthDropdown.ClearOptions();
         monthDropdown.AddOptions(
@@ -71,5 +81,5 @@ public class NewDateField : MonoBehaviour
         PopulateDayDropdown(28);
     }
 
-    void PopulateDayDropdown(int daysAmount) => dayDropdown.SetOptions(HourField.PopulateList(daysAmount, 1));
+    void PopulateDayDropdown(int daysAmount) => dayDropdown.SetOptions(Utilities.PopulateList(daysAmount, 1));
 }
