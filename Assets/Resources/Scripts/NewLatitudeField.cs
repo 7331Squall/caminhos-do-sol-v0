@@ -8,7 +8,7 @@ public class NewLatitudeField : MonoBehaviour
     public UnityEvent<float> OnValueChanged { get; set; } = new();
     public TMP_InputField latitudeNumberField;
     public Button latitudeButton;
-    public TMP_Text _latitudeButtonText;
+    public TMP_Text latitudeButtonText;
     float _actualValue;
     bool _isUpdating, _interactable = true;
 
@@ -24,20 +24,18 @@ public class NewLatitudeField : MonoBehaviour
     public float Value {
         get => _actualValue;
         set {
-            Debug.Log("Latitude Setter Called!");
             if (_isUpdating || Mathf.Approximately(_actualValue, value)) return;
-            Debug.Log($"Setting Latitude as {value}");
             _isUpdating = true;
             _actualValue = Mathf.Clamp(Mathf.Abs(value) * Mathf.Sign(value), -90, 90);
             latitudeNumberField.text = Mathf.Abs(_actualValue).ToString("F1");
-            _latitudeButtonText.text = _actualValue < 0 ? "S" : "N";
+            latitudeButtonText.text = _actualValue < 0 ? "S" : "N";
             OnValueChanged.Invoke(value);
             _isUpdating = false;
         }
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start() {
+    void Awake() {
         latitudeNumberField.onValueChanged.AddListener(value => Value = float.Parse(value));
         latitudeButton.onClick.AddListener(() => Value *= -1);
     }

@@ -26,9 +26,7 @@ public class NewDateTimeField : MonoBehaviour
     public DateTime Value {
         get => _actualValue;
         set {
-            Debug.Log("DateTime Setter Called!");
             if (_isUpdating || _actualValue == value) return;
-            Debug.Log($"Setting DateTime as {value}");
             _isUpdating = true;
             _actualValue = value;
             UpdateDropdowns();
@@ -61,7 +59,7 @@ public class NewDateTimeField : MonoBehaviour
         };
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start() {
+    void Awake() {
         monthDropdown.SetOptions(Months);
         monthDropdown.onValueChanged.AddListener(MonthChanged);
         MonthChanged(monthDropdown.value);
