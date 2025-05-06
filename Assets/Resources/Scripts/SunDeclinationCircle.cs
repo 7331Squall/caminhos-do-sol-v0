@@ -4,7 +4,6 @@ using UnityEngine;
 public class SunDeclinationCircle : MonoBehaviour
 {
     DateTime _sunDeclination;
-
     public DateTime SunDeclination {
         get => _sunDeclination;
         set {

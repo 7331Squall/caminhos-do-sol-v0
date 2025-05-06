@@ -11,7 +11,6 @@ public class NewLatitudeField : MonoBehaviour
     float _actualValue;
     bool _isUpdating, _interactable = true;
     public UnityEvent<float> OnValueChanged { get; set; } = new();
-
     public bool Interactable {
         get => _interactable;
         set {
@@ -20,7 +19,6 @@ public class NewLatitudeField : MonoBehaviour
             latitudeButton.interactable = value;
         }
     }
-
     public float Value {
         get => _actualValue;
         set {
@@ -36,7 +34,7 @@ public class NewLatitudeField : MonoBehaviour
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake() {
-        latitudeNumberField.onValueChanged.AddListener(value => Value = float.Parse(value));
+        latitudeNumberField.onEndEdit.AddListener(value => Value = Mathf.Abs(float.Parse(value)) * Mathf.Sign(Value));
         latitudeButton.onClick.AddListener(() => Value *= -1);
     }
 }

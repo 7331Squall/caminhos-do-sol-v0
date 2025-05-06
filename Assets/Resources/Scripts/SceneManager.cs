@@ -1,29 +1,36 @@
 using System;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SceneManager : MonoBehaviour
 {
-    public NewDateTimeField datetimeField;
-    public NewLatitudeField latitudeField;
-    public SimSliderField simSliderField;
+    public Canvas HUD;
+    NewDateTimeField datetimeField;
+    NewLatitudeField latitudeField;
+    Button simButton;
+    SimSliderField simSliderField;
 
     // public EntropediaSun sunLight;
-    public Button simButton;
     public GameObject lightGameObject;
     public float sphereRadius = 10f;
     bool _isSimulating; //, _isUpdatingTime;
     DateTime _simulationDateTime;
-
     DateTime CurrentTime {
         get => datetimeField.Value;
         set => datetimeField.Value = value;
     }
-
     float Latitude {
         get => latitudeField.Value;
         set => latitudeField.Value = value;
+    }
+
+    void Awake() {
+        datetimeField = HUD.GetComponentInChildren<NewDateTimeField>();
+        latitudeField = HUD.GetComponentInChildren<NewLatitudeField>();
+        simButton = HUD.GetComponentsInChildren<Button>().ToList().Find(x => x.name.Contains("SimButton") );
+        simSliderField = HUD.GetComponentInChildren<SimSliderField>();
     }
 
     void Start() {
@@ -57,11 +64,10 @@ public class SceneManager : MonoBehaviour
     }
 
     void DataUpdated() {
-        
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         /// SOL 3D AQUI
         /////////////////////////////////////////////////////////////////////////////////////////////////////
-        
+
         // sunLight.SetDate(datetimeField.Value);
         // sunLight.SetLocation(0.0f, latitudeField.Value);
         // double ApparentLongitude = SolarMath.ApparentLongitude(SolarMath.Century(datetimeField.Value));

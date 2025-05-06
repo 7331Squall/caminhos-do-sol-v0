@@ -10,7 +10,6 @@ public class SimSliderField : MonoBehaviour
     TMP_Text _label;
     Slider _slider;
     SpeedPerSecond _value;
-
     public bool Interactable {
         get => _enabled;
         set {
@@ -18,7 +17,6 @@ public class SimSliderField : MonoBehaviour
             _slider.interactable = value;
         }
     }
-
     public SpeedPerSecond Value {
         get => _value;
         set {
