@@ -23,12 +23,13 @@
 <canvas id="unity-canvas"></canvas>
 <script>
     const buildUrl = "Build";
-    const filePrefix = "_OUTPUT"
+    const filePrefix = "{{OUTPUT}}"
+    const extension = "{{EXTENSION}}"
     const loaderUrl = `${buildUrl}/${filePrefix}.loader.js`;
     const config = {
-        dataUrl: `${buildUrl}/${filePrefix}.data.br`,
-        frameworkUrl: `${buildUrl}/${filePrefix}.framework.js.br`,
-        codeUrl: `${buildUrl}/${filePrefix}.wasm.br`,
+        dataUrl: `${buildUrl}/${filePrefix}.data${extension}`,
+        frameworkUrl: `${buildUrl}/${filePrefix}.framework.js${extension}`,
+        codeUrl: `${buildUrl}/${filePrefix}.wasm${extension}`,
         streamingAssetsUrl: "StreamingAssets",
         companyName: "Squack Spencer",
         productName: "Simulador Solar",
