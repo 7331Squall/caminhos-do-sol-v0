@@ -22,12 +22,10 @@ public class NewDateTimeField : MonoBehaviour
             "Nov",
             "Dez"
         };
-
     public TMP_Dropdown dayDropdown, monthDropdown, hourDropdown, minuteDropdown;
     DateTime _actualValue;
     bool _isUpdating, _interactable = true;
     public UnityEvent<DateTime> OnValueChanged { get; set; } = new();
-
     public bool Interactable {
         get => _interactable;
         set {
@@ -38,7 +36,6 @@ public class NewDateTimeField : MonoBehaviour
             minuteDropdown.interactable = value;
         }
     }
-
     public DateTime Value {
         get => _actualValue;
         set {

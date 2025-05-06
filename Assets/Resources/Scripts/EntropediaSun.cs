@@ -1,4 +1,3 @@
-
 using System;
 using UnityEngine;
 
@@ -8,31 +7,44 @@ public class EntropediaSun : MonoBehaviour
 {
     [SerializeField]
     float longitude;
-
     [SerializeField]
     float latitude;
-
     [SerializeField]
     [Range(0, 24)]
     int hour;
-
     [SerializeField]
     [Range(0, 60)]
     int minutes;
-
-    DateTime _time;
-    Light _light;
-
     [SerializeField]
     float timeSpeed = 1;
-
     [SerializeField]
     int frameSteps = 1;
-
-    int _frameStep;
-
-    [SerializeField]
     DateTime _date;
+    int _frameStep;
+    Light _light;
+    DateTime _time;
+
+    void Awake() {
+        _light = GetComponent<Light>();
+        _time = DateTime.Now;
+        hour = _time.Hour;
+        minutes = _time.Minute;
+        _date = _time.Date;
+    }
+
+    void Update() {
+        _time = _time.AddSeconds(timeSpeed * Time.deltaTime);
+        if (_frameStep == 0) {
+            SetPosition();
+            return;
+        }
+        _frameStep = (_frameStep + 1) % frameSteps;
+    }
+
+    void OnValidate() {
+        _time = _date + new TimeSpan(hour, minutes, 0);
+        Debug.Log(_time);
+    }
 
     public void SetTime(int hour, int minutes) {
         this.hour = hour;
@@ -46,42 +58,20 @@ public class EntropediaSun : MonoBehaviour
     }
 
     public void SetDate(DateTime dateTime) {
-        this.hour = dateTime.Hour;
-        this.minutes = dateTime.Minute;
-        this._date = dateTime.Date;
+        hour = dateTime.Hour;
+        minutes = dateTime.Minute;
+        _date = dateTime.Date;
         OnValidate();
     }
 
     public void SetUpdateSteps(int i) { frameSteps = i; }
     public void SetTimeSpeed(float speed) { timeSpeed = speed; }
 
-    private void Awake() {
-        _light = GetComponent<Light>();
-        _time = DateTime.Now;
-        hour = _time.Hour;
-        minutes = _time.Minute;
-        _date = _time.Date;
-    }
-
-    private void OnValidate() {
-        _time = _date + new TimeSpan(hour, minutes, 0);
-        Debug.Log(_time);
-    }
-
-    private void Update() {
-        _time = _time.AddSeconds(timeSpeed * Time.deltaTime);
-        if (_frameStep == 0) {
-            SetPosition();
-            return;
-        }
-        _frameStep = (_frameStep + 1) % frameSteps;
-    }
-
     void SetPosition() {
-        Vector3 angles = new Vector3();
+        Vector3 angles = new();
         double alt;
         double azi;
-        SunPosition.CalculateSunPosition(_time, (double)latitude, (double)longitude, out azi, out alt);
+        SunPosition.CalculateSunPosition(_time, latitude, longitude, out azi, out alt);
         angles.x = (float)alt * Mathf.Rad2Deg;
         angles.y = (float)azi * Mathf.Rad2Deg;
         //UnityEngine.Debug.Log(angles);
@@ -96,8 +86,8 @@ public class EntropediaSun : MonoBehaviour
  */
 public static class SunPosition
 {
-    private const double Deg2Rad = Math.PI / 180.0;
-    private const double Rad2Deg = 180.0 / Math.PI;
+    const double Deg2Rad = Math.PI / 180.0;
+    const double Rad2Deg = 180.0 / Math.PI;
 
     /*!
      * \brief Calculates the sun light.
@@ -126,19 +116,19 @@ public static class SunPosition
         // Number of days from J2000.0.  
         double julianDate =
             367 * dateTime.Year
-          - (int)((7.0 / 4.0) * (dateTime.Year + (int)((dateTime.Month + 9.0) / 12.0)))
-          + (int)((275.0 * dateTime.Month) / 9.0)
+          - (int)(7.0 / 4.0 * (dateTime.Year + (int)((dateTime.Month + 9.0) / 12.0)))
+          + (int)(275.0 * dateTime.Month / 9.0)
           + dateTime.Day
           - 730531.5;
         double julianCenturies = julianDate / 36525.0;
 
         // Sidereal Time  
         double siderealTimeHours = 6.6974 + 2400.0513 * julianCenturies;
-        double siderealTimeUt = siderealTimeHours + (366.2422 / 365.2422) * (double)dateTime.TimeOfDay.TotalHours;
+        double siderealTimeUt = siderealTimeHours + 366.2422 / 365.2422 * dateTime.TimeOfDay.TotalHours;
         double siderealTime = siderealTimeUt * 15 + longitude;
 
         // Refine to number of days (fractional) to specific time.  
-        julianDate += (double)dateTime.TimeOfDay.TotalHours / 24.0;
+        julianDate += dateTime.TimeOfDay.TotalHours / 24.0;
         julianCenturies = julianDate / 36525.0;
 
         // Solar Coordinates  
@@ -186,8 +176,9 @@ public static class SunPosition
      * \param angleInRadians An angle expressed in radians.
      * \return An angle in the range 0 to 2*PI.
      */
-    private static double CorrectAngle(double angleInRadians) {
-        if (angleInRadians < 0) { return 2 * Math.PI - (Math.Abs(angleInRadians) % (2 * Math.PI)); } else if (
-            angleInRadians > 2 * Math.PI) { return angleInRadians % (2 * Math.PI); } else { return angleInRadians; }
+    static double CorrectAngle(double angleInRadians) {
+        if (angleInRadians < 0) { return 2 * Math.PI - Math.Abs(angleInRadians) % (2 * Math.PI); }
+        if (angleInRadians > 2 * Math.PI) { return angleInRadians % (2 * Math.PI); }
+        return angleInRadians;
     }
 }
