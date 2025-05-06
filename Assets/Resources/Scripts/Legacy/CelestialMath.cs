@@ -5,9 +5,9 @@ namespace Resources.Scripts
     public static class CelestialMath
     {
         // Epoch J2000.0: 2000-01-01 12:00:00 UTC
-        public static readonly DateTime Epoch = new DateTime(2000, 1, 1, 12, 0, 0, DateTimeKind.Utc);
-        public static double DegToRad(double degrees) => degrees * Math.PI / 180.0;
-        public static double RadToDeg(double radians) => radians * 180.0 / Math.PI;
+        public static readonly DateTime Epoch = new(2000, 1, 1, 12, 0, 0, DateTimeKind.Utc);
+        public static double DegToRad(double degrees) { return degrees * Math.PI / 180.0; }
+        public static double RadToDeg(double radians) { return radians * 180.0 / Math.PI; }
 
         public static double Century(DateTime date) {
             double deltaSeconds = (date.ToUniversalTime() - Epoch).TotalSeconds;
@@ -34,8 +34,8 @@ namespace Resources.Scripts
               + 0.0013114725 * Math.Sin(0.051642619 * day)
               + 0.00064591583 * Math.Cos(0.068856825 * day)
               + 0.00070547099 * Math.Sin(0.068856825 * day);
-            return (ra: (((12 / Math.PI) * ra) % 24 + 24) % 24,
-                dec: (180 / Math.PI) * Math.Atan2(Math.Sin(ra), 2.30644456403329));
+            return (ra: (12 / Math.PI * ra % 24 + 24) % 24,
+                dec: 180 / Math.PI * Math.Atan2(Math.Sin(ra), 2.30644456403329));
         }
 
         public static (double siderealTime, double hourAngle, double sunDeclination) DateUpdateData(
@@ -49,9 +49,9 @@ namespace Resources.Scripts
         }
 
         /**
- * Given the sun declination in radians, return the radius of this
- * orbit on the sphere.
- */
+         * Given the sun declination in radians, return the radius of this
+         * orbit on the sphere.
+         */
         public static double GetSunDeclinationRadius(double sphereRadius, double sunDeclination) {
             return sphereRadius * (Math.Cos(sunDeclination) * 1.25);
         }
@@ -95,7 +95,7 @@ namespace Resources.Scripts
 
         public static double GetHourAngle(double siderealTime, double rightAscension) {
             // Calculation from original (actionscript) source
-            double hourAngle = ((siderealTime - rightAscension) % 24) % 24;
+            double hourAngle = (siderealTime - rightAscension) % 24 % 24;
 
             // The hour angle shouldn't return values more than 12.
             // "18h 3m" should be displayed as "-5h 57m".

@@ -28,7 +28,7 @@ public static class SolarMath
 
         // Converte azimute e altitude para posição 3D (esfera ao redor da origem)
         Vector3 direction =
-            new Vector3(
+            new(
                 Mathf.Sin(azimuth) * Mathf.Cos(altitude), Mathf.Sin(altitude), Mathf.Cos(azimuth) * Mathf.Cos(altitude)
             );
         return direction;
@@ -42,7 +42,7 @@ public static class SolarMath
 
     // Número de séculos desde J2000.0
     public static double Century(DateTime date) {
-        DateTime epoch = new DateTime(2000, 1, 1, 12, 0, 0, DateTimeKind.Utc); // J2000.0
+        DateTime epoch = new(2000, 1, 1, 12, 0, 0, DateTimeKind.Utc); // J2000.0
         double elapsedSeconds = (date.ToUniversalTime() - epoch).TotalSeconds;
         return elapsedSeconds / 315576000.0; // 100 anos julianos em segundos
     }

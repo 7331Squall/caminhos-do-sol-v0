@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public class SimSliderField : MonoBehaviour
 {
+    bool _enabled = true;
+    bool _isUpdating;
     TMP_Text _label;
     Slider _slider;
     SpeedPerSecond _value;
-    bool _isUpdating;
-    bool _enabled = true;
 
     public bool Interactable {
         get => _enabled;
@@ -42,7 +42,7 @@ public class SimSliderField : MonoBehaviour
     void ValueChanged(float value) {
         if (_isUpdating || (SpeedPerSecond)value == _value) return;
         _isUpdating = true;
-        Value = (SpeedPerSecond)(value);
+        Value = (SpeedPerSecond)value;
         UpdateLabel();
         _isUpdating = false;
     }
