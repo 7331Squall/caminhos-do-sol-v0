@@ -1,5 +1,5 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 using UnityEngine.Serialization;
 
 public class LatitudeField : MonoBehaviour
@@ -7,8 +7,9 @@ public class LatitudeField : MonoBehaviour
     public TMP_InputField latitudeValue;
     public TMP_Text latitudeDirection;
 
-    [FormerlySerializedAs("Latitude"), SerializeField]
-    private float latitude;
+    [FormerlySerializedAs("Latitude")]
+    [SerializeField]
+    float latitude;
 
     public float Latitude {
         get => latitude;

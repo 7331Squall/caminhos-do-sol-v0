@@ -1,5 +1,6 @@
-using UnityEngine;
+using System.Linq;
 using TMPro;
+using UnityEngine;
 
 public class OrbitalCamera : MonoBehaviour
 {
@@ -12,17 +13,16 @@ public class OrbitalCamera : MonoBehaviour
     public float zoomSpeed = 2f;    // Velocidade de zoom
     public float minDistance = 2f;  // Zoom mínimo
     public float maxDistance = 20f; // Zoom máximo
-    private float _x = 0f;
-    private float _y = 0f;
+    float _x;
+    float _y;
 
     void Start() {
         Vector3 angles = transform.eulerAngles;
         _x = angles.y;
         _y = angles.x;
-        if (target == null) {
-            GameObject go = new GameObject("Camera Target") { transform = { position = Vector3.zero } };
-            target = go.transform;
-        }
+        if (target != null) return;
+        GameObject go = new("Camera Target") { transform = { position = Vector3.zero } };
+        target = go.transform;
     }
 
     void LateUpdate() {
@@ -60,12 +60,8 @@ public class OrbitalCamera : MonoBehaviour
     }
 
     // ✅ Verifica se qualquer TMP_Dropdown está expandido
-    private bool AnyDropdownOpen() {
-        TMP_Dropdown[]
-            dropdowns = FindObjectsByType<TMP_Dropdown>(FindObjectsSortMode.None); // FindObjectsOfType<TMP_Dropdown>();
-        foreach (var dd in dropdowns) {
-            if (dd.IsExpanded) return true;
-        }
-        return false;
+    static bool AnyDropdownOpen() {
+        var dropdowns = FindObjectsByType<TMP_Dropdown>(FindObjectsSortMode.None); // FindObjectsOfType<TMP_Dropdown>();
+        return dropdowns.Any(dd => dd.IsExpanded);
     }
 }

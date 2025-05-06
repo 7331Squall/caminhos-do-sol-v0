@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class NewLatitudeField : MonoBehaviour
 {
-    public UnityEvent<float> OnValueChanged { get; set; } = new();
     public TMP_InputField latitudeNumberField;
     public Button latitudeButton;
     public TMP_Text latitudeButtonText;
     float _actualValue;
     bool _isUpdating, _interactable = true;
+    public UnityEvent<float> OnValueChanged { get; set; } = new();
 
     public bool Interactable {
         get => _interactable;

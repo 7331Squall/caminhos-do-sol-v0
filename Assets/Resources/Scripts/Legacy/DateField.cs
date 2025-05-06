@@ -1,8 +1,8 @@
-using UnityEngine;
-using TMPro;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Resources.Scripts;
+using TMPro;
+using UnityEngine;
 using UnityEngine.Serialization;
 
 public class DateField : MonoBehaviour
@@ -39,9 +39,7 @@ public class DateField : MonoBehaviour
         monthDropdown.onValueChanged.AddListener(OnMonthDropdownChanged);
     }
 
-    public System.DateTime GetValue() {
-        return new System.DateTime(2000, monthDropdown.value + 1, dayDropdown.value + 1);
-    }
+    public DateTime GetValue() { return new DateTime(2000, monthDropdown.value + 1, dayDropdown.value + 1); }
 
     void OnMonthDropdownChanged(int index) {
         int[] thirtyOneDays = { 0, 2, 4, 6, 7, 9, 11 };
@@ -57,7 +55,7 @@ public class DateField : MonoBehaviour
         PopulateDayDropdown(28);
     }
 
-    void PopulateDayDropdown(int daysAmount) => dayDropdown.SetOptions(HourField.PopulateList(daysAmount, 1));
+    void PopulateDayDropdown(int daysAmount) { dayDropdown.SetOptions(HourField.PopulateList(daysAmount, 1)); }
 }
 
 // using System;

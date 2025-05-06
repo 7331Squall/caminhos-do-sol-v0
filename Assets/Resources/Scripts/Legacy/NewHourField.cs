@@ -1,17 +1,16 @@
 using System;
-using Resources.Scripts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class NewHourField : MonoBehaviour
 {
-    public UnityEvent<DateTime> OnValueChanged { get; set; } = new();
     public TMP_Dropdown hourDropdown;
     public TMP_Dropdown minuteDropdown;
     DateTime _actualValue;
-    bool _isUpdating;
     bool _enabled = true;
+    bool _isUpdating;
+    public UnityEvent<DateTime> OnValueChanged { get; set; } = new();
 
     public bool Interactable {
         get => _enabled;
@@ -41,7 +40,7 @@ public class NewHourField : MonoBehaviour
         minuteDropdown.SetOptions(Utilities.PopulateList(60));
         minuteDropdown.onValueChanged.AddListener(_ => OnTimeChanged());
         minuteDropdown.onValueChanged.AddListener(_ => OnTimeChanged());
-        Value = new(2000, 1, 1, 12, 0, 0);
+        Value = new DateTime(2000, 1, 1, 12, 0, 0);
     }
 
     void OnTimeChanged() {

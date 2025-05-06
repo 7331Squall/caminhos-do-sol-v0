@@ -7,10 +7,26 @@ using UnityEngine.Events;
 
 public class NewDateTimeField : MonoBehaviour
 {
-    public UnityEvent<DateTime> OnValueChanged { get; set; } = new();
+    static readonly List<string> Months =
+        new() {
+            "Jan",
+            "Fev",
+            "Mar",
+            "Abr",
+            "Mai",
+            "Jun",
+            "Jul",
+            "Ago",
+            "Set",
+            "Out",
+            "Nov",
+            "Dez"
+        };
+
     public TMP_Dropdown dayDropdown, monthDropdown, hourDropdown, minuteDropdown;
     DateTime _actualValue;
     bool _isUpdating, _interactable = true;
+    public UnityEvent<DateTime> OnValueChanged { get; set; } = new();
 
     public bool Interactable {
         get => _interactable;
@@ -35,29 +51,6 @@ public class NewDateTimeField : MonoBehaviour
         }
     }
 
-    void UpdateDropdowns() {
-        monthDropdown.value = _actualValue.Month - 1;
-        dayDropdown.value = _actualValue.Day - 1;
-        hourDropdown.value = _actualValue.Hour;
-        minuteDropdown.value = _actualValue.Minute;
-    }
-
-    static readonly List<string> Months =
-        new() {
-            "Jan",
-            "Fev",
-            "Mar",
-            "Abr",
-            "Mai",
-            "Jun",
-            "Jul",
-            "Ago",
-            "Set",
-            "Out",
-            "Nov",
-            "Dez"
-        };
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake() {
         monthDropdown.SetOptions(Months);
@@ -68,6 +61,13 @@ public class NewDateTimeField : MonoBehaviour
         minuteDropdown.SetOptions(Utilities.PopulateList(60));
         hourDropdown.onValueChanged.AddListener(_ => ParseDropdowns());
         minuteDropdown.onValueChanged.AddListener(_ => ParseDropdowns());
+    }
+
+    void UpdateDropdowns() {
+        monthDropdown.value = _actualValue.Month - 1;
+        dayDropdown.value = _actualValue.Day - 1;
+        hourDropdown.value = _actualValue.Hour;
+        minuteDropdown.value = _actualValue.Minute;
     }
 
     void MonthChanged(int index) {
@@ -86,8 +86,11 @@ public class NewDateTimeField : MonoBehaviour
     }
 
     void ParseDropdowns() {
-        Value = new(2000, monthDropdown.value + 1, dayDropdown.value + 1, hourDropdown.value, minuteDropdown.value, 0);
+        Value =
+            new DateTime(
+                2000, monthDropdown.value + 1, dayDropdown.value + 1, hourDropdown.value, minuteDropdown.value, 0
+            );
     }
 
-    void PopulateDayDropdown(int daysAmount) => dayDropdown.SetOptions(Utilities.PopulateList(daysAmount, 1));
+    void PopulateDayDropdown(int daysAmount) { dayDropdown.SetOptions(Utilities.PopulateList(daysAmount, 1)); }
 }
