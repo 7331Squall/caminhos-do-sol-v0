@@ -135,9 +135,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 2926210480606617591, guid: 802bd15d454783c47b5b80686e6f4f69, type: 3}
+      propertyPath: m_ScrollSensitivity
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 3231847882884837329, guid: 802bd15d454783c47b5b80686e6f4f69, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3292958880462353425, guid: 802bd15d454783c47b5b80686e6f4f69, type: 3}
+      propertyPath: m_ScrollSensitivity
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 4590923817585693313, guid: 802bd15d454783c47b5b80686e6f4f69, type: 3}
       propertyPath: m_Pivot.x
@@ -218,6 +226,14 @@ PrefabInstance:
     - target: {fileID: 4590923817585693313, guid: 802bd15d454783c47b5b80686e6f4f69, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202130095934224309, guid: 802bd15d454783c47b5b80686e6f4f69, type: 3}
+      propertyPath: m_ScrollSensitivity
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 9133970577901942137, guid: 802bd15d454783c47b5b80686e6f4f69, type: 3}
+      propertyPath: m_ScrollSensitivity
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
