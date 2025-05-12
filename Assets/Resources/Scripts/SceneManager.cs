@@ -6,11 +6,12 @@ using UnityEngine.UI;
 
 public class SceneManager : MonoBehaviour
 {
+    // ReSharper disable once InconsistentNaming
     public Canvas HUD;
-    NewDateTimeField datetimeField;
-    NewLatitudeField latitudeField;
-    Button simButton;
-    SimSliderField simSliderField;
+    NewDateTimeField _datetimeField;
+    NewLatitudeField _latitudeField;
+    Button _simButton;
+    SimSliderField _simSliderField;
 
     // public EntropediaSun sunLight;
     public GameObject lightGameObject;
@@ -18,39 +19,39 @@ public class SceneManager : MonoBehaviour
     bool _isSimulating; //, _isUpdatingTime;
     DateTime _simulationDateTime;
     DateTime CurrentTime {
-        get => datetimeField.Value;
-        set => datetimeField.Value = value;
+        get => _datetimeField.Value;
+        set => _datetimeField.Value = value;
     }
     float Latitude {
-        get => latitudeField.Value;
-        set => latitudeField.Value = value;
+        get => _latitudeField.Value;
+        set => _latitudeField.Value = value;
     }
 
     void Awake() {
-        datetimeField = HUD.GetComponentInChildren<NewDateTimeField>();
-        latitudeField = HUD.GetComponentInChildren<NewLatitudeField>();
-        simButton = HUD.GetComponentsInChildren<Button>().ToList().Find(x => x.name.Contains("SimButton") );
-        simSliderField = HUD.GetComponentInChildren<SimSliderField>();
+        _datetimeField = HUD.GetComponentInChildren<NewDateTimeField>();
+        _latitudeField = HUD.GetComponentInChildren<NewLatitudeField>();
+        _simButton = HUD.GetComponentsInChildren<Button>().ToList().Find(x => x.name.Contains("SimButton"));
+        _simSliderField = HUD.GetComponentInChildren<SimSliderField>();
     }
 
     void Start() {
         // CurrentTime = new(2000, 01, 01, 12, 0, 0);
-        CurrentTime = new DateTime(2000, 12, 23, 10, 05, 0);
+        CurrentTime = new DateTime(2000, 12, 23, 12, 00, 0);
         Latitude = -23f;
-        simButton.onClick.AddListener(ToggleSimulation);
-        datetimeField.OnValueChanged.AddListener(_ => DataUpdated());
-        latitudeField.OnValueChanged.AddListener(_ => DataUpdated());
+        _simButton.onClick.AddListener(ToggleSimulation);
+        _datetimeField.OnValueChanged.AddListener(_ => DataUpdated());
+        _latitudeField.OnValueChanged.AddListener(_ => DataUpdated());
         DataUpdated();
     }
 
     void Update() {
         if (_isSimulating) {
             if (_simulationDateTime.Year == 1999) _simulationDateTime = CurrentTime;
-            int simSecondsPerSecond = SpeedSetting.SimSecondsPerSecond(simSliderField.Value);
+            int simSecondsPerSecond = SpeedSetting.SimSecondsPerSecond(_simSliderField.Value);
             double simValue = simSecondsPerSecond * Time.deltaTime;
             _simulationDateTime = _simulationDateTime.AddSeconds(simValue);
             CurrentTime =
-                simSliderField.Value >= SpeedPerSecond.OneWeek
+                _simSliderField.Value >= SpeedPerSecond.OneWeek
                     ? new DateTime(
                         _simulationDateTime.Year, _simulationDateTime.Month, _simulationDateTime.Day, CurrentTime.Hour,
                         CurrentTime.Minute, 0
@@ -58,12 +59,21 @@ public class SceneManager : MonoBehaviour
                     : _simulationDateTime;
             DataUpdated();
             Debug.Log(
-                $"Lat: {Latitude}, Dat: {CurrentTime}, IDT: {_simulationDateTime}, SSP: {SpeedSetting.SimSecondsPerSecond(simSliderField.Value)}"
+                $"Lat: {Latitude}, Dat: {CurrentTime}, IDT: {_simulationDateTime}, SSP: {SpeedSetting.SimSecondsPerSecond(_simSliderField.Value)}"
             );
         } else if (_simulationDateTime.Year != 1999) { _simulationDateTime = new DateTime(1999, 1, 1, 12, 0, 0); }
     }
 
     void DataUpdated() {
+        (Vector3 position, Quaternion rotation) calc = GPTSolarCalc.GetPositionNOAA(Latitude, CurrentTime);
+        lightGameObject.transform.position = calc.position * sphereRadius;
+        lightGameObject.transform.rotation = calc.rotation;
+        Debug.Log(
+            $"Sun Position = {lightGameObject.transform.position}, Sun Rotation = {lightGameObject.transform.rotation}."
+        );
+    }
+
+    void OldDataUpdated() {
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         /// SOL 3D AQUI
         /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -72,7 +82,7 @@ public class SceneManager : MonoBehaviour
         // sunLight.SetLocation(0.0f, latitudeField.Value);
         // double ApparentLongitude = SolarMath.ApparentLongitude(SolarMath.Century(datetimeField.Value));
         SunPosition.CalculateSunPosition(
-            datetimeField.Value, latitudeField.Value, 0, out double azimuth, out double altitude
+            _datetimeField.Value, _latitudeField.Value, 0, out double azimuth, out double altitude
         );
 
         // Converte azimute e altitude para posição 3D (esfera ao redor da origem)
@@ -110,9 +120,9 @@ public class SceneManager : MonoBehaviour
     //
     void ToggleSimulation() {
         _isSimulating = !_isSimulating;
-        latitudeField.Interactable = !_isSimulating;
-        datetimeField.Interactable = !_isSimulating;
-        simSliderField.Interactable = !_isSimulating;
-        simButton.GetComponentInChildren<TMP_Text>().text = _isSimulating ? "Simulando..." : "Simular";
+        _latitudeField.Interactable = !_isSimulating;
+        _datetimeField.Interactable = !_isSimulating;
+        _simSliderField.Interactable = !_isSimulating;
+        _simButton.GetComponentInChildren<TMP_Text>().text = _isSimulating ? "Simulando..." : "Simular";
     }
 }
