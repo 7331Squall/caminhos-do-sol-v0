@@ -34,7 +34,6 @@ public class SimSliderField : MonoBehaviour
         _slider.onValueChanged.AddListener(ValueChanged);
         Value = SpeedPerSecond.OneHour;
         UpdateLabel();
-        Debug.Log($"{Value} == {_value} ?");
     }
 
     void ValueChanged(float value) {
