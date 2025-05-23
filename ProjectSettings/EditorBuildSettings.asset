@@ -12,5 +12,6 @@ EditorBuildSettings:
     path: Assets/Resources/Scenes/CelestialSphere.unity
     guid: 13e88eb7b58c8704d912acf6ad0d6feb
   m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: e91f53a763c483645a0d77ab35304d07, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

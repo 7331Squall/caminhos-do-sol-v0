@@ -6,14 +6,7 @@ using UnityEngine;
 public class OrbitalCamera : MonoBehaviour
 {
     public Transform target;        // Alvo (pode ser vazio no (0,0,0))
-    public float distance = 20f;    // Distância da câmera até o alvo
-    public float xSpeed = 120f;     // Velocidade de rotação horizontal
-    public float ySpeed = 120f;     // Velocidade de rotação vertical
-    public float yMinLimit = 1f;    // Limite inferior da rotação vertical
-    public float yMaxLimit = 90f;   // Limite superior da rotação vertical
-    public float zoomSpeed = 2f;    // Velocidade de zoom
-    public float minDistance = 2f;  // Zoom mínimo
-    public float maxDistance = 20f; // Zoom máximo
+    public OrbitalCameraProperties props;
     float _x;
     float _y;
 
@@ -41,9 +34,9 @@ public class OrbitalCamera : MonoBehaviour
                     delta = touch.deltaPosition * 0.1f; // ajuste de sensibilidade pro toque
                 }
             }
-            _x += delta.x * xSpeed * Time.deltaTime;
-            _y += delta.y * ySpeed * Time.deltaTime;
-            _y = Mathf.Clamp(_y, yMinLimit, yMaxLimit);
+            _x += delta.x * props.xSpeed * Time.deltaTime;
+            _y += delta.y * props.ySpeed * Time.deltaTime;
+            _y = Mathf.Clamp(_y, props.yMinLimit, props.yMaxLimit);
         }
         float scroll = Input.GetAxis("Mouse ScrollWheel") * (dropdownOpen ? 0 : 1);
         if (Input.touchCount == 2) {
@@ -54,9 +47,9 @@ public class OrbitalCamera : MonoBehaviour
             float currMag = (t1.position - t2.position).magnitude;
             scroll = (prevMag - currMag) * 0.01f;
         }
-        distance = Mathf.Clamp(distance - scroll * zoomSpeed, minDistance, maxDistance);
+        props.distance = Mathf.Clamp(props.distance - scroll * props.zoomSpeed, props.minDistance, props.maxDistance);
         Quaternion rotation = Quaternion.Euler(_y, _x, 0);
-        Vector3 negDistance = new(0, 0, -distance);
+        Vector3 negDistance = new(0, 0, -props.distance);
         Vector3 position = rotation * negDistance + target.position;
         transform.rotation = rotation;
         transform.position = position;

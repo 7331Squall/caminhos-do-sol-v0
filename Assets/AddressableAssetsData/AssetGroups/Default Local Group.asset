@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_GUID: 0fed86b579d28f34a98f73c66d72f317
+  m_SerializeEntries:
+  - m_GUID: 39fd9a9b3ee8e6a4e899472899bef71e
+    m_Address: Assets/Addressables/Tour eiffel B.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 655c1bf625717c94dbbe221573a8b20f
+    m_Address: Assets/Addressables/EstatuaDaLiberdade.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 86aebd5d8fcb27644808a9bdc9a72648
+    m_Address: Assets/Addressables/tajmahal.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: da5c0e46a98797648ad76dd442b73a35
+    m_Address: Assets/Addressables/Cristo.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: c62a05236e484654e91dcf759c9f3682, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 55166e3ea3f440f47bbc3e02a00f61b3, type: 2}
+    - {fileID: 11400000, guid: e19e1c803d4b0194f86963afb8d26ac7, type: 2}
