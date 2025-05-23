@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: afb675bb876e1e6438991743e2af4afd, type: 3}
       propertyPath: m_Name
-      value: tajmahal
+      value: TajMahal
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -85,3 +85,4 @@ MonoBehaviour:
   zoomSpeed: 2
   minDistance: 2
   maxDistance: 30
+  sunDistance: 10

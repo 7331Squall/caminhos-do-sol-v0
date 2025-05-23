@@ -77,11 +77,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c6abf7ee1f34a27b13148a5785e00e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 50
+  distance: 70
   xSpeed: 160
   ySpeed: 160
   yMinLimit: 1
   yMaxLimit: 90
   zoomSpeed: 5
   minDistance: 2
-  maxDistance: 60
+  maxDistance: 80
+  sunDistance: 35
