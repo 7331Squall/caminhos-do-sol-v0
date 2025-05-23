@@ -122,7 +122,7 @@ public class SceneManager : MonoBehaviour {
             DataUpdated();
             loadingPanel.SetActive(false);
         } else {
-            DisplayMessage(obj.OperationException.Message);
+            DisplayMessage($"{obj.OperationException.Message} : {obj.OperationException.StackTrace}");
             DisplayFallbackModel();
         }
     }
