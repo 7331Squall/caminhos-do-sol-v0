@@ -1,0 +1,23 @@
+{
+  "name": "solar_simulator",
+  "version": "1.0.0",
+  "description": "Solar Simulator",
+  "keywords": [
+    "astronomy"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "..\\"
+  },
+  "license": "ISC",
+  "author": "Squack Spencer",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "firebase": "^11.6.1"
+  },
+  "devDependencies": {}
+}
