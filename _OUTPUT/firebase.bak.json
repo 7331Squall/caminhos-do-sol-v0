@@ -1,0 +1,172 @@
+{
+  "emulators": {
+    "hosting": {
+      "port": 5000,
+      "host": "localhost",
+      "https": {
+        "cert": "./ssl/cert.pem",
+        "key": "./ssl/key.pem"
+      }
+    }
+  },
+  "hosting": {
+    "public": "public",
+    "headers": [
+      {
+        "source": "**/*.bundle",
+        "headers": [
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          },
+          {
+            "key": "Cache-Control",
+            "value": "no-cache, no-store, must-revalidate"
+          },
+          {
+            "key": "Content-Encoding",
+            "value": "identity"
+          }
+        ]
+      },
+      {
+        "source": "**/*.json",
+        "headers": [
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          },
+          {
+            "key": "Cache-Control",
+            "value": "no-cache, no-store, must-revalidate"
+          },
+          {
+            "key": "Content-Encoding",
+            "value": "identity"
+          }
+        ]
+      },
+      {
+        "source": "**/*.hash",
+        "headers": [
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          },
+          {
+            "key": "Cache-Control",
+            "value": "no-cache, no-store, must-revalidate"
+          },
+          {
+            "key": "Content-Encoding",
+            "value": "identity"
+          },
+          {
+            "key": "Cache-Control",
+            "value": "no-transform"
+          }
+        ]
+      },
+      {
+        "source": "**/*.js.br",
+        "headers": [
+          {
+            "key": "Content-Encoding",
+            "value": "br"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/javascript"
+          },
+          {
+            "key": "Cache-Control",
+            "value": "no-transform"
+          }
+        ]
+      },
+      {
+        "source": "**/*.wasm.br",
+        "headers": [
+          {
+            "key": "Content-Encoding",
+            "value": "br"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/wasm"
+          },
+          {
+            "key": "Cache-Control",
+            "value": "no-transform"
+          }
+        ]
+      },
+      {
+        "source": "**/*.data.br",
+        "headers": [
+          {
+            "key": "Content-Encoding",
+            "value": "br"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/octet-stream"
+          },
+          {
+            "key": "Cache-Control",
+            "value": "no-transform"
+          }
+        ]
+      },
+      {
+        "source": "**/*.br",
+        "headers": [
+          {
+            "key": "Content-Encoding",
+            "value": "br"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/octet-stream"
+          }
+        ]
+      },
+      {
+        "source": "**/*.gz",
+        "headers": [
+          {
+            "key": "Content-Encoding",
+            "value": "gzip"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/octet-stream"
+          }
+        ]
+      }
+    ],
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/[R|r]odrigo",
+        "destination": "/Rodrigo.html"
+      },
+      {
+        "source": "/[R|r]odrigo[T|t]est",
+        "destination": "/RodrigoTest.html"
+      },
+      {
+        "source": "/[F|f]elipe",
+        "destination": "/Felipe.html"
+      },
+      {
+        "source": "/",
+        "destination": "/Index.html"
+      }
+    ]
+  }
+}

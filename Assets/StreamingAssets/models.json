@@ -1,0 +1,42 @@
+[
+  {
+    "modelName": "Cristo Redentor",
+    "modelPath": "Models/Cristo.glb",
+    "rotationDegrees": 112.5,
+    "camData": {
+      "minDistance": 2,
+      "maxDistance": 40,
+      "sunDistance": 20
+    }
+  },
+  {
+    "modelName": "Est\u00e1tua da Liberdade",
+    "modelPath": "Models/Estatua da Liberdade.glb",
+    "rotationDegrees": 155,
+    "camData": {
+      "minDistance": 2,
+      "maxDistance": 60,
+      "sunDistance": 10
+    }
+  },
+  {
+    "modelName": "Torre Eiffel",
+    "modelPath": "Models/Torre Eiffel.glb",
+    "rotationDegrees": 0,
+    "camData": {
+      "minDistance": 2,
+      "maxDistance": 80,
+      "sunDistance": 35
+    }
+  },
+  {
+    "modelName": "Taj Mahal",
+    "modelPath": "Models/Taj Mahal.glb",
+    "rotationDegrees": 0,
+    "camData": {
+      "minDistance": 2,
+      "maxDistance": 30,
+      "sunDistance": 10
+    }
+  }
+]

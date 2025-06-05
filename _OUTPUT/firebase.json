@@ -11,114 +11,22 @@
   },
   "hosting": {
     "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
     "headers": [
       {
-        "source": "**/*.bundle",
+        "source": "/WebGL/**",
         "headers": [
-          {
-            "key": "Access-Control-Allow-Origin",
-            "value": "*"
-          },
-          {
-            "key": "Cache-Control",
-            "value": "no-cache, no-store, must-revalidate"
-          },
-          {
-            "key": "Content-Encoding",
-            "value": "identity"
-          },
           {
             "key": "Cache-Control",
             "value": "no-transform"
-          }
-        ]
-      },
-      {
-        "source": "**/*.json",
-        "headers": [
-          {
-            "key": "Access-Control-Allow-Origin",
-            "value": "*"
-          },
-          {
-            "key": "Cache-Control",
-            "value": "no-cache, no-store, must-revalidate"
-          },
-          {
-            "key": "Content-Encoding",
-            "value": "identity"
-          }
-        ]
-      },
-      {
-        "source": "**/*.hash",
-        "headers": [
-          {
-            "key": "Access-Control-Allow-Origin",
-            "value": "*"
-          },
-          {
-            "key": "Cache-Control",
-            "value": "no-cache, no-store, must-revalidate"
-          },
-          {
-            "key": "Content-Encoding",
-            "value": "identity"
-          },
-          {
-            "key": "Cache-Control",
-            "value": "no-transform"
-          }
-        ]
-      },
-      {
-        "source": "**/*.js.br",
-        "headers": [
-          {
-            "key": "Content-Encoding",
-            "value": "br"
-          },
-          {
-            "key": "Content-Type",
-            "value": "application/javascript"
-          },
-          {
-            "key": "Cache-Control",
-            "value": "no-transform"
-          }
-        ]
-      },
-      {
-        "source": "**/*.wasm.br",
-        "headers": [
-          {
-            "key": "Content-Encoding",
-            "value": "br"
-          },
-          {
-            "key": "Content-Type",
-            "value": "application/wasm"
-          },
-          {
-            "key": "Cache-Control",
-            "value": "no-transform"
-          }
-        ]
-      },
-      {
-        "source": "**/*.data.br",
-        "headers": [
-          {
-            "key": "Content-Encoding",
-            "value": "br"
           },
           {
             "key": "Content-Type",
             "value": "application/octet-stream"
-          },
-          {
-            "key": "Cache-Control",
-            "value": "no-transform"
           }
         ]
       },
@@ -132,6 +40,10 @@
           {
             "key": "Content-Type",
             "value": "application/octet-stream"
+          },
+          {
+            "key": "Cache-Control",
+            "value": "no-transform"
           }
         ]
       },
@@ -145,14 +57,13 @@
           {
             "key": "Content-Type",
             "value": "application/octet-stream"
+          },
+          {
+            "key": "Cache-Control",
+            "value": "no-transform"
           }
         ]
       }
-    ],
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
     ],
     "rewrites": [
       {
