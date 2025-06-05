@@ -34,7 +34,7 @@ public static class SpeedSetting
             SpeedPerSecond.TwoWeeks       => "14 dias/s",
             SpeedPerSecond.OneMonth       => "30 dias/s",
             SpeedPerSecond.ThreeMonths    => "120 dias/s",
-            _                             => value.ToString()
+            var _                         => value.ToString()
         };
     }
 
@@ -54,7 +54,7 @@ public static class SpeedSetting
             SpeedPerSecond.TwoWeeks       => 1209600,
             SpeedPerSecond.OneMonth       => 2592000,
             SpeedPerSecond.ThreeMonths    => 7776000,
-            _                             => (int)value
+            var _                         => (int)value
         };
     }
 }

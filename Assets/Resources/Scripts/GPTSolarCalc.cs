@@ -32,11 +32,11 @@ public static class GPTSolarCalc
         int minute = dateTime.Minute;
 
         // 1) Cálculo do dia do ano (N)
-        DateTime dt = new DateTime(2000, month, day, hour, minute, 0);
+        DateTime dt = new(2000, month, day, hour, minute, 0);
         int N = dt.DayOfYear;
 
         // 2) Ângulo do ano (γ), em radianos
-        double gamma = 2.0 * Math.PI / 365.0 * (N - 1 + ((hour - 12.0) / 24.0) + minute / 1440.0);
+        double gamma = 2.0 * Math.PI / 365.0 * (N - 1 + (hour - 12.0) / 24.0 + minute / 1440.0);
 
         // 3) Declinação solar δ, em radianos
         double delta =
@@ -79,7 +79,7 @@ public static class GPTSolarCalc
 
         // 8) Vetor direção no sistema Unity (X=leste, Y=cima, Z=norte)
         float x = (float)(Math.Cos(elevation) * Math.Sin(azimuth));
-        float y = (float)(Math.Sin(elevation));
+        float y = (float)Math.Sin(elevation);
         float z = (float)(Math.Cos(elevation) * Math.Cos(azimuth));
 
         // 9) Aplica rotação na luz direcional para “apontar” para a origem
