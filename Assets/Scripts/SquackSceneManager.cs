@@ -10,7 +10,7 @@ using static SpeedPerSecond;
 using static SpeedSetting;
 using static UnityEngine.ParticleSystem;
 
-public class SceneManager : MonoBehaviour {
+public class SquackSceneManager : MonoBehaviour {
     // ReSharper disable once InconsistentNaming
 
 #region HUD
@@ -27,7 +27,7 @@ public class SceneManager : MonoBehaviour {
     GameObject loadingPanel;
     [SerializeField]
     TMP_Text loadingText;
-    ExperimentalToggle _experimentalToggle;
+    CustomToggle _customToggle;
 #endregion
 
 #region ExternalVariables
@@ -62,7 +62,7 @@ public class SceneManager : MonoBehaviour {
         _latitudeField = HUD.GetComponentInChildren<NewLatitudeField>();
         _simButton = HUD.GetComponentsInChildren<Button>().ToList().Find(x => x.name.Contains("SimButton"));
         _simSliderField = HUD.GetComponentInChildren<SimSliderField>();
-        _experimentalToggle = HUD.GetComponentInChildren<ExperimentalToggle>();
+        _customToggle = HUD.GetComponentInChildren<CustomToggle>();
         _lightParticle = lightGameObject.GetComponent<ParticleSystem>();
         _messageText = messagePanel.GetComponentInChildren<TMP_Text>();
         FallbackModel = GetComponentsInChildren<MeshFilter>().ToList().Find(x => x.name.Contains("Model"));
@@ -90,7 +90,7 @@ public class SceneManager : MonoBehaviour {
         _datetimeField.OnValueChanged.AddListener(_ => DataUpdated());
         _simSliderField.OnValueChanged.AddListener(_ => ResetParticle());
         _latitudeField.OnValueChanged.AddListener(_ => DataUpdated());
-        _experimentalToggle.OnValueChanged.AddListener(_ => ResetParticle());
+        _customToggle.OnValueChanged.AddListener(_ => ResetParticle());
         DataUpdated();
     }
 
@@ -137,7 +137,7 @@ public class SceneManager : MonoBehaviour {
 
     void ToggleSimulation() {
         AdjustHudForSim();
-        if (_experimentalToggle.emitSunTrails) {
+        if (_customToggle.emitSunTrails) {
             MainModule main = _lightParticle.main;
             if (_simSliderField.Value >= OneWeek) {
                 main.startLifetime = SimSecondsPerSecond(ThreeMonths) * 4 / SimSecondsPerSecond(_simSliderField.Value);
@@ -154,7 +154,7 @@ public class SceneManager : MonoBehaviour {
         _latitudeField.Interactable = !_isSimulating;
         _datetimeField.Interactable = !_isSimulating;
         _simSliderField.Interactable = !_isSimulating;
-        _experimentalToggle.Interactable= !_isSimulating;
+        _customToggle.Interactable= !_isSimulating;
         _simButton.GetComponentInChildren<TMP_Text>().text = _isSimulating ? "Simulando..." : "Simular";
     }
 
