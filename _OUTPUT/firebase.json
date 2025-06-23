@@ -71,8 +71,8 @@
         "destination": "/Rodrigo.html"
       },
       {
-        "source": "/[R|r]odrigo[T|t]est",
-        "destination": "/RodrigoTest.html"
+        "source": "/[R|r]odrigo[C|c]lassic",
+        "destination": "/RodrigoClassic.html"
       },
       {
         "source": "/[F|f]elipe",
