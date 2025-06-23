@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class ExperimentalToggle : MonoBehaviour {
+public class CustomToggle : MonoBehaviour {
     public Toggle experimentalToggle;
     public Camera cam;
     public GameObject sky;

@@ -21,7 +21,7 @@ public class ModelSelectField : MonoBehaviour {
     [SerializeField]
     Mesh fallbackMesh;
 
-    SceneManager _sceneManager;
+    SquackSceneManager _squackSceneManager;
     
     void PopulateModelSelectDropdown() {
         // TODO: Tirar o Hard-Code e Refatorar essa classe toda
@@ -33,7 +33,7 @@ public class ModelSelectField : MonoBehaviour {
     }
 
     void Awake() {
-        _sceneManager = GameObject.Find("SceneManager").GetComponent<SceneManager>();
+        _squackSceneManager = GameObject.Find("SceneManager").GetComponent<SquackSceneManager>();
         _modelSelectDropdown = GetComponent<TMP_Dropdown>();
         // ReSharper disable once IteratorMethodResultIsIgnored
     }
@@ -41,18 +41,18 @@ public class ModelSelectField : MonoBehaviour {
     void Start() { StartCoroutine(LoadList()); }
 
     IEnumerator LoadList() {
-        _sceneManager.DoLoading("Carregando lista de modelos...");
+        _squackSceneManager.DoLoading("Carregando lista de modelos...");
         string fullPath = Path.Combine(Application.streamingAssetsPath, "models.json");
         UnityWebRequest www = UnityWebRequest.Get(fullPath);
         yield return www.SendWebRequest();
         if (www.result != UnityWebRequest.Result.Success) {
-            _sceneManager.DisplayMessage($"Erro ao carregar JSON: {www.error}");
+            _squackSceneManager.DisplayMessage($"Erro ao carregar JSON: {www.error}");
         } else {
             string json = www.downloadHandler.text;
             _modelList = JsonConvert.DeserializeObject<List<ModelData>>(json);
             PopulateModelSelectDropdown();
         }
-        _sceneManager.TryToFinishLoading();
+        _squackSceneManager.TryToFinishLoading();
     }
 
     async void ChangeModel(int index) {
@@ -65,10 +65,10 @@ public class ModelSelectField : MonoBehaviour {
                 DisplayFallbackModel();
                 return;
             }
-            _sceneManager.DoLoading($"Carregando {_modelList[actualIdx].ModelName}");
+            _squackSceneManager.DoLoading($"Carregando {_modelList[actualIdx].ModelName}");
             await Load3DModel(actualIdx);
         } catch (Exception ex) {
-            _sceneManager.DisplayMessage($"Erro ao trocar modelo: {ex.Message}");
+            _squackSceneManager.DisplayMessage($"Erro ao trocar modelo: {ex.Message}");
             DisplayFallbackModel();
         }
     }
@@ -87,20 +87,20 @@ public class ModelSelectField : MonoBehaviour {
                 transform = { rotation = Quaternion.Euler(0f, prop.RotationDegrees, 0f), localScale = new Vector3(0.1f, 0.1f, 0.1f) }
             };
             await gltf.InstantiateMainSceneAsync(_loadedModel.transform);
-            _sceneManager.UpdateProps(prop.CamData);
-            _sceneManager.TryToFinishLoading();
+            _squackSceneManager.UpdateProps(prop.CamData);
+            _squackSceneManager.TryToFinishLoading();
         } else {
-            _sceneManager.DisplayMessage($"Falha ao carregar o modelo {fullPath}.");
+            _squackSceneManager.DisplayMessage($"Falha ao carregar o modelo {fullPath}.");
         }
     }
 
-    void SetFallbackModelActive(bool isActive) => _sceneManager.FallbackModel.gameObject.SetActive(isActive);
+    void SetFallbackModelActive(bool isActive) => _squackSceneManager.FallbackModel.gameObject.SetActive(isActive);
 
     void DisplayFallbackModel() {
         Destroy(_loadedModel);
-        _sceneManager.UpdateProps(null);
+        _squackSceneManager.UpdateProps(null);
         SetFallbackModelActive(true);
-        _sceneManager.TryToFinishLoading();
+        _squackSceneManager.TryToFinishLoading();
     }
 }
 
