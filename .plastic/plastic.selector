@@ -1,4 +1,0 @@
-repository "Sun Motion Simulator/Sun Motion Simulator@4674079348553@cloud"
-  path "/"
-    br "/main"
-    co "/main"

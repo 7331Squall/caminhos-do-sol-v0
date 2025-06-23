@@ -4,9 +4,10 @@
     "modelPath": "Models/Cristo.glb",
     "rotationDegrees": 112.5,
     "camData": {
+      "distance": 40,
       "minDistance": 2,
-      "maxDistance": 40,
-      "sunDistance": 20
+      "maxDistance": 60,
+      "sunDistance": 17
     }
   },
   {
@@ -14,9 +15,10 @@
     "modelPath": "Models/Estatua da Liberdade.glb",
     "rotationDegrees": 155,
     "camData": {
+      "distance": 35,
       "minDistance": 2,
-      "maxDistance": 60,
-      "sunDistance": 10
+      "maxDistance": 40,
+      "sunDistance": 15
     }
   },
   {
@@ -24,8 +26,9 @@
     "modelPath": "Models/Torre Eiffel.glb",
     "rotationDegrees": 0,
     "camData": {
+      "distance": 75,
       "minDistance": 2,
-      "maxDistance": 80,
+      "maxDistance": 90,
       "sunDistance": 35
     }
   },
@@ -34,9 +37,10 @@
     "modelPath": "Models/Taj Mahal.glb",
     "rotationDegrees": 0,
     "camData": {
+      "distance": 16,
       "minDistance": 2,
       "maxDistance": 30,
-      "sunDistance": 10
+      "sunDistance": 6
     }
   }
 ]
