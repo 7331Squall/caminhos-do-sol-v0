@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class SimSliderField : MonoBehaviour {
     [SerializeField]
+    // ReSharper disable once RedundantDefaultMemberInitializer
     bool isInterval = false;
     bool _enabled = true;
     bool _isUpdating;
@@ -37,14 +38,14 @@ public class SimSliderField : MonoBehaviour {
         _label = GetComponentsInChildren<TMP_Text>().ToList().Find(x => x.name == "ValueLabel");
         _slider.maxValue = Enum.GetValues(isInterval ? typeof(IntervalSettings) : typeof(SpeedSettings)).Length - 1;
         _slider.onValueChanged.AddListener(ValueChanged);
-        Value = isInterval ? IntervalSetting.SimSecondsPerSecond(IntervalSettings.Continuous) : SpeedSetting.SimSecondsPerSecond(SpeedSettings.OneHour);
+        Value = isInterval ? (int) (IntervalSettings.Continuous) : (int) (SpeedSettings.OneHour);
         UpdateLabel();
     }
 
     void ValueChanged(float value) {
         if (_isUpdating || Mathf.Approximately(value, _value)) return;
         _isUpdating = true;
-        Value = (int)value;
+        Value = (int) value;
         UpdateLabel();
         _isUpdating = false;
     }

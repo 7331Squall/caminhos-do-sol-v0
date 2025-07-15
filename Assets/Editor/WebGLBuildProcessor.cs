@@ -7,8 +7,8 @@ using UnityEngine;
 public class WebGLBuildProcessor : IPostprocessBuildWithReport
 {
     public int callbackOrder => 0;
-    private const string OutputPH = "{{OUTPUT}}";
-    private const string OutputEX = "{{EXTENSION}}";
+    private const string Output = "{{OUTPUT}}";
+    private const string OutputExt = "{{EXTENSION}}";
 
     public void OnPostprocessBuild(BuildReport report) {
         if (report.summary.platform != BuildTarget.WebGL) return;
@@ -21,10 +21,10 @@ public class WebGLBuildProcessor : IPostprocessBuildWithReport
         string indexPath = Path.Combine(report.summary.outputPath, "index.html");
         if (File.Exists(indexPath)) {
             string html = File.ReadAllText(indexPath);
-            html = html.Replace(OutputPH, outputFolder).Replace(OutputEX, extension);
+            html = html.Replace(Output, outputFolder).Replace(OutputExt, extension);
             File.WriteAllText(indexPath, html);
-            Debug.Log($"[BuildProcessor] Substituído '{OutputPH}' por '{outputFolder}' no index.html");
-            Debug.Log($"[BuildProcessor] Substituído '{OutputEX}' por '{extension}' no index.html");
+            Debug.Log($"[BuildProcessor] Substituído '{Output}' por '{outputFolder}' no index.html");
+            Debug.Log($"[BuildProcessor] Substituído '{OutputExt}' por '{extension}' no index.html");
         } else { Debug.LogWarning("[BuildProcessor] index.html não encontrado na pasta de build."); }
     }
 

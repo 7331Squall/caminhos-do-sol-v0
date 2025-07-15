@@ -1,7 +1,6 @@
-using UnityEngine.Rendering;
 public enum SpeedSettings {
-    TwoMinutes,
-    FiveMinutes,
+    // TwoMinutes,
+    // FiveMinutes,
     FifteenMinutes,
     ThirtyMinutes,
     OneHour,
@@ -23,8 +22,8 @@ public enum IntervalSettings {
 public static class SpeedSetting {
     public static string ToDisplayString(SpeedSettings value) {
         return value switch {
-            SpeedSettings.TwoMinutes     => "2 min/s",
-            SpeedSettings.FiveMinutes    => "5 min/s",
+            // SpeedSettings.TwoMinutes     => "2 min/s",
+            // SpeedSettings.FiveMinutes    => "5 min/s",
             SpeedSettings.FifteenMinutes => "15 min/s",
             SpeedSettings.ThirtyMinutes  => "30 min/s",
             SpeedSettings.OneHour        => "1 hora/s",
@@ -37,14 +36,14 @@ public static class SpeedSetting {
         };
     }
 
-    public static int SimSecondsPerSecond(int value) {
-        return SimSecondsPerSecond((SpeedSettings) value);
+    public static int SpeedInSeconds(int value) {
+        return SpeedInSeconds((SpeedSettings) value);
     }
 
-    public static int SimSecondsPerSecond(SpeedSettings value) {
+    public static int SpeedInSeconds(SpeedSettings value) {
         return value switch {
-            SpeedSettings.TwoMinutes     => 120,
-            SpeedSettings.FiveMinutes    => 300,
+            // SpeedSettings.TwoMinutes     => 120,
+            // SpeedSettings.FiveMinutes    => 300,
             SpeedSettings.FifteenMinutes => 900,
             SpeedSettings.ThirtyMinutes  => 1800,
             SpeedSettings.OneHour        => 3600,
@@ -75,16 +74,16 @@ public static class IntervalSetting {
         };
     }
 
-    public static int SimSecondsPerSecond(int value) {
-        return SimSecondsPerSecond((IntervalSettings) value);
+    public static int IntervalInDays(int value) {
+        return IntervalInDays((IntervalSettings) value);
     }
 
-    public static int SimSecondsPerSecond(IntervalSettings value) {
+    public static int IntervalInDays(IntervalSettings value) {
         return value switch {
-            IntervalSettings.OneWeek     => 604800,
-            IntervalSettings.TwoWeeks    => 1209600,
-            IntervalSettings.OneMonth    => 2592000,
-            IntervalSettings.ThreeMonths => 7776000,
+            IntervalSettings.OneWeek     => 7,
+            IntervalSettings.TwoWeeks    => 14,
+            IntervalSettings.OneMonth    => 30,
+            IntervalSettings.ThreeMonths => 90,
             var _                        => (int) value
         };
     }

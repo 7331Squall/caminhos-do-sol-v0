@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+// ReSharper disable InconsistentNaming
 
 public class FindURPLitShaders : EditorWindow
 {
@@ -42,8 +43,8 @@ public class FindURPLitShaders : EditorWindow
         if (count > 0)
         {
             Debug.Log($"Encontrados {count} objetos usando o shader '{targetShaderName}':");
-            foreach (var name in results)
-                Debug.Log(name);
+            foreach (var objName in results)
+                Debug.Log(objName);
         }
         else
         {
