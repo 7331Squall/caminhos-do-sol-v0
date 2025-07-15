@@ -8,6 +8,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using static SpeedSettings;
 using static SpeedSetting;
+using static IntervalSettings;
+using static IntervalSetting;
 using static UnityEngine.ParticleSystem;
 
 public class SquackSceneManager : MonoBehaviour {
@@ -15,11 +17,10 @@ public class SquackSceneManager : MonoBehaviour {
 
 #region HUD
     public Canvas HUD;
-
     NewDateTimeField _datetimeField;
     NewLatitudeField _latitudeField;
     Button _simButton;
-    SimSliderField _simSliderField;
+    SimSliderField _simSpeedField, _simIntervalField;
     [SerializeField]
     GameObject messagePanel;
     TMP_Text _messageText;
@@ -44,8 +45,12 @@ public class SquackSceneManager : MonoBehaviour {
 #region SimulationVariables
     bool _isSimulating;
     int _loadingCount;
+    bool particleChanged;
+
+    bool _initialized;
 
     DateTime _simulationDateTime;
+    DateTime SimStartTime;
 #endregion
 
 #region Others
@@ -61,7 +66,8 @@ public class SquackSceneManager : MonoBehaviour {
         _datetimeField = HUD.GetComponentInChildren<NewDateTimeField>();
         _latitudeField = HUD.GetComponentInChildren<NewLatitudeField>();
         _simButton = HUD.GetComponentsInChildren<Button>().ToList().Find(x => x.name.Contains("SimButton"));
-        _simSliderField = HUD.GetComponentInChildren<SimSliderField>();
+        _simSpeedField = HUD.GetComponentsInChildren<SimSliderField>().ToList().Find(x => x.name.Contains("SimSpeedField"));
+        _simIntervalField = HUD.GetComponentsInChildren<SimSliderField>().ToList().Find(x => x.name.Contains("SimIntervalField"));
         _celestialSphereToggle = HUD.GetComponentInChildren<CustomToggle>();
         _lightParticle = lightGameObject.GetComponent<ParticleSystem>();
         _messageText = messagePanel.GetComponentInChildren<TMP_Text>();
@@ -88,7 +94,8 @@ public class SquackSceneManager : MonoBehaviour {
         Latitude = -23f;
         _simButton.onClick.AddListener(ToggleSimulation);
         _datetimeField.OnValueChanged.AddListener(_ => DataUpdated());
-        _simSliderField.OnValueChanged.AddListener(_ => ResetParticle());
+        _simSpeedField.OnValueChanged.AddListener(_ => ResetParticle());
+        _simIntervalField.OnValueChanged.AddListener(_ => ResetParticle());
         _latitudeField.OnValueChanged.AddListener(_ => DataUpdated());
         _celestialSphereToggle.OnValueChanged.AddListener(_ => ResetParticle());
         DataUpdated();
@@ -98,22 +105,35 @@ public class SquackSceneManager : MonoBehaviour {
         if (_isSimulating) {
             if (_simulationDateTime.Year == 1999)
                 _simulationDateTime = CurrentTime;
-            int simSecondsPerSecond = SimSecondsPerSecond((int)_simSliderField.Value);
+            int simSecondsPerSecond = SpeedInSeconds(_simSpeedField.Value);
             double simValue = simSecondsPerSecond * Time.deltaTime;
             _simulationDateTime = _simulationDateTime.AddSeconds(simValue);
+            if (_simIntervalField.Value > (int) Continuous) {
+                if (TimeBetween(SimStartTime, CurrentTime, _simulationDateTime)) {
+                    // if (particleChanged) {
+                    _lightParticle.Pause(true);
+                    _simulationDateTime = _simulationDateTime.AddDays(IntervalInDays(_simIntervalField.Value));
+                    _lightParticle.Play(true);
+                    // particleChanged = false;
+                    // }
+                    // particleChanged = true;
+                }
+            }
             CurrentTime = _simulationDateTime;
-            // CurrentTime = _simSliderField.Value >= OneWeek
-            //     ? new DateTime(
-            //         _simulationDateTime.Year, _simulationDateTime.Month, _simulationDateTime.Day, CurrentTime.Hour, CurrentTime.Minute, 0
-            //     )
-            //     : _simulationDateTime;
             DataUpdated();
-            // Debug.Log(
-            //     $"Lat: {Latitude}, Dat: {CurrentTime}, IDT: {_simulationDateTime}, SSP: {SpeedSetting.SimSecondsPerSecond(_simSliderField.Value)}"
-            // );
         } else if (_simulationDateTime.Year != 1999) {
             _simulationDateTime = new DateTime(1999, 1, 1, 12, 0, 0);
         }
+    }
+
+    static bool TimeBetween(DateTime evalTime, DateTime startTime, DateTime endTime) {
+        TimeSpan eval = evalTime.TimeOfDay;
+        TimeSpan start = startTime.TimeOfDay;
+        TimeSpan end = endTime.TimeOfDay;
+        bool differentDays = startTime.Date != endTime.Date;
+        return (!differentDays && start < eval && end >= eval) || (differentDays && (start < eval || end >= eval));
+        // int clamped = start <= end ? Math.Clamp(eval, start, end) : Math.Clamp(eval, end, start);
+        // return clamped != start && clamped != end;
     }
 
     void DataUpdated() {
@@ -137,25 +157,28 @@ public class SquackSceneManager : MonoBehaviour {
     }
 
     void ToggleSimulation() {
-        AdjustHudForSim();
-        if (_celestialSphereToggle.emitSunTrails) {
-            MainModule main = _lightParticle.main;
-            // if (_simSliderField.Value >= OneWeek) {
-                // main.startLifetime = SimSecondsPerSecond(ThreeMonths) * 4 / SimSecondsPerSecond(_simSliderField.Value);
-            // } else {
-                main.startLifetime = SimSecondsPerSecond(OneDay) / SimSecondsPerSecond((int)_simSliderField.Value);
-            // }
-            if (_isSimulating)
-                _lightParticle.Play();
+        if (!_isSimulating) {
         }
+        AdjustHudForSim();
+        MainModule main = _lightParticle.main;
+        SimStartTime = CurrentTime;
+        if (_simIntervalField.Value == (int) Continuous) {
+            main.startLifetime = SpeedInSeconds(OneDay) / SpeedInSeconds(_simSpeedField.Value);
+        } else {
+            main.startLifetime = float.MaxValue;
+            // SimSecondsPerSecond(ThreeMonths) * 4 / SimSecondsPerSecond(_simSliderField.Value);
+        }
+        if (_isSimulating)
+            _lightParticle.Play();
     }
 
     void AdjustHudForSim() {
         _isSimulating = !_isSimulating;
         _latitudeField.Interactable = !_isSimulating;
         _datetimeField.Interactable = !_isSimulating;
-        _simSliderField.Interactable = !_isSimulating;
-        _celestialSphereToggle.Interactable= !_isSimulating;
+        _simSpeedField.Interactable = !_isSimulating;
+        _simIntervalField.Interactable = !_isSimulating;
+        _celestialSphereToggle.Interactable = !_isSimulating;
         _simButton.GetComponentInChildren<TMP_Text>().text = _isSimulating ? "Simulando..." : "Simular";
     }
 

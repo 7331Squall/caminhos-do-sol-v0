@@ -6,8 +6,6 @@ public class CustomToggle : MonoBehaviour {
     public Toggle customToggle;
     public Camera cam;
     public GameObject sky;
-    [SerializeField]
-    public bool emitSunTrails;
     public UnityEvent<bool> OnValueChanged { get; set; } = new();
     bool _interactable = true;
 
@@ -29,7 +27,6 @@ public class CustomToggle : MonoBehaviour {
 
     void UpdateExperimentalConfig(bool value) {
         OnValueChanged.Invoke(value);
-        emitSunTrails = value;
         if (cam != null)
             cam.clearFlags = value ? CameraClearFlags.SolidColor : CameraClearFlags.Skybox;
         if (sky != null)

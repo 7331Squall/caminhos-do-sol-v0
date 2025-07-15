@@ -1415,7 +1415,6 @@ MonoBehaviour:
   customToggle: {fileID: 0}
   cam: {fileID: 2120458225}
   sky: {fileID: 739578833}
-  emitSunTrails: 0
 --- !u!114 &1240590384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6494,7 +6493,9 @@ GameObject:
   - component: {fileID: 6571864775763802962}
   - component: {fileID: 7004127162769179734}
   - component: {fileID: 7004127162769179733}
-  m_Layer: 0
+  - component: {fileID: 7004127162769179736}
+  - component: {fileID: 7004127162769179735}
+  m_Layer: 3
   m_Name: Sun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9434,7 +9435,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 15.707963
+      scalar: 0
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -9487,7 +9488,7 @@ ParticleSystem:
     rateOverDistance:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -12183,7 +12184,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
     type: 1
     collisionMode: 0
@@ -12356,11 +12357,11 @@ ParticleSystem:
     radiusScale: 2
     collidesWith:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 8
     maxCollisionShapes: 256
-    quality: 2
+    quality: 0
     voxelSize: 1
-    collisionMessages: 0
+    collisionMessages: 1
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
@@ -13320,6 +13321,40 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &7004127162769179735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4672890345945793021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb86953dc5464c5a901dfc953123e3d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pSys: {fileID: 7004127162769179734}
+--- !u!135 &7004127162769179736
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4672890345945793021}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7026264077134774462
 MonoBehaviour:
   m_ObjectHideFlags: 0
