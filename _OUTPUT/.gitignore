@@ -68,10 +68,12 @@ node_modules/
 # dataconnect generated files
 .dataconnect
 
-
 /public/Build/*
 /public/WebGL/*
 /public/WindowsTest.zip
 /ssl/*
 /Windows/*
 /AddressableBuild/*
+/RodrigoAlpha/*
+/RodrigoBeta/*
+/RodrigoGamma/*
