@@ -11,24 +11,27 @@ using static SpeedSetting;
 using static IntervalSettings;
 using static IntervalSetting;
 using static UnityEngine.ParticleSystem;
+using Quaternion = UnityEngine.Quaternion;
+using Vector3 = UnityEngine.Vector3;
 
 public class SquackSceneManager : MonoBehaviour {
-    // ReSharper disable once InconsistentNaming
 
 #region HUD
-    public Canvas HUD;
-    NewDateTimeField _datetimeField;
-    NewLatitudeField _latitudeField;
-    Button _simButton;
-    SimSliderField _simSpeedField, _simIntervalField;
     [SerializeField]
     GameObject messagePanel;
-    TMP_Text _messageText;
     [SerializeField]
     GameObject loadingPanel;
     [SerializeField]
     TMP_Text loadingText;
-    CustomToggle _celestialSphereToggle;
+
+    // ReSharper disable once InconsistentNaming
+    public Canvas HUD;
+    NewDateTimeField _datetimeField;
+    NewLatitudeField _latitudeField;
+    CustomToggle _celestialSphereToggle, _constellationToggle;
+    SimSliderField _simSpeedField, _simIntervalField;
+    TMP_Text _messageText;
+    Button _simButton;
 #endregion
 
 #region ExternalVariables
@@ -43,21 +46,16 @@ public class SquackSceneManager : MonoBehaviour {
 #endregion
 
 #region SimulationVariables
-    bool _isSimulating;
+    bool _isSimulating, _particleChanged, _initialized;
     int _loadingCount;
-    bool particleChanged;
-
-    bool _initialized;
-
-    DateTime _simulationDateTime;
-    DateTime SimStartTime;
+    DateTime _simulationDateTime, _simStartTime;
 #endregion
 
 #region Others
-    OrbitalCamera _camera;
-    public GameObject lightGameObject;
-    ParticleSystem _lightParticle;
+    public GameObject lightsGameObject, constellationGameObject;
     public float sphereRadius = 10f;
+    OrbitalCamera _camera;
+    ParticleSystem _lightParticle;
     List<Task<GameObject>> _promises;
     public MeshFilter FallbackModel { get; private set; }
 #endregion
@@ -68,8 +66,9 @@ public class SquackSceneManager : MonoBehaviour {
         _simButton = HUD.GetComponentsInChildren<Button>().ToList().Find(x => x.name.Contains("SimButton"));
         _simSpeedField = HUD.GetComponentsInChildren<SimSliderField>().ToList().Find(x => x.name.Contains("SimSpeedField"));
         _simIntervalField = HUD.GetComponentsInChildren<SimSliderField>().ToList().Find(x => x.name.Contains("SimIntervalField"));
-        _celestialSphereToggle = HUD.GetComponentInChildren<CustomToggle>();
-        _lightParticle = lightGameObject.GetComponent<ParticleSystem>();
+        _celestialSphereToggle = HUD.GetComponentsInChildren<CustomToggle>().ToList().Find(x => x.name.Contains("CelestialSphereField"));
+        _constellationToggle = HUD.GetComponentsInChildren<CustomToggle>().ToList().Find(x => x.name.Contains("ConstellationField"));
+        _lightParticle = lightsGameObject.GetComponent<ParticleSystem>();
         _messageText = messagePanel.GetComponentInChildren<TMP_Text>();
         FallbackModel = GetComponentsInChildren<MeshFilter>().ToList().Find(x => x.name.Contains("Model"));
         _camera = GetComponentInChildren<OrbitalCamera>();
@@ -94,10 +93,11 @@ public class SquackSceneManager : MonoBehaviour {
         Latitude = -23f;
         _simButton.onClick.AddListener(ToggleSimulation);
         _datetimeField.OnValueChanged.AddListener(_ => DataUpdated());
-        _simSpeedField.OnValueChanged.AddListener(_ => ResetParticle());
-        _simIntervalField.OnValueChanged.AddListener(_ => ResetParticle());
+        _simSpeedField.OnValueChanged.AddListener(_ => TryAndResetParticle());
+        _simIntervalField.OnValueChanged.AddListener(_ => TryAndResetParticle());
         _latitudeField.OnValueChanged.AddListener(_ => DataUpdated());
-        _celestialSphereToggle.OnValueChanged.AddListener(_ => ResetParticle());
+        _celestialSphereToggle.OnValueChanged.AddListener(_ => TryAndResetParticle());
+        _constellationToggle.OnValueChanged.AddListener(_ => TryAndResetParticle());
         DataUpdated();
     }
 
@@ -109,7 +109,7 @@ public class SquackSceneManager : MonoBehaviour {
             double simValue = simSecondsPerSecond * Time.deltaTime;
             _simulationDateTime = _simulationDateTime.AddSeconds(simValue);
             if (_simIntervalField.Value > (int) Continuous) {
-                if (TimeBetween(SimStartTime, CurrentTime, _simulationDateTime)) {
+                if (TimeBetween(_simStartTime, CurrentTime, _simulationDateTime)) {
                     // if (particleChanged) {
                     _lightParticle.Pause(true);
                     _simulationDateTime = _simulationDateTime.AddDays(IntervalInDays(_simIntervalField.Value));
@@ -137,14 +137,25 @@ public class SquackSceneManager : MonoBehaviour {
     }
 
     void DataUpdated() {
-        ResetParticle();
-        (Vector3 position, Quaternion rotation) calc = GPTSolarCalc.GetPositionNOAA(Latitude, CurrentTime);
-        lightGameObject.transform.position = calc.position * sphereRadius;
-        lightGameObject.transform.rotation = calc.rotation;
-        // Debug.Log($"Sun Position = {lightGameObject.transform.position}, Sun Rotation = {lightGameObject.transform.rotation}.");
+        TryAndResetParticle();
+        (Vector3 position, Quaternion rotation) calc = GPTSolarCalc.GetPositionNOAA(Latitude, CurrentTime, false);
+        lightsGameObject.transform.position = calc.position * sphereRadius;
+        lightsGameObject.transform.rotation = calc.rotation;
+        calc = GPTSolarCalc.GetPositionNOAA(Latitude, CurrentTime, true);
+        // float tilt = 0f;// 23.44f; // inclinação do eixo da Terra
+        // // Polo norte celeste no espaço (inclinado)
+        // Vector3 northCelestial = Quaternion.Euler(tilt, 0f, 0f) * Vector3.up;
+        // // Ajusta pelo ponto de vista da latitude (inclinando o “horizonte” local)
+        // Vector3 northAxis = Quaternion.Euler(Latitude, 0f, 0f) * northCelestial;
+        // Vector3 forward = (calc.position - northAxis).normalized;
+        // // agora calcula right/up seguros usando cross:
+        // Vector3 right = Vector3.Cross(northAxis, forward).normalized;
+        // Vector3 up = Vector3.Cross(forward, right).normalized;
+        // constellationGameObject.transform.rotation = Quaternion.LookRotation(forward, up);
+        constellationGameObject.transform.rotation = calc.rotation;
     }
 
-    void ResetParticle() {
+    void TryAndResetParticle() {
         if (!_isSimulating)
             _lightParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
     }
@@ -152,7 +163,7 @@ public class SquackSceneManager : MonoBehaviour {
     public void UpdateProps(OrbitalCameraData props) {
         _camera.camData = props ?? new OrbitalCameraData();
         sphereRadius = _camera.camData.sunDistance;
-        lightGameObject.transform.localScale = Vector3.one * sphereRadius / 10f;
+        lightsGameObject.transform.localScale = Vector3.one * sphereRadius / 10f;
         DataUpdated();
     }
 
@@ -161,7 +172,7 @@ public class SquackSceneManager : MonoBehaviour {
         }
         AdjustHudForSim();
         MainModule main = _lightParticle.main;
-        SimStartTime = CurrentTime;
+        _simStartTime = CurrentTime;
         if (_simIntervalField.Value == (int) Continuous) {
             main.startLifetime = SpeedInSeconds(OneDay) / SpeedInSeconds(_simSpeedField.Value);
         } else {
@@ -179,6 +190,7 @@ public class SquackSceneManager : MonoBehaviour {
         _simSpeedField.Interactable = !_isSimulating;
         _simIntervalField.Interactable = !_isSimulating;
         _celestialSphereToggle.Interactable = !_isSimulating;
+        _constellationToggle.Interactable = !_isSimulating;
         _simButton.GetComponentInChildren<TMP_Text>().text = _isSimulating ? "Simulando..." : "Simular";
     }
 

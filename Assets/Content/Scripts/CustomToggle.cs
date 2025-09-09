@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class CustomToggle : MonoBehaviour {
     public Toggle customToggle;
     public Camera cam;
-    public GameObject sky;
+    public GameObject objectToHide;
     public UnityEvent<bool> OnValueChanged { get; set; } = new();
     bool _interactable = true;
 
@@ -27,9 +27,9 @@ public class CustomToggle : MonoBehaviour {
 
     void UpdateExperimentalConfig(bool value) {
         OnValueChanged.Invoke(value);
-        if (cam != null)
-            cam.clearFlags = value ? CameraClearFlags.SolidColor : CameraClearFlags.Skybox;
-        if (sky != null)
-            sky.SetActive(value);
+        // if (cam != null)
+        //     cam.clearFlags = value ? CameraClearFlags.SolidColor : CameraClearFlags.Skybox;
+        if (objectToHide != null)
+            objectToHide.SetActive(value);
     }
 }
