@@ -28,10 +28,9 @@ public class SquackSceneManager : MonoBehaviour {
     public Canvas HUD;
     NewDateTimeField _datetimeField;
     NewLatitudeField _latitudeField;
-    CustomToggle _celestialSphereToggle, _constellationToggle;
     SimSliderField _simSpeedField, _simIntervalField;
     TMP_Text _messageText;
-    Button _simButton;
+    Button _simButton, _optButton;
 #endregion
 
 #region ExternalVariables
@@ -64,10 +63,9 @@ public class SquackSceneManager : MonoBehaviour {
         _datetimeField = HUD.GetComponentInChildren<NewDateTimeField>();
         _latitudeField = HUD.GetComponentInChildren<NewLatitudeField>();
         _simButton = HUD.GetComponentsInChildren<Button>().ToList().Find(x => x.name.Contains("SimButton"));
-        _simSpeedField = HUD.GetComponentsInChildren<SimSliderField>().ToList().Find(x => x.name.Contains("SimSpeedField"));
+        _optButton = HUD.GetComponentsInChildren<Button>().ToList().Find(x => x.name.Contains("OptButton"));
+        _simSpeedField = HUD.GetComponentsInChildren<SimSliderField>().ToList().Find(x => x.name.Contains("SimSpeedField"));       
         _simIntervalField = HUD.GetComponentsInChildren<SimSliderField>().ToList().Find(x => x.name.Contains("SimIntervalField"));
-        _celestialSphereToggle = HUD.GetComponentsInChildren<CustomToggle>().ToList().Find(x => x.name.Contains("CelestialSphereField"));
-        _constellationToggle = HUD.GetComponentsInChildren<CustomToggle>().ToList().Find(x => x.name.Contains("ConstellationField"));
         _lightParticle = lightsGameObject.GetComponent<ParticleSystem>();
         _messageText = messagePanel.GetComponentInChildren<TMP_Text>();
         FallbackModel = GetComponentsInChildren<MeshFilter>().ToList().Find(x => x.name.Contains("Model"));
@@ -96,8 +94,6 @@ public class SquackSceneManager : MonoBehaviour {
         _simSpeedField.OnValueChanged.AddListener(_ => TryAndResetParticle());
         _simIntervalField.OnValueChanged.AddListener(_ => TryAndResetParticle());
         _latitudeField.OnValueChanged.AddListener(_ => DataUpdated());
-        _celestialSphereToggle.OnValueChanged.AddListener(_ => TryAndResetParticle());
-        _constellationToggle.OnValueChanged.AddListener(_ => TryAndResetParticle());
         DataUpdated();
     }
 
@@ -152,7 +148,9 @@ public class SquackSceneManager : MonoBehaviour {
         // Vector3 right = Vector3.Cross(northAxis, forward).normalized;
         // Vector3 up = Vector3.Cross(forward, right).normalized;
         // constellationGameObject.transform.rotation = Quaternion.LookRotation(forward, up);
-        constellationGameObject.transform.rotation = calc.rotation;
+        
+        // constellationGameObject.transform.rotation = calc.rotation;
+        constellationGameObject.transform.rotation = GPTSolarCalc.OrientationForCelestialPole(Latitude, CurrentTime);
     }
 
     void TryAndResetParticle() {
@@ -189,8 +187,7 @@ public class SquackSceneManager : MonoBehaviour {
         _datetimeField.Interactable = !_isSimulating;
         _simSpeedField.Interactable = !_isSimulating;
         _simIntervalField.Interactable = !_isSimulating;
-        _celestialSphereToggle.Interactable = !_isSimulating;
-        _constellationToggle.Interactable = !_isSimulating;
+        _optButton.interactable = !_isSimulating;
         _simButton.GetComponentInChildren<TMP_Text>().text = _isSimulating ? "Simulando..." : "Simular";
     }
 

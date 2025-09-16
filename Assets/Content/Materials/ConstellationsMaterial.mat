@@ -25,6 +25,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _BackgroundTexture:
+        m_Texture: {fileID: 2800000, guid: 9b3950f997c11e64c87ce6ddaa06cc1d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 2800000, guid: 9b4e0bf8990d9f344ad17fffeb93429c, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -33,8 +37,28 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _ConstellationTexture:
+    - _ComposeTexture_9860a616aebf490aa994acac21692268_Texture_3770609767_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 41ef1604384cb3e458a5c7c0f6b2bbde, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ComposeTexture_a42ccb4f3f38446c998458be9c4015c5_Texture_3770609767_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 3ce46eca602f02448bcde716245e3e13, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ComposeTexture_a4543a7ddd2c403e9aaec9b4015bb205_Texture_3770609767_Texture2D:
         m_Texture: {fileID: 2800000, guid: 9b4e0bf8990d9f344ad17fffeb93429c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ComposeTexture_cb0b295d77e74fc6860ec4871af0e83f_Texture_3770609767_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 454961a666f7734439304ee96fb3ef40, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ComposeTexture_e4c7bd03c55248e485fc3d11adecb7e3_Texture_3770609767_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 8f566912164140d40bf359f49c2c51a2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ConstellationTexture:
+        m_Texture: {fileID: 2800000, guid: 41ef1604384cb3e458a5c7c0f6b2bbde, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -73,6 +97,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 9b4e0bf8990d9f344ad17fffeb93429c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_2a80f02ebfe342b687e443ec23101137_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 8f566912164140d40bf359f49c2c51a2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -107,6 +135,7 @@ Material:
     - _ClearCoatSmoothness: 0
     - _Cull: 0
     - _Cutoff: 1
+    - _DebugTexture: 0
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 1
@@ -122,6 +151,11 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _SampleGI: 0
+    - _ShowBackground: 1
+    - _ShowConstBounds: 0
+    - _ShowConstellations: 1
+    - _ShowEquatorialGrid: 1
+    - _ShowWireframe: 1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -136,8 +170,9 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _Offset: {r: 1, g: 1, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - _WireColor: {r: 0, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &3434464652570995528

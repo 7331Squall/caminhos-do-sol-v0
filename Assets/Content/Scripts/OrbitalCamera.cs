@@ -8,10 +8,16 @@ public class OrbitalCamera : MonoBehaviour {
     [SerializeField]
     public OrbitalCameraData camData;
 
+    [SerializeField]
+    public Camera[] Cameras;
+
     float _x;
     float _y;
 
-    void Awake() { camData = new OrbitalCameraData(); }
+    void Awake() {
+        camData ??= new OrbitalCameraData();
+        Cameras = GetComponentsInChildren<Camera>();
+    }
 
     void Start() {
         Vector3 angles = transform.eulerAngles;
@@ -56,9 +62,19 @@ public class OrbitalCamera : MonoBehaviour {
         camData.distance = Mathf.Clamp(camData.distance - scroll * camData.zoomSpeed, camData.minDistance, camData.maxDistance);
         Quaternion rotation = Quaternion.Euler(_y, _x, 0);
         Vector3 negDistance = new(0, 0, -camData.distance);
-        Vector3 position = rotation * negDistance + target.position;
+        if (camData.isOrthographic) {
+            foreach (Camera cam in Cameras) {
+                cam.orthographicSize = camData.distance; // zoom = tamanho ortográfico
+            }
+            // Mantém a câmera a uma distância fixa do alvo
+            //transform.position = rotation * new Vector3(0, 0, -camData.minDistance) + target.position;
+            transform.position = Vector3.zero;
+        }
+        else {
+            transform.position = rotation * negDistance + target.position;
+        }
+
         transform.rotation = rotation;
-        transform.position = position;
     }
 
     // ✅ Verifica se qualquer TMP_Dropdown está expandido

@@ -24,6 +24,12 @@ public class ModelData {
 [Serializable]
 public class OrbitalCameraData {
     /// <summary>
+    /// if false, camera is in perspective mode.
+    /// this does nothing, but is needed for zoom.
+    /// </summary>
+    [SerializeField]
+    public bool isOrthographic;
+    /// <summary>
     /// Camera distance to target
     /// </summary>
     [SerializeField]
