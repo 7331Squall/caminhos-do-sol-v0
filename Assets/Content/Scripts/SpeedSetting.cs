@@ -65,7 +65,7 @@ public static class SpeedSetting {
 public static class IntervalSetting {
     public static string ToDisplayString(IntervalSettings value) {
         return value switch {
-            IntervalSettings.Continuous  => "∞",
+            IntervalSettings.Continuous  => "Contínuo",
             IntervalSettings.OneWeek     => "7 dias",
             IntervalSettings.TwoWeeks    => "14 dias",
             IntervalSettings.OneMonth    => "1 mês",

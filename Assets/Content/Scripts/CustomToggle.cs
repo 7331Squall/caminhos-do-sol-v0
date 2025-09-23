@@ -7,6 +7,10 @@ public class CustomToggle : MonoBehaviour {
     public Camera cam;
     public GameObject objectToHide;
     public UnityEvent<bool> OnValueChanged { get; set; } = new();
+    public bool Value {
+        get => customToggle.isOn;
+        set => customToggle.isOn = value;
+    }
     bool _interactable = true;
 
     public bool Interactable {

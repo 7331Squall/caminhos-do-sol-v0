@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -21,10 +22,13 @@ public class OptionsMenu : MonoBehaviour {
         FindHUDComponents();
         AssignEvents();
         _constellationMaterial = new Material(constellationShader);
-        ResetChecks();
         return;
 
         void FindHUDComponents() {
+            sSceneManager = GetComponentInParent<SquackSceneManager>();
+            List<MeshRenderer> meshes = sSceneManager.GetComponentsInChildren<MeshRenderer>().ToList();
+            celestialSphere = meshes.Find(x => x.name == "CelestialSphere").gameObject;
+            constellationSphere = meshes.Find(x => x.name == "ConstellationSphere").gameObject;
             _backgroundToggle = sSceneManager.HUD.GetComponentsInChildren<CustomToggle>().ToList().Find(x => x.name.Contains("BackgroundField"));
             _celestialSphereToggle = sSceneManager.HUD.GetComponentsInChildren<CustomToggle>()
                                                   .ToList()
@@ -46,17 +50,20 @@ public class OptionsMenu : MonoBehaviour {
             _equatorialGridToggle.OnValueChanged.AddListener(ToggleEquatorialGrid);
         }
 
-        void ResetChecks() {
-            ToggleCelestialSphere(false);
-            ToggleConstellations(false);
-            ToggleConstellationBounds(false);
-            ToggleEquatorialGrid(false);
-            ToggleBackground(false);
-        }
     }
 
     void Start() {
+        ResetChecks();
         constellationSphere.GetComponent<Renderer>().material = _constellationMaterial;
+        return;
+
+        void ResetChecks() {
+            ToggleCelestialSphere(_celestialSphereToggle.Value);
+            ToggleConstellations(_constellationToggle.Value);
+            ToggleConstellationBounds(_constBoundsToggle.Value);
+            ToggleEquatorialGrid(_equatorialGridToggle.Value);
+            ToggleBackground(_backgroundToggle.Value);
+        }
     }
 
 

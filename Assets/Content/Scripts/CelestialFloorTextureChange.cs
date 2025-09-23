@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CelestialFloorTextureChange : MonoBehaviour {
@@ -12,6 +14,7 @@ public class CelestialFloorTextureChange : MonoBehaviour {
     void Start()
     {
         _renderer = GetComponent<MeshRenderer>();
+        latitudeField = GetComponentInParent<SquackSceneManager>().GetComponentsInChildren<NewLatitudeField>().ToList().First(x => x.name == "LatitudeField");
         latitudeField.OnValueChanged.AddListener(LatitudeChanged);
     }
 
