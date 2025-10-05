@@ -12,8 +12,9 @@ EditorBuildSettings:
     path: Assets/Content/Scenes/CelestialSphere.unity
     guid: 9043f16e61734bc458218d5a746e51fc
   - enabled: 1
-    path: Assets/Content/Scenes/ConstellarGrid.unity
-    guid: 97f7c7fdde9d7614f916fd3d0eb8dd49
+    path: Assets/Content/Scenes/NewConstellarGrid.unity
+    guid: 2eae9ce7695a27640b2b00898f16745f
   m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 555fbea7a26490945aaaa099f292e90a, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

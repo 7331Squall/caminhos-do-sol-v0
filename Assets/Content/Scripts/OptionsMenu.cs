@@ -7,14 +7,13 @@ public class OptionsMenu : MonoBehaviour {
 
     static readonly int ShowBackground = Shader.PropertyToID("_ShowBackground");
     static readonly int ShowConstellations = Shader.PropertyToID("_ShowConstellations");
-    static readonly int ShowConstBounds = Shader.PropertyToID("_ShowConstBounds");
     static readonly int ShowEquatorialGrid = Shader.PropertyToID("_ShowEquatorialGrid");
 
     public SquackSceneManager sSceneManager;
     public GameObject celestialSphere, constellationSphere;
     public Shader constellationShader;
     Material _constellationMaterial;
-    CustomToggle _backgroundToggle, _celestialSphereToggle, _constellationToggle, _constBoundsToggle, _equatorialGridToggle;
+    CustomToggle _backgroundToggle, _celestialSphereToggle, _starsToggle, _equatorialGridToggle, _sunTrailToggle;
     Animator _anim8R;
 
     void Awake() {
@@ -22,48 +21,39 @@ public class OptionsMenu : MonoBehaviour {
         FindHUDComponents();
         AssignEvents();
         _constellationMaterial = new Material(constellationShader);
+        constellationSphere.GetComponent<Renderer>().material = _constellationMaterial;
         return;
 
         void FindHUDComponents() {
             sSceneManager = GetComponentInParent<SquackSceneManager>();
             List<MeshRenderer> meshes = sSceneManager.GetComponentsInChildren<MeshRenderer>().ToList();
-            celestialSphere = meshes.Find(x => x.name == "CelestialSphere").gameObject;
-            constellationSphere = meshes.Find(x => x.name == "ConstellationSphere").gameObject;
+            celestialSphere ??= meshes.Find(x => x.name == "CelestialSphere").gameObject;
+            constellationSphere ??= meshes.Find(x => x.name == "ConstellationSphere").gameObject;
             _backgroundToggle = sSceneManager.HUD.GetComponentsInChildren<CustomToggle>().ToList().Find(x => x.name.Contains("BackgroundField"));
             _celestialSphereToggle = sSceneManager.HUD.GetComponentsInChildren<CustomToggle>()
                                                   .ToList()
                                                   .Find(x => x.name.Contains("CelestialSphereField"));
-            _constellationToggle = sSceneManager.HUD.GetComponentsInChildren<CustomToggle>()
-                                                .ToList()
-                                                .Find(x => x.name.Contains("ConstellationField"));
-            _constBoundsToggle = sSceneManager.HUD.GetComponentsInChildren<CustomToggle>()
-                                              .ToList()
-                                              .Find(x => x.name.Contains("ConstellationRegionField"));
+            _starsToggle = sSceneManager.HUD.GetComponentsInChildren<CustomToggle>().ToList().Find(x => x.name.Contains("StarsField"));
+            _sunTrailToggle = sSceneManager.HUD.GetComponentsInChildren<CustomToggle>().ToList().Find(x => x.name.Contains("SunTrailField"));
             _equatorialGridToggle = sSceneManager.HUD.GetComponentsInChildren<CustomToggle>().ToList().Find(x => x.name.Contains("EquatorialField"));
         }
 
         void AssignEvents() {
             _celestialSphereToggle.OnValueChanged.AddListener(ToggleCelestialSphere);
             _backgroundToggle.OnValueChanged.AddListener(ToggleBackground);
-            _constellationToggle.OnValueChanged.AddListener(ToggleConstellations);
-            _constBoundsToggle.OnValueChanged.AddListener(ToggleConstellationBounds);
+            _starsToggle.OnValueChanged.AddListener(ToggleConstellations);
+            _sunTrailToggle.OnValueChanged.AddListener(ToggleSunTrail);
             _equatorialGridToggle.OnValueChanged.AddListener(ToggleEquatorialGrid);
         }
 
     }
 
     void Start() {
-        ResetChecks();
-        constellationSphere.GetComponent<Renderer>().material = _constellationMaterial;
-        return;
-
-        void ResetChecks() {
-            ToggleCelestialSphere(_celestialSphereToggle.Value);
-            ToggleConstellations(_constellationToggle.Value);
-            ToggleConstellationBounds(_constBoundsToggle.Value);
-            ToggleEquatorialGrid(_equatorialGridToggle.Value);
-            ToggleBackground(_backgroundToggle.Value);
-        }
+        ToggleCelestialSphere(_celestialSphereToggle.Value);
+        ToggleConstellations(_starsToggle.Value);
+        ToggleSunTrail(_sunTrailToggle.Value);
+        ToggleEquatorialGrid(_equatorialGridToggle.Value);
+        ToggleBackground(_backgroundToggle.Value);
     }
 
 
@@ -71,8 +61,8 @@ public class OptionsMenu : MonoBehaviour {
         SetMaterialBoolParameter(ShowEquatorialGrid, arg0);
     }
 
-    void ToggleConstellationBounds(bool arg0) {
-        SetMaterialBoolParameter(ShowConstBounds, arg0);
+    void ToggleSunTrail(bool arg0) {
+        sSceneManager.DoSunTrail = arg0;
     }
 
     void ToggleConstellations(bool arg0) {

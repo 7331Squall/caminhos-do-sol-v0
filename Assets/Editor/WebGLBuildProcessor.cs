@@ -10,6 +10,21 @@ public class WebGLBuildProcessor : IPostprocessBuildWithReport
     private const string Output = "{{OUTPUT}}";
     private const string OutputExt = "{{EXTENSION}}";
 
+    public void OnPreprocessBuild(BuildReport report)
+    {
+        // Lê versão atual
+        string version = PlayerSettings.bundleVersion; // Mesma coisa que Application.version
+        string[] parts = version.Split('.');
+        int major = parts.Length > 0 ? int.Parse(parts[0]) : 1;
+        int minor = parts.Length > 1 ? int.Parse(parts[1]) : 0;
+        int patch = parts.Length > 2 ? int.Parse(parts[2]) : 0;
+        // Incrementa o patch
+        patch++;
+        string newVersion = $"{major}.{minor}.{patch}";
+        PlayerSettings.bundleVersion = newVersion;
+        Debug.Log($"Versão atualizada para: {newVersion}");
+    }
+    
     public void OnPostprocessBuild(BuildReport report) {
         if (report.summary.platform != BuildTarget.WebGL) return;
 

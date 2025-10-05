@@ -75,3 +75,43 @@ public class OrbitalCameraData {
     [SerializeField]
     public float sunDistance = 10f;
 }
+
+[Serializable]
+public class StaticCameraData {
+    /// <summary>
+    /// Horizontal Rotation Speed
+    /// </summary>
+    [SerializeField]
+    public float xSpeed = 120f;
+    /// <summary>
+    /// Vertical Rotation Speed
+    /// </summary>
+    [SerializeField]
+    public float ySpeed = 120f;
+    /// <summary>
+    /// Lower Vertical Rotation Limit
+    /// </summary>
+    [SerializeField]
+    public float yMinLimit = -90f;
+    /// <summary>
+    /// Upper Vertical Rotation Limit
+    /// </summary>
+    [SerializeField]
+    public float yMaxLimit = 90f;
+    /// <summary>
+    /// Sphere Radius
+    /// </summary>
+    [SerializeField]
+    public float sphereRadius = 10f;
+}
+
+[Serializable]
+public class CameraPreset
+{
+    // Se você quiser, pode arrastar um Transform no Inspector e usá-lo diretamente.
+    public Transform anchor;     // opcional: se setado, usa position/rotation dele
+    public Vector3 targetPos;    // usado se anchor == null
+    public Vector3 targetEuler;  // usado se anchor == null (Euler)
+    public float moveSpeed = 3f; // unidades por segundo (maior = mais rápido)
+    public float rotSpeed = 8f;  // fator de slerp por segundo (maior = mais rápido)
+}

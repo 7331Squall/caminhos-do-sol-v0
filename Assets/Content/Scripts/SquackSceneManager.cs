@@ -46,6 +46,14 @@ public class SquackSceneManager : MonoBehaviour {
 
 #region SimulationVariables
     bool _isSimulating, _particleChanged, _initialized;
+    bool _doSunTrail;
+    public bool DoSunTrail {
+        get => _doSunTrail;
+        set {
+            _doSunTrail = value;
+            TryAndResetParticle();
+        }
+    }
     int _loadingCount;
     DateTime _simulationDateTime, _simStartTime;
 #endregion
@@ -64,7 +72,7 @@ public class SquackSceneManager : MonoBehaviour {
         _latitudeField = HUD.GetComponentInChildren<NewLatitudeField>();
         _simButton = HUD.GetComponentsInChildren<Button>().ToList().Find(x => x.name.Contains("SimButton"));
         _optButton = HUD.GetComponentsInChildren<Button>().ToList().Find(x => x.name.Contains("OptButton"));
-        _simSpeedField = HUD.GetComponentsInChildren<SimSliderField>().ToList().Find(x => x.name.Contains("SimSpeedField"));       
+        _simSpeedField = HUD.GetComponentsInChildren<SimSliderField>().ToList().Find(x => x.name.Contains("SimSpeedField"));
         _simIntervalField = HUD.GetComponentsInChildren<SimSliderField>().ToList().Find(x => x.name.Contains("SimIntervalField"));
         _lightParticle = lightsGameObject.GetComponent<ParticleSystem>();
         _messageText = messagePanel.GetComponentInChildren<TMP_Text>();
@@ -105,11 +113,11 @@ public class SquackSceneManager : MonoBehaviour {
             double simValue = simSecondsPerSecond * Time.deltaTime;
             _simulationDateTime = _simulationDateTime.AddSeconds(simValue);
             if (_simIntervalField.Value > (int) Continuous) {
-                if (TimeBetween(_simStartTime, CurrentTime, _simulationDateTime)) {
+                if (TimeBetween(_simStartTime, CurrentTime, _simulationDateTime) && _doSunTrail) {
                     // if (particleChanged) {
                     _lightParticle.Pause(true);
                     _simulationDateTime = _simulationDateTime.AddDays(IntervalInDays(_simIntervalField.Value));
-                    _lightParticle.Play(true);
+                    PlayParticle();
                     // particleChanged = false;
                     // }
                     // particleChanged = true;
@@ -137,7 +145,7 @@ public class SquackSceneManager : MonoBehaviour {
         (Vector3 position, Quaternion rotation) calc = GPTSolarCalc.GetPositionNOAA(Latitude, CurrentTime, false);
         lightsGameObject.transform.position = calc.position * sphereRadius;
         lightsGameObject.transform.rotation = calc.rotation;
-        calc = GPTSolarCalc.GetPositionNOAA(Latitude, CurrentTime, true);
+        //      calc = GPTSolarCalc.GetPositionNOAA(Latitude, CurrentTime, true);
         // float tilt = 0f;// 23.44f; // inclinação do eixo da Terra
         // // Polo norte celeste no espaço (inclinado)
         // Vector3 northCelestial = Quaternion.Euler(tilt, 0f, 0f) * Vector3.up;
@@ -148,7 +156,7 @@ public class SquackSceneManager : MonoBehaviour {
         // Vector3 right = Vector3.Cross(northAxis, forward).normalized;
         // Vector3 up = Vector3.Cross(forward, right).normalized;
         // constellationGameObject.transform.rotation = Quaternion.LookRotation(forward, up);
-        
+
         // constellationGameObject.transform.rotation = calc.rotation;
         constellationGameObject.transform.rotation = GPTSolarCalc.OrientationForCelestialPole(Latitude, CurrentTime);
     }
@@ -177,8 +185,13 @@ public class SquackSceneManager : MonoBehaviour {
             main.startLifetime = float.MaxValue;
             // SimSecondsPerSecond(ThreeMonths) * 4 / SimSecondsPerSecond(_simSliderField.Value);
         }
-        if (_isSimulating)
-            _lightParticle.Play();
+        if (_isSimulating && _doSunTrail)
+            PlayParticle();
+    }
+
+    void PlayParticle() {
+        if (!_doSunTrail) return;
+        _lightParticle.Play(true);
     }
 
     void AdjustHudForSim() {
@@ -191,7 +204,7 @@ public class SquackSceneManager : MonoBehaviour {
         _simButton.GetComponentInChildren<TMP_Text>().text = _isSimulating ? "Simulando..." : "Simular";
     }
 
-    // ReSharper disable once InconsistentNaming
+// ReSharper disable once InconsistentNaming
     public void DoLoading(string LoadingText = null) {
         _loadingCount++;
         loadingPanel.SetActive(true);

@@ -41,7 +41,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6442834599165509816}
-  m_Mesh: {fileID: 3581873577330021610, guid: 08eff6ff6a8240b4abfbcea4e1f9227f, type: 3}
+  m_Mesh: {fileID: -1018598755296145641, guid: 08eff6ff6a8240b4abfbcea4e1f9227f, type: 3}
 --- !u!23 &835435964984459407
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -102,5 +102,5 @@ MonoBehaviour:
   northPoleMaterial: {fileID: 2100000, guid: cccc6c76563659c4eab5c34a203786c9, type: 2}
   southPoleMaterial: {fileID: 2100000, guid: e28db947ad4b21541bd64902262389d5, type: 2}
   regularMaterial: {fileID: 2100000, guid: d044856a3119b3541994702038c394a0, type: 2}
-  _renderer: {fileID: 0}
+  _renderer: {fileID: 835435964984459407}
   latitudeField: {fileID: 0}

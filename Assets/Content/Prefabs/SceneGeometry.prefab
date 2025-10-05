@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5762463027226052706}
   - component: {fileID: 5487630897349636525}
   - component: {fileID: 8828042892531758998}
-  - component: {fileID: 3227288129850579865}
   m_Layer: 8
   m_Name: CelestialSphere
   m_TagString: Untagged
@@ -87,20 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3227288129850579865
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 525889792048598325}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5086bcf3b6994d4d92b627ef8d9658b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  resolution: 512
-  sphereMaterial: {fileID: 2100000, guid: 8bdf983198fa96b4288d3eff401b0e27, type: 2}
 --- !u!1 &651197540411263188
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,7 +183,6 @@ GameObject:
   - component: {fileID: 8955153398775716947}
   - component: {fileID: 4429128949023003694}
   - component: {fileID: 4804575483758416368}
-  - component: {fileID: 6585224670167703188}
   - component: {fileID: 2830031186635008087}
   m_Layer: 0
   m_Name: CelestialFloor
@@ -276,20 +260,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &6585224670167703188
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7016884424988219464}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5086bcf3b6994d4d92b627ef8d9658b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  resolution: 512
-  sphereMaterial: {fileID: 2100000, guid: 8bdf983198fa96b4288d3eff401b0e27, type: 2}
 --- !u!114 &2830031186635008087
 MonoBehaviour:
   m_ObjectHideFlags: 0

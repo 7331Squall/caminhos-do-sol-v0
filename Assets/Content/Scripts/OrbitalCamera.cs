@@ -1,6 +1,3 @@
-using UnityEngine.EventSystems;
-using System.Linq;
-using TMPro;
 using UnityEngine;
 
 public class OrbitalCamera : MonoBehaviour {
@@ -9,14 +6,14 @@ public class OrbitalCamera : MonoBehaviour {
     public OrbitalCameraData camData;
 
     [SerializeField]
-    public Camera[] Cameras;
+    public Camera[] cameras;
 
     float _x;
     float _y;
 
     void Awake() {
         camData ??= new OrbitalCameraData();
-        Cameras = GetComponentsInChildren<Camera>();
+        cameras = GetComponentsInChildren<Camera>();
     }
 
     void Start() {
@@ -33,8 +30,8 @@ public class OrbitalCamera : MonoBehaviour {
         bool clicking = Input.GetMouseButton(0);
         bool touching = Input.touchCount == 1;
         bool rotating = clicking || touching;
-        bool overUI = IsPointerOverUI();
-        bool dropdownOpen = AnyDropdownOpen();
+        bool overUI = Utilities.IsPointerOverUI();
+        bool dropdownOpen = Utilities.AnyDropdownOpen();
         if (rotating && !overUI && !dropdownOpen) {
             Vector2 delta = Vector2.zero;
             if (clicking) {
@@ -63,7 +60,7 @@ public class OrbitalCamera : MonoBehaviour {
         Quaternion rotation = Quaternion.Euler(_y, _x, 0);
         Vector3 negDistance = new(0, 0, -camData.distance);
         if (camData.isOrthographic) {
-            foreach (Camera cam in Cameras) {
+            foreach (Camera cam in cameras) {
                 cam.orthographicSize = camData.distance; // zoom = tamanho ortográfico
             }
             // Mantém a câmera a uma distância fixa do alvo
@@ -75,19 +72,5 @@ public class OrbitalCamera : MonoBehaviour {
         }
 
         transform.rotation = rotation;
-    }
-
-    // ✅ Verifica se qualquer TMP_Dropdown está expandido
-    static bool AnyDropdownOpen() {
-        TMP_Dropdown[] dropdowns = FindObjectsByType<TMP_Dropdown>(FindObjectsSortMode.None); // FindObjectsOfType<TMP_Dropdown>();
-        return dropdowns.Any(dd => dd.IsExpanded);
-    }
-
-    static bool IsPointerOverUI() {
-        // Mouse
-        if (EventSystem.current.IsPointerOverGameObject())
-            return true;
-        // Touch
-        return Input.touchCount > 0 && EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId);
     }
 }
