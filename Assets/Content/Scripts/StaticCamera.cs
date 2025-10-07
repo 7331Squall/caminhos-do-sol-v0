@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Constellation;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,23 +9,24 @@ public class StaticCamera : MonoBehaviour {
     CameraLocations cams;
     [SerializeField]
     int max, cur;
+    [SerializeField]
+    StaticCameraData camData;
     // [SerializeField]
     // ConstellationNames GeoNames;
     // Dropdown ConstellationsDropdown;
     Transform _desiredTransform;
     Button _prevButton, _nextButton;
     TMP_Text _camNameLbl;
-    bool _isCamMoving;
 
     [SerializeField]
     CameraState camState;
-    [SerializeField, Range(0,1)]
+    [SerializeField, Range(0, 1)]
     float lerpSpeed = 0.25f;
 
     enum CameraState {
+        Idle,
         Automatic,
         Manual,
-        DropdownSet,
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -72,7 +71,6 @@ public class StaticCamera : MonoBehaviour {
         if (newCam == -1) return;
         cur = Math.Clamp(newCam, 0, max);
         _desiredTransform = cams.GetCamPosition(cur);
-        _isCamMoving = true;
         camState = CameraState.Automatic;
         _prevButton.interactable = cur > 0;
         _nextButton.interactable = cur < max;
@@ -89,16 +87,68 @@ public class StaticCamera : MonoBehaviour {
     }
 
     public void Update() {
+        bool hasMoved = HasMouseMoved();
+        if (camState == CameraState.Idle && hasMoved)
+            camState = CameraState.Manual;
+        if (camState == CameraState.Manual && !hasMoved)
+            camState = CameraState.Idle;
+        // Vector2 coords mv = GetMouseValues();
         switch (camState) {
             case CameraState.Automatic:
-                if (_isCamMoving) {
-                    transform.SetPositionAndRotation(
-                        Vector3.Lerp(transform.position, _desiredTransform.position, lerpSpeed),
-                        Quaternion.Lerp(transform.rotation, _desiredTransform.rotation, lerpSpeed)
-                    );
-                    
-                }
+                HandleAutomaticMovement();
+            break;
+            case CameraState.Manual:
+                HandleManualMovement();
             break;
         }
+        Debug.Log(camState);
+    }
+
+    void HandleAutomaticMovement() {
+        transform.SetPositionAndRotation(
+            Vector3.Lerp(transform.position, _desiredTransform.position, lerpSpeed),
+            Quaternion.Lerp(transform.rotation, _desiredTransform.rotation, lerpSpeed)
+        );
+        if (Quaternion.Angle(transform.rotation, _desiredTransform.rotation) < 0.01f
+         && Vector3.Distance(transform.position, _desiredTransform.position) < 0.01f) {
+            camState = CameraState.Manual;
+        }
+    }
+
+    void HandleManualMovement() {
+        Vector2 mv = GetMouseValues();
+        // transform.rotation *= Quaternion.Euler(mv.y, mv.x, 0);
+
+        // Aplica rotação incremental ao transform do pivot/target
+        transform.Rotate(Vector3.up, mv.x, Space.World);   // gira horizontalmente
+        transform.Rotate(Vector3.right, mv.y, Space.Self); // gira verticalmente
+    }
+
+    bool HasMouseMoved() {
+        bool clicking = Input.GetMouseButton(0);
+        bool touching = Input.touchCount == 1;
+        bool rotating = clicking || touching;
+        bool overUI = Utilities.IsPointerOverUI();
+        bool dropdownOpen = Utilities.AnyDropdownOpen();
+        return rotating && !overUI && !dropdownOpen;
+    }
+
+    Vector2 GetMouseValues() {
+        bool clicking = Input.GetMouseButton(0);
+        Vector2 mousePos = new(0, 0);
+        Vector2 delta = Vector2.zero;
+        if (clicking) {
+            delta = new Vector2(Input.GetAxis("Mouse X"), -Input.GetAxis("Mouse Y"));
+        } else {
+            //if not clicking, is touching
+            Touch touch = Input.GetTouch(0);
+            if (touch.phase == TouchPhase.Moved) {
+                delta = touch.deltaPosition * 0.1f; // ajuste de sensibilidade pro toque
+            }
+        }
+        mousePos.x += delta.x * camData.xSpeed * Time.deltaTime;
+        mousePos.y += delta.y * camData.ySpeed * Time.deltaTime;
+        mousePos.y = Mathf.Clamp(mousePos.y, camData.yMinLimit, camData.yMaxLimit);
+        return mousePos;
     }
 }
