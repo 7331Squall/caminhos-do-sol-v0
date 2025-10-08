@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class StaticCamera : MonoBehaviour {
@@ -10,7 +11,13 @@ public class StaticCamera : MonoBehaviour {
     [SerializeField]
     int max, cur;
     [SerializeField]
-    StaticCameraData camData;
+    CameraData camData;
+
+    [SerializeField]
+    InputActionReference deltaAction;
+    [SerializeField]
+    InputActionReference clickAction;
+
     // [SerializeField]
     // ConstellationNames GeoNames;
     // Dropdown ConstellationsDropdown;
@@ -67,7 +74,6 @@ public class StaticCamera : MonoBehaviour {
 //     }
 
     void ChangeCam(int newCam = -1) {
-        Debug.Log($"Changing from camera {cur} to {newCam}.");
         if (newCam == -1) return;
         cur = Math.Clamp(newCam, 0, max);
         _desiredTransform = cams.GetCamPosition(cur);
@@ -87,7 +93,7 @@ public class StaticCamera : MonoBehaviour {
     }
 
     public void Update() {
-        bool hasMoved = HasMouseMoved();
+        bool hasMoved = Utilities.ShouldMoveCamera(clickAction);
         if (camState == CameraState.Idle && hasMoved)
             camState = CameraState.Manual;
         if (camState == CameraState.Manual && !hasMoved)
@@ -101,7 +107,6 @@ public class StaticCamera : MonoBehaviour {
                 HandleManualMovement();
             break;
         }
-        Debug.Log(camState);
     }
 
     void HandleAutomaticMovement() {
@@ -116,39 +121,6 @@ public class StaticCamera : MonoBehaviour {
     }
 
     void HandleManualMovement() {
-        Vector2 mv = GetMouseValues();
-        // transform.rotation *= Quaternion.Euler(mv.y, mv.x, 0);
-
-        // Aplica rotação incremental ao transform do pivot/target
-        transform.Rotate(Vector3.up, mv.x, Space.World);   // gira horizontalmente
-        transform.Rotate(Vector3.right, mv.y, Space.Self); // gira verticalmente
-    }
-
-    bool HasMouseMoved() {
-        bool clicking = Input.GetMouseButton(0);
-        bool touching = Input.touchCount == 1;
-        bool rotating = clicking || touching;
-        bool overUI = Utilities.IsPointerOverUI();
-        bool dropdownOpen = Utilities.AnyDropdownOpen();
-        return rotating && !overUI && !dropdownOpen;
-    }
-
-    Vector2 GetMouseValues() {
-        bool clicking = Input.GetMouseButton(0);
-        Vector2 mousePos = new(0, 0);
-        Vector2 delta = Vector2.zero;
-        if (clicking) {
-            delta = new Vector2(Input.GetAxis("Mouse X"), -Input.GetAxis("Mouse Y"));
-        } else {
-            //if not clicking, is touching
-            Touch touch = Input.GetTouch(0);
-            if (touch.phase == TouchPhase.Moved) {
-                delta = touch.deltaPosition * 0.1f; // ajuste de sensibilidade pro toque
-            }
-        }
-        mousePos.x += delta.x * camData.xSpeed * Time.deltaTime;
-        mousePos.y += delta.y * camData.ySpeed * Time.deltaTime;
-        mousePos.y = Mathf.Clamp(mousePos.y, camData.yMinLimit, camData.yMaxLimit);
-        return mousePos;
+        transform.localRotation = Utilities.CalcCamLocalRotation(transform, deltaAction, camData);
     }
 }

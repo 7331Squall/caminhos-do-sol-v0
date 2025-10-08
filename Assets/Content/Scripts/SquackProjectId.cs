@@ -8,9 +8,4 @@ public class SquackProjectId : MonoBehaviour {
         TMP_Text label = GetComponent<TMP_Text>();
         label.text = label.text.Replace("{ProjectName}", $"{Application.productName}").Replace("{ProjectVersion}", $"v{Application.version}");
     }
-
-    // Update is called once per frame
-    void Update() {
-
-    }
 }

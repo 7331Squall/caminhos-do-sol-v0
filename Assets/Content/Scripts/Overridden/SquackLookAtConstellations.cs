@@ -18,7 +18,7 @@ namespace Constellation {
 // ReSharper restore InconsistentNaming
 
         [SerializeField]
-        public StaticCameraData camData;
+        public CameraData camData;
         [SerializeField]
         public float camSens = 0.1f;
         bool _hasManualMoved;

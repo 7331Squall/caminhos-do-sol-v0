@@ -1,4 +1,9 @@
+using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
+using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.InputSystem.Utilities;
 
 public class OrbitalCamera : MonoBehaviour {
     public Transform target; // Alvo (pode ser vazio no (0,0,0))
@@ -6,10 +11,14 @@ public class OrbitalCamera : MonoBehaviour {
     public OrbitalCameraData camData;
 
     [SerializeField]
-    public Camera[] cameras;
+    InputActionReference clickAction;
+    [SerializeField]
+    InputActionReference deltaAction;
+    [SerializeField]
+    InputActionReference scrollAction;
 
-    float _x;
-    float _y;
+    [SerializeField]
+    public Camera[] cameras;
 
     void Awake() {
         camData ??= new OrbitalCameraData();
@@ -17,47 +26,42 @@ public class OrbitalCamera : MonoBehaviour {
     }
 
     void Start() {
-        Vector3 angles = transform.eulerAngles;
-        _x = angles.y;
-        _y = angles.x;
-        if (target)
-            return;
+        InitTarget();
+    }
+
+    void InitTarget() {
+
+        if (target) return;
         GameObject go = new("Camera Target") { transform = { position = Vector3.zero } };
         target = go.transform;
     }
 
     void LateUpdate() {
-        bool clicking = Input.GetMouseButton(0);
-        bool touching = Input.touchCount == 1;
-        bool rotating = clicking || touching;
-        bool overUI = Utilities.IsPointerOverUI();
-        bool dropdownOpen = Utilities.AnyDropdownOpen();
-        if (rotating && !overUI && !dropdownOpen) {
-            Vector2 delta = Vector2.zero;
-            if (clicking) {
-                delta = new Vector2(Input.GetAxis("Mouse X"), -Input.GetAxis("Mouse Y"));
-            } else {
-                //if not clicking, is touching
-                Touch touch = Input.GetTouch(0);
-                if (touch.phase == TouchPhase.Moved) {
-                    delta = touch.deltaPosition * 0.1f; // ajuste de sensibilidade pro toque
-                }
-            }
-            _x += delta.x * camData.xSpeed * Time.deltaTime;
-            _y += delta.y * camData.ySpeed * Time.deltaTime;
-            _y = Mathf.Clamp(_y, camData.yMinLimit, camData.yMaxLimit);
+        // bool dropdownOpen = Utilities.AnyDropdownOpen();
+        if (Utilities.ShouldMoveCamera(clickAction)) {
+            transform.localRotation = Utilities.CalcCamLocalRotation(transform, deltaAction, camData);
         }
-        float scroll = Input.GetAxis("Mouse ScrollWheel") * (dropdownOpen ? 0 : 1);
-        if (Input.touchCount == 2) {
-            // Zoom (scroll no mouse ou pinça no touchscreen)
-            Touch t1 = Input.GetTouch(0);
-            Touch t2 = Input.GetTouch(1);
-            float prevMag = (t1.position - t1.deltaPosition - (t2.position - t2.deltaPosition)).magnitude;
+        string DebugStr = "";
+        float scroll = scrollAction.action.ReadValue<Vector2>().y * (Utilities.AnyDropdownOpen() ? 0 : 1);
+        DebugStr += scroll + " before touches | ";
+        TouchControl[] touches = Touchscreen.current.touches.Where(t => t.press.isPressed).ToArray();
+        DebugStr += touches.Length + " touches | ";
+        if (touches.Length >= 2) {
+            TouchState t1 = touches[0].ReadValue();
+            TouchState t2 = touches[1].ReadValue();
+
+            Vector2 prevT1 = t1.startPosition + (t1.position - t1.delta);
+            Vector2 prevT2 = t2.startPosition + (t2.position - t2.delta);
+
+            float prevMag = (prevT1 - prevT2).magnitude;
             float currMag = (t1.position - t2.position).magnitude;
+
             scroll = (prevMag - currMag) * 0.01f;
+            // usar scroll aqui
         }
+        DebugStr += scroll + " after touches | " + camData.distance + " | ";
         camData.distance = Mathf.Clamp(camData.distance - scroll * camData.zoomSpeed, camData.minDistance, camData.maxDistance);
-        Quaternion rotation = Quaternion.Euler(_y, _x, 0);
+        DebugStr += camData.distance + " | ";
         Vector3 negDistance = new(0, 0, -camData.distance);
         if (camData.isOrthographic) {
             foreach (Camera cam in cameras) {
@@ -66,11 +70,10 @@ public class OrbitalCamera : MonoBehaviour {
             // Mantém a câmera a uma distância fixa do alvo
             //transform.position = rotation * new Vector3(0, 0, -camData.minDistance) + target.position;
             transform.position = Vector3.zero;
+        } else {
+            transform.position = transform.localRotation * negDistance + target.position;
         }
-        else {
-            transform.position = rotation * negDistance + target.position;
-        }
-
-        transform.rotation = rotation;
+        DebugStr += transform.position + " | ";
+        Debug.Log(DebugStr);
     }
 }
