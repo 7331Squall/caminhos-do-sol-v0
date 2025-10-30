@@ -39,11 +39,11 @@ public class OptionsMenu : MonoBehaviour {
         }
 
         void AssignEvents() {
-            _celestialSphereToggle.OnValueChanged.AddListener(ToggleCelestialSphere);
-            _backgroundToggle.OnValueChanged.AddListener(ToggleBackground);
-            _starsToggle.OnValueChanged.AddListener(ToggleConstellations);
-            _sunTrailToggle.OnValueChanged.AddListener(ToggleSunTrail);
-            _equatorialGridToggle.OnValueChanged.AddListener(ToggleEquatorialGrid);
+            _celestialSphereToggle.onValueChanged.AddListener(ToggleCelestialSphere);
+            _backgroundToggle.onValueChanged.AddListener(ToggleBackground);
+            _starsToggle.onValueChanged.AddListener(ToggleConstellations);
+            _sunTrailToggle.onValueChanged.AddListener(ToggleSunTrail);
+            _equatorialGridToggle.onValueChanged.AddListener(ToggleEquatorialGrid);
         }
 
     }

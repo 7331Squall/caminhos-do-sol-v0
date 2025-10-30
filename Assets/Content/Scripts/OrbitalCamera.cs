@@ -74,6 +74,6 @@ public class OrbitalCamera : MonoBehaviour {
             transform.position = transform.localRotation * negDistance + target.position;
         }
         DebugStr += transform.position + " | ";
-        Debug.Log(DebugStr);
+//        Debug.Log(DebugStr);
     }
 }
