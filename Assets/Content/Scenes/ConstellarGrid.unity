@@ -208,7 +208,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26.85
+  m_fontSize: 13.2
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -670,7 +670,7 @@ GameObject:
   - component: {fileID: 532015843}
   - component: {fileID: 532015842}
   m_Layer: 0
-  m_Name: Visao Leste
+  m_Name: "Vis\xE3o Leste"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1059,7 +1059,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: a5b57c0e202087141aa988cdc5ffbe69, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1567,12 +1567,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 724f00ff79545884fa4f0b81420f08f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  messagePanel: {fileID: 2063757591}
-  loadingPanel: {fileID: 1609568788}
-  loadingText: {fileID: 1484727685}
   HUD: {fileID: 279044163}
   lightsGameObject: {fileID: 1721066521}
   constellationGameObject: {fileID: 2005464925}
+  earthGameObject: {fileID: 0}
   sphereRadius: 10
 --- !u!4 &789087414
 Transform:
@@ -2024,7 +2022,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: a5b57c0e202087141aa988cdc5ffbe69, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2191,7 +2189,7 @@ GameObject:
   - component: {fileID: 1223208163}
   - component: {fileID: 1223208162}
   m_Layer: 0
-  m_Name: Visao Oeste
+  m_Name: "Vis\xE3o Oeste"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2319,7 +2317,7 @@ GameObject:
   - component: {fileID: 1342292031}
   - component: {fileID: 1342292030}
   m_Layer: 0
-  m_Name: Visao Sul
+  m_Name: "Vis\xE3o Sul"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2449,17 +2447,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f26341f9f8250ad47a283a26764e761b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1484727685 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2238098579006384792, guid: 83145519ecb049d4181c1bc1dbee727a, type: 3}
-  m_PrefabInstance: {fileID: 1734752899}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1511382893
@@ -2813,11 +2800,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!1 &1609568788 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7325304864323930936, guid: 83145519ecb049d4181c1bc1dbee727a, type: 3}
-  m_PrefabInstance: {fileID: 1734752899}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1652389585
 GameObject:
   m_ObjectHideFlags: 0
@@ -2906,7 +2888,7 @@ GameObject:
   - component: {fileID: 1727664685}
   - component: {fileID: 1727664684}
   m_Layer: 0
-  m_Name: Visao Norte
+  m_Name: "Vis\xE3o Norte"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3120,6 +3102,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2791256605327139805, guid: 83145519ecb049d4181c1bc1dbee727a, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3517314717433329732, guid: 83145519ecb049d4181c1bc1dbee727a, type: 3}
+      propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3887342879498623834, guid: 83145519ecb049d4181c1bc1dbee727a, type: 3}
@@ -3400,8 +3386,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4294309365
+  m_fontColor: {r: 0.96, g: 0.96, b: 0.96, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3621,8 +3607,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4294309365
+  m_fontColor: {r: 0.96, g: 0.96, b: 0.96, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3724,11 +3710,6 @@ Transform:
   - {fileID: 1720368625}
   m_Father: {fileID: 836716217}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2063757591 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3138100660093884367, guid: 83145519ecb049d4181c1bc1dbee727a, type: 3}
-  m_PrefabInstance: {fileID: 1734752899}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2108740839
 GameObject:
   m_ObjectHideFlags: 0
@@ -3809,14 +3790,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 2c71a27a9c5a0c842823cd12fc05f09b, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1

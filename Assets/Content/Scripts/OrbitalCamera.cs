@@ -65,7 +65,9 @@ public class OrbitalCamera : MonoBehaviour {
         Vector3 negDistance = new(0, 0, -camData.distance);
         if (camData.isOrthographic) {
             foreach (Camera cam in cameras) {
-                cam.orthographicSize = camData.distance; // zoom = tamanho ortográfico
+                if (cam.name != "GalacticOverlayCamera") {
+                    cam.orthographicSize = camData.distance; // zoom = tamanho ortográfico
+                }
             }
             // Mantém a câmera a uma distância fixa do alvo
             //transform.position = rotation * new Vector3(0, 0, -camData.minDistance) + target.position;

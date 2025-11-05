@@ -27,7 +27,7 @@ public static class GPTSolarCalc {
     //     return Quaternion.Euler(0f, anguloSideral, 0f);
     // }
 
-    public static (Vector3 position, Quaternion rotation) GetPositionNOAA(float latitude, DateTime dateTime, bool isConstellation) {
+    public static (Vector3 position, Quaternion rotation) GetPositionNOAA(float latitude, DateTime dateTime) {
 // 1) Dados do tempo
         int day = dateTime.Day;
         int month = dateTime.Month;
@@ -42,9 +42,7 @@ public static class GPTSolarCalc {
         double gamma = 2.0 * Math.PI / 365.0 * (N - 1 + (hour - 12.0) / 24.0 + minute / 1440.0);
 
 // 4) Declinação solar δ
-        double delta = isConstellation
-            ? 0.5
-            : 0.006918
+        double delta = 0.006918
           - 0.399912 * Math.Cos(gamma)
           + 0.070257 * Math.Sin(gamma)
           - 0.006758 * Math.Cos(2 * gamma)
@@ -78,61 +76,19 @@ public static class GPTSolarCalc {
         const float tilt = 23.44f;
         Quaternion rotation;
 
-        if (isConstellation) {
-// --- Calcula eixo de rotação robusto a partir do movimento do Sol ---
-// Eixo do planeta (polo norte celeste inclinado) - fallback
-            Vector3 earthAxis = (Quaternion.Euler(tilt, 0f, 0f) * Vector3.up).normalized;
-
-// calcula uma posição do Sol um minuto à frente (pequeno dt) para obter o eixo instantâneo
-            double tstNext = tst + 1.0; // 1 minuto à frente
-            double hourAngleNext = (tstNext / 4.0 - 180.0) * Mathf.Deg2Rad;
-
-// elevação/azimute no instante seguinte
-            double cosZenithN = Math.Sin(latRad) * Math.Sin(delta) + Math.Cos(latRad) * Math.Cos(delta) * Math.Cos(hourAngleNext);
-// cuidado com possíveis valores numéricos fora de -1..1
-            cosZenithN = Math.Max(-1.0, Math.Min(1.0, cosZenithN));
-            double zenithN = Math.Acos(cosZenithN);
-            double elevationN = Math.PI / 2.0 - zenithN;
-            double sinAzN = -Math.Cos(delta) * Math.Sin(hourAngleNext) / Math.Sin(zenithN);
-            double cosAzN = (Math.Sin(delta) - Math.Sin(latRad) * Math.Cos(zenithN)) / (Math.Cos(latRad) * Math.Sin(zenithN));
-            double azimuthN = Math.Atan2(sinAzN, cosAzN);
-            if (azimuthN < 0) azimuthN += 2 * Math.PI;
-
-            float xN = (float) (Math.Cos(elevationN) * Math.Sin(azimuthN));
-            float yN = (float) Math.Sin(elevationN);
-            float zN = (float) (Math.Cos(elevationN) * Math.Cos(azimuthN));
-            Vector3 sunDirNext = new Vector3(xN, yN, zN).normalized;
-
-// eixo instantâneo = cruz entre as duas posições (direção do eixo da grande-círculo)
-            Vector3 axis = Vector3.Cross(sunDir, sunDirNext);
-            const float EPS = 1e-6f;
-            if (axis.sqrMagnitude < EPS) {
-// degenerado: usa eixo do planeta como fallback
-                axis = earthAxis;
-            } else {
-                axis.Normalize();
-            }
-
-// ângulo horário (graus) -> quantidade de giro em torno desse eixo
-            float angleDeg = (float) (hourAngle * Mathf.Rad2Deg);
-
-// rotação das estrelas: gira em torno do eixo calculado
-            rotation = Quaternion.AngleAxis(angleDeg, axis);
-        } else {
 // --- Mantém exatamente o comportamento do Sol (inalterado) ---
-            Vector3 northCelestial = Quaternion.Euler(tilt, 0, 0) * Vector3.up;
+        Vector3 northCelestial = Quaternion.Euler(tilt, 0, 0) * Vector3.up;
 
 // calcula up estável baseado no eixo do planeta (northCelestial)
-            Vector3 right = Vector3.Cross(northCelestial, -sunDir);
-            if (right.sqrMagnitude < 1e-6f) {
+        Vector3 right = Vector3.Cross(northCelestial, -sunDir);
+        if (right.sqrMagnitude < 1e-6f) {
 // fallback (evita degenerescência)
-                right = Vector3.Cross(Vector3.forward, -sunDir);
-            }
-            right.Normalize();
-            Vector3 up = Vector3.Cross(-sunDir, right).normalized;
-
-            rotation = Quaternion.LookRotation(-sunDir, up);
+            right = Vector3.Cross(Vector3.forward, -sunDir);
         }
+        right.Normalize();
+        Vector3 up = Vector3.Cross(-sunDir, right).normalized;
+
+        rotation = Quaternion.LookRotation(-sunDir, up);
 
         return (sunDir, rotation);
     }
@@ -143,15 +99,17 @@ public static class GPTSolarCalc {
     /// longitudeDeg: longitude do observador, latitudeDeg: latitude do observador.
     /// dateTimeUtc: data/hora UTC
     /// </summary>
-    public static Quaternion OrientationForCelestialPole(float latitudeDeg, DateTime dateTimeUtc)
-    {
+    public static Quaternion OrientationForCelestialPole(float latitudeDeg, DateTime dateTimeUtc) {
         // 1) Julian Date
         double Y = dateTimeUtc.Year;
         double M = dateTimeUtc.Month;
         double D = dateTimeUtc.Day + (dateTimeUtc.Hour + dateTimeUtc.Minute / 60.0 + dateTimeUtc.Second / 3600.0) / 24.0;
-        if (M <= 2) { Y -= 1; M += 12; }
-        int A = (int)Math.Floor(Y / 100.0);
-        int B = 2 - A + (int)Math.Floor(A / 4.0);
+        if (M <= 2) {
+            Y -= 1;
+            M += 12;
+        }
+        int A = (int) Math.Floor(Y / 100.0);
+        int B = 2 - A + (int) Math.Floor(A / 4.0);
         double JD = Math.Floor(365.25 * (Y + 4716)) + Math.Floor(30.6001 * (M + 1)) + D + B - 1524.5;
 
         double T = (JD - 2451545.0) / 36525.0;
@@ -173,7 +131,7 @@ public static class GPTSolarCalc {
         Quaternion alignPole = Quaternion.FromToRotation(Vector3.up, poleDir);
 
         // 6) Rotação em torno do eixo Y da esfera (já inclinado) pelo LST
-        Quaternion rotAroundY = Quaternion.AngleAxis((float)LST, Vector3.up);
+        Quaternion rotAroundY = Quaternion.AngleAxis((float) LST, Vector3.up);
 
         // 7) Combina: primeiro inclina, depois gira em torno do eixo da esfera
         Quaternion finalRot = alignPole * rotAroundY;
@@ -181,4 +139,41 @@ public static class GPTSolarCalc {
         return finalRot;
     }
 
+    // Constantes básicas
+    const float ORBITAL_PERIOD_DAYS = 365.25f; // Um ano
+    const float AXIAL_TILT_DEGREES = 23.44f;   // Inclinação da Terra
+
+    // Data de referência: 21 de março (equinócio), Terra em Z+
+    static readonly DateTime epoch = new DateTime(2000, 3, 21, 0, 0, 0, DateTimeKind.Utc);
+
+    /// <summary>
+    /// Calcula a posição e rotação da Terra em sua órbita ao redor do Sol.
+    /// </summary>
+    public static (Vector3 position, Quaternion rotation) GetEarthTransform(DateTime dateTime) {
+        // Converter para UTC e calcular dias desde o "epoch"
+        double daysSinceEpoch = (dateTime.ToUniversalTime() - epoch).TotalDays;
+
+        // Fração da órbita completada
+        float orbitFraction = (float) ((daysSinceEpoch % ORBITAL_PERIOD_DAYS) / ORBITAL_PERIOD_DAYS);
+
+        // Ângulo orbital (radianos)
+        float angle = orbitFraction * Mathf.PI * 2f;
+
+        // Direção da Terra (plano XZ)
+        Vector3 dir = new Vector3(Mathf.Sin(angle), 0f, Mathf.Cos(angle));
+
+        // Aplicar inclinação do eixo orbital (em torno do eixo X)
+        Quaternion tilt = Quaternion.Euler(AXIAL_TILT_DEGREES, 0f, 0f);
+        Vector3 inclinedDir = tilt * dir;
+
+        // Rotação do planeta (giro próprio da Terra)
+        // ~360° por dia (um dia sideral ≈ 23h56min)
+        float spinAngle = (float) ((dateTime.TimeOfDay.TotalHours / 24f) * 360f);
+        Quaternion spin = Quaternion.Euler(0f, spinAngle, 0f);
+
+        // Rotação total da Terra (inclinação + rotação própria)
+        Quaternion rotation = tilt * spin;
+
+        return (inclinedDir, rotation);
+    }
 }

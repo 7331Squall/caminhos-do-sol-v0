@@ -485,6 +485,9 @@
     "m_Guid": {
         "m_GuidSerialized": "c566fa87-a801-48c7-84c0-deaf0eed7cd8"
     },
+    "promotedFromAssetID": "",
+    "promotedFromCategoryName": "",
+    "promotedOrdering": -1,
     "m_Name": "ShowEquatorialGrid",
     "m_DefaultRefNameVersion": 1,
     "m_RefNameGeneratedByDisplayName": "ShowEquatorialGrid",
@@ -498,6 +501,8 @@
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
+    "m_PerRendererData": false,
+    "m_customAttributes": [],
     "m_Value": false
 }
 
@@ -820,6 +825,9 @@
     "m_Guid": {
         "m_GuidSerialized": "0375161e-6d55-4419-8a0d-a549380636a3"
     },
+    "promotedFromAssetID": "",
+    "promotedFromCategoryName": "",
+    "promotedOrdering": -1,
     "m_Name": "Offset",
     "m_DefaultRefNameVersion": 1,
     "m_RefNameGeneratedByDisplayName": "Offset",
@@ -833,6 +841,8 @@
     "overrideHLSLDeclaration": true,
     "hlslDeclarationOverride": 2,
     "m_Hidden": false,
+    "m_PerRendererData": false,
+    "m_customAttributes": [],
     "m_Value": {
         "x": 0.0,
         "y": 1.0,
@@ -967,6 +977,9 @@
     "m_Guid": {
         "m_GuidSerialized": "9d9084d3-81ea-43df-86fb-582220abcd03"
     },
+    "promotedFromAssetID": "",
+    "promotedFromCategoryName": "",
+    "promotedOrdering": -1,
     "m_Name": "ShowConstellations",
     "m_DefaultRefNameVersion": 1,
     "m_RefNameGeneratedByDisplayName": "ShowConstellations",
@@ -980,6 +993,8 @@
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
+    "m_PerRendererData": false,
+    "m_customAttributes": [],
     "m_Value": true
 }
 
@@ -1013,7 +1028,8 @@
     "m_StageCapability": 3,
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
-    "m_Labels": []
+    "m_Labels": [],
+    "m_LiteralMode": false
 }
 
 {
@@ -1023,6 +1039,9 @@
     "m_Guid": {
         "m_GuidSerialized": "d7f94974-356e-4f0e-92ca-902b9fcd0a83"
     },
+    "promotedFromAssetID": "",
+    "promotedFromCategoryName": "",
+    "promotedOrdering": -1,
     "m_Name": "ShowBackground",
     "m_DefaultRefNameVersion": 1,
     "m_RefNameGeneratedByDisplayName": "ShowBackground",
@@ -1036,6 +1055,8 @@
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
+    "m_PerRendererData": false,
+    "m_customAttributes": [],
     "m_Value": false
 }
 
@@ -1060,7 +1081,8 @@
         "y": 0.0,
         "z": 0.0,
         "w": 0.0
-    }
+    },
+    "m_LiteralMode": false
 }
 
 {
@@ -1266,7 +1288,8 @@
         "y": 0.0,
         "z": 0.0,
         "w": 0.0
-    }
+    },
+    "m_LiteralMode": false
 }
 
 {
@@ -1283,7 +1306,8 @@
     "m_DefaultValue": 0.0,
     "m_Labels": [
         "Z"
-    ]
+    ],
+    "m_LiteralMode": false
 }
 
 {
@@ -1480,7 +1504,8 @@
     "m_StageCapability": 2,
     "m_Value": 1.0,
     "m_DefaultValue": 1.0,
-    "m_Labels": []
+    "m_Labels": [],
+    "m_LiteralMode": false
 }
 
 {
@@ -1601,7 +1626,8 @@
         "y": 0.0,
         "z": 0.0,
         "w": 0.0
-    }
+    },
+    "m_LiteralMode": true
 }
 
 {
@@ -1611,6 +1637,9 @@
     "m_Guid": {
         "m_GuidSerialized": "a032f33e-9a75-4510-98f4-2733c4a83e5f"
     },
+    "promotedFromAssetID": "",
+    "promotedFromCategoryName": "",
+    "promotedOrdering": -1,
     "m_Name": "ShowConstBounds",
     "m_DefaultRefNameVersion": 1,
     "m_RefNameGeneratedByDisplayName": "ShowConstBounds",
@@ -1624,6 +1653,8 @@
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
+    "m_PerRendererData": false,
+    "m_customAttributes": [],
     "m_Value": false
 }
 
@@ -1691,6 +1722,9 @@
     "m_Guid": {
         "m_GuidSerialized": "00b244b5-0577-43e0-b4c5-0853de09242e"
     },
+    "promotedFromAssetID": "",
+    "promotedFromCategoryName": "",
+    "promotedOrdering": -1,
     "m_Name": "WireColor",
     "m_DefaultRefNameVersion": 1,
     "m_RefNameGeneratedByDisplayName": "WireColor",
@@ -1704,6 +1738,8 @@
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
+    "m_PerRendererData": false,
+    "m_customAttributes": [],
     "m_Value": {
         "r": 1.0,
         "g": 0.0,
@@ -1726,7 +1762,8 @@
     "m_StageCapability": 3,
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
-    "m_Labels": []
+    "m_Labels": [],
+    "m_LiteralMode": false
 }
 
 {
@@ -1746,7 +1783,10 @@
 {
     "m_SGVersion": 2,
     "m_Type": "UnityEditor.Rendering.Universal.ShaderGraph.UniversalUnlitSubTarget",
-    "m_ObjectId": "7bd09b8697b54158876d265c76f2109b"
+    "m_ObjectId": "7bd09b8697b54158876d265c76f2109b",
+    "m_KeepLightingVariants": false,
+    "m_DefaultDecalBlending": true,
+    "m_DefaultSSAO": true
 }
 
 {
@@ -1821,7 +1861,8 @@
     "m_StageCapability": 3,
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
-    "m_Labels": []
+    "m_Labels": [],
+    "m_LiteralMode": false
 }
 
 {
@@ -1831,7 +1872,7 @@
     "m_Group": {
         "m_Id": ""
     },
-    "m_Name": "ComposeTexture",
+    "m_Name": "Compose Texture",
     "m_DrawState": {
         "m_Expanded": true,
         "m_Position": {
@@ -1919,6 +1960,7 @@
     "m_CastShadows": true,
     "m_ReceiveShadows": true,
     "m_DisableTint": false,
+    "m_Sort3DAs2DCompatible": false,
     "m_AdditionalMotionVectorMode": 0,
     "m_AlembicMotionVectors": false,
     "m_SupportsLODCrossFade": false,
@@ -1972,7 +2014,7 @@
     "m_Group": {
         "m_Id": ""
     },
-    "m_Name": "ComposeTexture",
+    "m_Name": "Compose Texture",
     "m_DrawState": {
         "m_Expanded": true,
         "m_Position": {
@@ -2049,7 +2091,7 @@
     "m_Group": {
         "m_Id": ""
     },
-    "m_Name": "ComposeTexture",
+    "m_Name": "Compose Texture",
     "m_DrawState": {
         "m_Expanded": true,
         "m_Position": {
@@ -2160,6 +2202,9 @@
     "m_Guid": {
         "m_GuidSerialized": "569e44cf-ecdc-4d30-a22c-145e87abd601"
     },
+    "promotedFromAssetID": "",
+    "promotedFromCategoryName": "",
+    "promotedOrdering": -1,
     "m_Name": "DebugTexture",
     "m_DefaultRefNameVersion": 1,
     "m_RefNameGeneratedByDisplayName": "DebugTexture",
@@ -2173,6 +2218,8 @@
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
+    "m_PerRendererData": false,
+    "m_customAttributes": [],
     "m_Value": false
 }
 
@@ -2320,7 +2367,8 @@
     "m_StageCapability": 3,
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
-    "m_Labels": []
+    "m_Labels": [],
+    "m_LiteralMode": false
 }
 
 {
@@ -2337,7 +2385,8 @@
     "m_DefaultValue": 0.0,
     "m_Labels": [
         "Y"
-    ]
+    ],
+    "m_LiteralMode": false
 }
 
 {
@@ -2432,7 +2481,7 @@
     "m_Group": {
         "m_Id": ""
     },
-    "m_Name": "ComposeTexture",
+    "m_Name": "Compose Texture",
     "m_DrawState": {
         "m_Expanded": true,
         "m_Position": {
@@ -2575,7 +2624,8 @@
         "y": 0.0,
         "z": 0.0,
         "w": 0.0
-    }
+    },
+    "m_LiteralMode": false
 }
 
 {
@@ -2681,7 +2731,7 @@
     "m_Group": {
         "m_Id": ""
     },
-    "m_Name": "ComposeTexture",
+    "m_Name": "Compose Texture",
     "m_DrawState": {
         "m_Expanded": true,
         "m_Position": {
@@ -2905,7 +2955,8 @@
     "m_StageCapability": 3,
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
-    "m_Labels": []
+    "m_Labels": [],
+    "m_LiteralMode": false
 }
 
 {
