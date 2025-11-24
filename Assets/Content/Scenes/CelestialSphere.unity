@@ -459,13 +459,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7215047028355520110, guid: 8d0ee5da3d196864fb1f372f317040f0, type: 3}
-      propertyPath: geoObject
-      value: 
-      objectReference: {fileID: 1982513678}
-    - target: {fileID: 7215047028355520110, guid: 8d0ee5da3d196864fb1f372f317040f0, type: 3}
       propertyPath: geoSettings
       value: 
-      objectReference: {fileID: 1982513680}
+      objectReference: {fileID: 1982513679}
     - target: {fileID: 7215047028355520110, guid: 8d0ee5da3d196864fb1f372f317040f0, type: 3}
       propertyPath: sSceneManager
       value: 
@@ -961,6 +957,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3046596851441183437, guid: 4eb6481081f60c542a6d1beebfe5c9d6, type: 3}
   m_PrefabInstance: {fileID: 413287895}
   m_PrefabAsset: {fileID: 0}
+--- !u!20 &484134573 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 3731645691961400435, guid: 66c9b89cddf7cfc4f8253709e659a471, type: 3}
+  m_PrefabInstance: {fileID: 5485111182156240666}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &506839793
 GameObject:
   m_ObjectHideFlags: 0
@@ -1007,7 +1008,7 @@ GameObject:
   - component: {fileID: 558001656}
   - component: {fileID: 558001655}
   m_Layer: 5
-  m_Name: Image
+  m_Name: SolarSystemDiagram
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1211,9 +1212,21 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3340637037056578387, guid: 888c7eb5be7ffab458cf06df75e0cfc1, type: 3}
-      propertyPath: m_sunAffect
-      value: 0
+    - target: {fileID: 3106529958129497588, guid: 888c7eb5be7ffab458cf06df75e0cfc1, type: 3}
+      propertyPath: nameFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 74d6fbce22fd8c64c9954147be188975, type: 2}
+    - target: {fileID: 3106529958129497588, guid: 888c7eb5be7ffab458cf06df75e0cfc1, type: 3}
+      propertyPath: textPrefab
+      value: 
+      objectReference: {fileID: 1584602269187196, guid: 3ad60ec2efecb2b44ab128282f6d494f, type: 3}
+    - target: {fileID: 3106529958129497588, guid: 888c7eb5be7ffab458cf06df75e0cfc1, type: 3}
+      propertyPath: targetCamera
+      value: 
+      objectReference: {fileID: 484134573}
+    - target: {fileID: 3106529958129497588, guid: 888c7eb5be7ffab458cf06df75e0cfc1, type: 3}
+      propertyPath: fontSizeMultiplier
+      value: 0.36
       objectReference: {fileID: 0}
     - target: {fileID: 3359171086591312474, guid: 888c7eb5be7ffab458cf06df75e0cfc1, type: 3}
       propertyPath: m_Name
@@ -1382,6 +1395,10 @@ PrefabInstance:
     - target: {fileID: 197012075824322723, guid: 83145519ecb049d4181c1bc1dbee727a, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 286878337400547508, guid: 83145519ecb049d4181c1bc1dbee727a, type: 3}
+      propertyPath: m_BlockingObjects
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 963825991500348225, guid: 83145519ecb049d4181c1bc1dbee727a, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1652,7 +1669,7 @@ GameObject:
   - component: {fileID: 1835873313}
   - component: {fileID: 1835873312}
   m_Layer: 5
-  m_Name: Image
+  m_Name: SolarSystemDiagramBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1676,7 +1693,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -2, y: -2}
-  m_SizeDelta: {x: 90, y: 90}
+  m_SizeDelta: {x: 140, y: 140}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1835873312
 MonoBehaviour:
@@ -1716,22 +1733,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1835873310}
   m_CullTransparentMesh: 1
---- !u!1 &1982513678 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1518961591282380634, guid: 888c7eb5be7ffab458cf06df75e0cfc1, type: 3}
-  m_PrefabInstance: {fileID: 661051973}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1982513680 stripped
+--- !u!114 &1982513679 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3340637037056578387, guid: 888c7eb5be7ffab458cf06df75e0cfc1, type: 3}
+  m_CorrespondingSourceObject: {fileID: 2981320757751448994, guid: 888c7eb5be7ffab458cf06df75e0cfc1, type: 3}
   m_PrefabInstance: {fileID: 661051973}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1982513678}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b57400d971fd0a743955ff6bfaded47f, type: 3}
+  m_Script: {fileID: 11500000, guid: 476c2367015e49bc8291efeeb1f7bfca, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Assembly-CSharp::Constellation.SquackConstellationSettings
 --- !u!1 &2003862515 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 525889792048598325, guid: 8e84d610eb201f74595483a0f176bd67, type: 3}

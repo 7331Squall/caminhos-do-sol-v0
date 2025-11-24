@@ -208,7 +208,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 13.2
+  m_fontSize: 14.35
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2855,17 +2855,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1518961591282380634, guid: 888c7eb5be7ffab458cf06df75e0cfc1, type: 3}
   m_PrefabInstance: {fileID: 6085229640547986797}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1684282596 stripped
+--- !u!114 &1684282597 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3340637037056578387, guid: 888c7eb5be7ffab458cf06df75e0cfc1, type: 3}
+  m_CorrespondingSourceObject: {fileID: 2981320757751448994, guid: 888c7eb5be7ffab458cf06df75e0cfc1, type: 3}
   m_PrefabInstance: {fileID: 6085229640547986797}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1684282595}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b57400d971fd0a743955ff6bfaded47f, type: 3}
+  m_Script: {fileID: 11500000, guid: 476c2367015e49bc8291efeeb1f7bfca, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Assembly-CSharp::Constellation.SquackConstellationSettings
 --- !u!4 &1720368625 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8112929317322293312, guid: 888c7eb5be7ffab458cf06df75e0cfc1, type: 3}
@@ -3891,6 +3891,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2005464926}
     m_Modifications:
+    - target: {fileID: 3106529958129497588, guid: 888c7eb5be7ffab458cf06df75e0cfc1, type: 3}
+      propertyPath: distance
+      value: 380
+      objectReference: {fileID: 0}
+    - target: {fileID: 3106529958129497588, guid: 888c7eb5be7ffab458cf06df75e0cfc1, type: 3}
+      propertyPath: textPrefab
+      value: 
+      objectReference: {fileID: 1584602269187196, guid: 3ad60ec2efecb2b44ab128282f6d494f, type: 3}
+    - target: {fileID: 3106529958129497588, guid: 888c7eb5be7ffab458cf06df75e0cfc1, type: 3}
+      propertyPath: targetCamera
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3106529958129497588, guid: 888c7eb5be7ffab458cf06df75e0cfc1, type: 3}
+      propertyPath: fontSizeMultiplier
+      value: 0.24
+      objectReference: {fileID: 0}
     - target: {fileID: 3359171086591312474, guid: 888c7eb5be7ffab458cf06df75e0cfc1, type: 3}
       propertyPath: m_Name
       value: GeoOffset
@@ -4267,7 +4283,7 @@ PrefabInstance:
     - target: {fileID: 7215047028355520110, guid: 8d0ee5da3d196864fb1f372f317040f0, type: 3}
       propertyPath: geoSettings
       value: 
-      objectReference: {fileID: 1684282596}
+      objectReference: {fileID: 1684282597}
     - target: {fileID: 7215047028355520110, guid: 8d0ee5da3d196864fb1f372f317040f0, type: 3}
       propertyPath: sSceneManager
       value: 

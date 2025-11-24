@@ -18,12 +18,31 @@ public static class Utilities {
         return dropdowns.Any(dd => dd.IsExpanded);
     }
 
-    public static bool IsPointerOverUI() {
+    public static GameObject IsPointerOverUI() {
+        if (EventSystem.current == null)
+            return null;
+
+        PointerEventData pointerData = new(EventSystem.current);
+
+        Vector2 pointerPos = Vector2.zero;
+
         // Mouse
-        if (EventSystem.current.IsPointerOverGameObject())
-            return true;
+        if (Mouse.current != null)
+            pointerPos = Mouse.current.position.ReadValue();
+
         // Touch
-        return Input.touchCount > 0 && EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId);
+        else if (Touchscreen.current != null && Touchscreen.current.touches.Count > 0)
+            pointerPos = Touchscreen.current.touches[0].position.ReadValue();
+
+        pointerData.position = pointerPos;
+
+        List<RaycastResult> results = new();
+        EventSystem.current.RaycastAll(pointerData, results);
+
+        if (results.Count > 0)
+            return results[0].gameObject;
+
+        return null;
     }
 
     public static Vector2 GetCameraMovementValues(InputActionReference pointAction, Vector2 camSpeed) {

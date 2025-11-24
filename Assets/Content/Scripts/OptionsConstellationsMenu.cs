@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using Constellation;
 using UnityEngine;
 
@@ -9,16 +7,23 @@ public class OptionsConstellationsMenu : MonoBehaviour {
     [Header("SceneManager")]
     public SquackSceneManager sSceneManager;
     [Header("Settings")]
-    public ConstellationSettings geoSettings;
+    public SquackConstellationSettings geoSettings;
 
     [Header("Objects")]
     public GameObject celestialSphere;
-    public GameObject equatorialGrid, geoObject, occluderObject;
+    public GameObject equatorialGrid;
+    public GameObject occluderObject;
 
     [Header("Options")]
-    public CustomSlider _starsSlider;
-    public CustomToggle _starsToggle, _linesToggle, _namesToggle, _imagesToggle, _milkyWayToggle, _equatorialGridToggle, _showAtmosphereToggle,
-        _sunTrailsToggle;
+    public CustomSlider starsSlider;
+    public CustomToggle starsToggle;
+    public CustomToggle linesToggle;
+    public CustomToggle namesToggle;
+    public CustomToggle imagesToggle;
+    public CustomToggle milkyWayToggle;
+    public CustomToggle equatorialGridToggle;
+    public CustomToggle showAtmosphereToggle;
+    public CustomToggle sunTrailsToggle;
 
     void Start() {
         _anim8R = GetComponent<Animator>();
@@ -27,26 +32,26 @@ public class OptionsConstellationsMenu : MonoBehaviour {
         return;
 
         void AssignEvents() {
-            _starsToggle.onValueChanged.AddListener(ToggleStars);
-            _linesToggle.onValueChanged.AddListener(ToggleLines);
-            _namesToggle.onValueChanged.AddListener(ToggleNames);
-            _imagesToggle.onValueChanged.AddListener(ToggleImages);
-            _milkyWayToggle.onValueChanged.AddListener(ToggleMilkyWay);
-            _equatorialGridToggle.onValueChanged.AddListener(ToggleGrid);
-            _showAtmosphereToggle.onValueChanged.AddListener(ToggleShowAtmosphere);
-            _sunTrailsToggle.onValueChanged.AddListener(ToggleSunTrails);
-            _starsSlider.onValueChanged.AddListener(ChangeStarSlider);
+            starsToggle.onValueChanged.AddListener(ToggleStars);
+            linesToggle.onValueChanged.AddListener(ToggleLines);
+            namesToggle.onValueChanged.AddListener(ToggleNames);
+            imagesToggle.onValueChanged.AddListener(ToggleImages);
+            milkyWayToggle.onValueChanged.AddListener(ToggleMilkyWay);
+            equatorialGridToggle.onValueChanged.AddListener(ToggleGrid);
+            showAtmosphereToggle.onValueChanged.AddListener(ToggleShowAtmosphere);
+            sunTrailsToggle.onValueChanged.AddListener(ToggleSunTrails);
+            starsSlider.onValueChanged.AddListener(ChangeStarSlider);
         }
 
         void ResetChecks() {
-            ToggleStars(_starsToggle.Value);
-            ToggleLines(_linesToggle.Value);
-            ToggleNames(_namesToggle.Value);
-            ToggleImages(_imagesToggle.Value);
-            ToggleMilkyWay(_milkyWayToggle.Value);
-            ToggleGrid(_equatorialGridToggle.Value);
-            ToggleShowAtmosphere(_showAtmosphereToggle.Value);
-            ToggleSunTrails(_sunTrailsToggle.Value);
+            ToggleStars(starsToggle.Value);
+            ToggleLines(linesToggle.Value);
+            ToggleNames(namesToggle.Value);
+            ToggleImages(imagesToggle.Value);
+            ToggleMilkyWay(milkyWayToggle.Value);
+            ToggleGrid(equatorialGridToggle.Value);
+            ToggleShowAtmosphere(showAtmosphereToggle.Value);
+            ToggleSunTrails(sunTrailsToggle.Value);
         }
     }
 
@@ -54,14 +59,14 @@ public class OptionsConstellationsMenu : MonoBehaviour {
 
     void ChangeStarSlider(int val) {
         bool shallDisable = val == 0;
-        _starsToggle.Interactable = !shallDisable;
-        ToggleStars(!shallDisable && _starsToggle.Value);
-        _linesToggle.Interactable = !shallDisable;
-        ToggleLines(!shallDisable && _linesToggle.Value);
-        _namesToggle.Interactable = !shallDisable;
-        ToggleNames(!shallDisable && _namesToggle.Value);
-        _imagesToggle.Interactable = !shallDisable;
-        ToggleImages(!shallDisable && _imagesToggle.Value);
+        starsToggle.Interactable = !shallDisable;
+        ToggleStars(!shallDisable && starsToggle.Value);
+        linesToggle.Interactable = !shallDisable;
+        ToggleLines(!shallDisable && linesToggle.Value);
+        namesToggle.Interactable = !shallDisable;
+        ToggleNames(!shallDisable && namesToggle.Value);
+        imagesToggle.Interactable = !shallDisable;
+        ToggleImages(!shallDisable && imagesToggle.Value);
         ToggleVirgo(val == 1);
     }
 

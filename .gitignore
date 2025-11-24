@@ -93,4 +93,4 @@ crashlytics-build.properties
 !/[Pp]ackages/packages-lock.json
 
 
-/Assets/Packages/
+/[Aa]ssets/[Pp]ackages/*

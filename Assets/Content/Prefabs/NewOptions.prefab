@@ -2358,17 +2358,16 @@ MonoBehaviour:
   geoSettings: {fileID: 0}
   celestialSphere: {fileID: 0}
   equatorialGrid: {fileID: 0}
-  geoObject: {fileID: 0}
   occluderObject: {fileID: 0}
-  _starsSlider: {fileID: 3225862382708779475}
-  _starsToggle: {fileID: 2533700542087499542}
-  _linesToggle: {fileID: 2654764832269207451}
-  _namesToggle: {fileID: 2692238996094053723}
-  _imagesToggle: {fileID: 6762891548842311212}
-  _milkyWayToggle: {fileID: 4285887014940875223}
-  _equatorialGridToggle: {fileID: 5505228554313392564}
-  _showAtmosphereToggle: {fileID: 4270400011722060847}
-  _sunTrailsToggle: {fileID: 1195958567055487362}
+  starsSlider: {fileID: 3225862382708779475}
+  starsToggle: {fileID: 2533700542087499542}
+  linesToggle: {fileID: 2654764832269207451}
+  namesToggle: {fileID: 2692238996094053723}
+  imagesToggle: {fileID: 6762891548842311212}
+  milkyWayToggle: {fileID: 4285887014940875223}
+  equatorialGridToggle: {fileID: 5505228554313392564}
+  showAtmosphereToggle: {fileID: 4270400011722060847}
+  sunTrailsToggle: {fileID: 1195958567055487362}
 --- !u!1 &5637699121433821125
 GameObject:
   m_ObjectHideFlags: 0
