@@ -18,9 +18,6 @@ public class StaticCamera : MonoBehaviour {
     [SerializeField]
     InputActionReference clickAction;
 
-    // [SerializeField]
-    // ConstellationNames GeoNames;
-    // Dropdown ConstellationsDropdown;
     Transform _desiredTransform;
     Button _prevButton, _nextButton;
     TMP_Text _camNameLbl;
@@ -45,33 +42,11 @@ public class StaticCamera : MonoBehaviour {
         _nextButton.onClick.AddListener(NextCam);
         _camNameLbl = panel.GetComponentsInChildren<TMP_Text>().First(x => x.name == "CamNameLbl");
         cams ??= GetComponent<CameraLocations>();
-        // ConstellationsDropdown ??= GetComponent<Dropdown>();
-        // GeoNames ??= FindFirstObjectByType<ConstellationNames>();
         max = cams.GetMaxCamPositions() - 1;
         ChangeCam(0);
         transform.SetPositionAndRotation(_desiredTransform.position, _desiredTransform.rotation);
-        // InitDropdown();
     }
 
-//     void InitDropdown() {
-//         List<ConstellationNames.NamePosData> namePosList = GeoNames.namePosList;
-//         ConstellationNames.LanguageType langType = GeoNames.languageType;
-//         if (namePosList != null && ConstellationsDropdown != null) {
-//             int currentVal = 0;
-//             if (!ConstellationsDropdown.options.Count.Equals(0)) { currentVal = ConstellationsDropdown.value; }
-//             ConstellationsDropdown.ClearOptions();
-//             List<Dropdown.OptionData> options = new() { new Dropdown.OptionData("-") };
-//             foreach (ConstellationNames.NamePosData pos in namePosList) {
-//                 string constellationName = pos.secondNameArr[(int) langType];
-//                 options.Add(new Dropdown.OptionData(constellationName));
-//             }
-//             Debug.Log(JsonUtility.ToJson(options));
-//             ConstellationsDropdown.AddOptions(options);
-//             ConstellationsDropdown.SetValueWithoutNotify(currentVal);
-// //m_targetDir = m_namesScr.namePosList[currentVal].pos; 
-// //m_targetDir = (m_namesScr.nameObjList[currentVal].transform.localPosition - transform.position).normalized;
-//         }
-//     }
 
     void ChangeCam(int newCam = -1) {
         if (newCam == -1) return;
@@ -81,7 +56,6 @@ public class StaticCamera : MonoBehaviour {
         _prevButton.interactable = cur > 0;
         _nextButton.interactable = cur < max;
         _camNameLbl.text = cams.GetCamName(cur);
-        // transform.SetPositionAndRotation(_desiredTransform.position, _desiredTransform.rotation);
     }
 
     public void NextCam() {
@@ -93,12 +67,11 @@ public class StaticCamera : MonoBehaviour {
     }
 
     public void Update() {
-        bool hasMoved = Utilities.ShouldMoveCamera(clickAction);
+        bool hasMoved = clickAction.action.inProgress && Utilities.GetObjectsUnderPointer().Count <= 0 && !Utilities.AnyDropdownOpen();
         if (camState == CameraState.Idle && hasMoved)
             camState = CameraState.Manual;
         if (camState == CameraState.Manual && !hasMoved)
             camState = CameraState.Idle;
-        // Vector2 coords mv = GetMouseValues();
         switch (camState) {
             case CameraState.Automatic:
                 HandleAutomaticMovement();

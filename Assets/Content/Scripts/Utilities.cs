@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public static class Utilities {
     public static List<string> PopulateList(int amount, int offset = 0) {
@@ -18,31 +19,18 @@ public static class Utilities {
         return dropdowns.Any(dd => dd.IsExpanded);
     }
 
-    public static GameObject IsPointerOverUI() {
-        if (EventSystem.current == null)
-            return null;
-
-        PointerEventData pointerData = new(EventSystem.current);
-
-        Vector2 pointerPos = Vector2.zero;
-
-        // Mouse
-        if (Mouse.current != null)
-            pointerPos = Mouse.current.position.ReadValue();
-
-        // Touch
-        else if (Touchscreen.current != null && Touchscreen.current.touches.Count > 0)
-            pointerPos = Touchscreen.current.touches[0].position.ReadValue();
-
-        pointerData.position = pointerPos;
-
+    public static List<GameObject> GetObjectsUnderPointer() {
+        if (EventSystem.current == null) {
+            return new List<GameObject>();
+        }
+        int pointerId = PointerId.mousePointerId;
+        PointerEventData pointerData = new(EventSystem.current) {
+            pointerId = pointerId,
+            position = Mouse.current != null ? Mouse.current.position.ReadValue() : Vector2.zero
+        };
         List<RaycastResult> results = new();
         EventSystem.current.RaycastAll(pointerData, results);
-
-        if (results.Count > 0)
-            return results[0].gameObject;
-
-        return null;
+        return results.Select(r => r.gameObject).ToList();
     }
 
     public static Vector2 GetCameraMovementValues(InputActionReference pointAction, Vector2 camSpeed) {
@@ -52,9 +40,6 @@ public static class Utilities {
         mousePos.y += coords.y * camSpeed.y * Time.deltaTime;
         return mousePos;
     }
-
-    public static bool ShouldMoveCamera(InputActionReference clickAction) =>
-        clickAction.action.IsPressed() && !IsPointerOverUI() && !AnyDropdownOpen();
 
     public static Quaternion CalcCamLocalRotation(Transform transform, InputActionReference deltaAction, CameraData camData) {
         Vector2 mv = GetCameraMovementValues(deltaAction, new(camData.xSpeed, -camData.ySpeed));
