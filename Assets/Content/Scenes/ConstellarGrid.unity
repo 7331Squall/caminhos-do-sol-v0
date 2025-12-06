@@ -208,7 +208,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14.35
+  m_fontSize: 26.85
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -4168,6 +4168,30 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4853300492679356980, guid: 8d0ee5da3d196864fb1f372f317040f0, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4853300492679356980, guid: 8d0ee5da3d196864fb1f372f317040f0, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4853300492679356980, guid: 8d0ee5da3d196864fb1f372f317040f0, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4853300492679356980, guid: 8d0ee5da3d196864fb1f372f317040f0, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4853300492679356980, guid: 8d0ee5da3d196864fb1f372f317040f0, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4853300492679356980, guid: 8d0ee5da3d196864fb1f372f317040f0, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5080140152853428583, guid: 8d0ee5da3d196864fb1f372f317040f0, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -4300,6 +4324,10 @@ PrefabInstance:
       propertyPath: celestialSphere
       value: 
       objectReference: {fileID: 835568969}
+    - target: {fileID: 7215047028355520110, guid: 8d0ee5da3d196864fb1f372f317040f0, type: 3}
+      propertyPath: shouldExposeCelestialSphereOption
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7470290246907509903, guid: 8d0ee5da3d196864fb1f372f317040f0, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

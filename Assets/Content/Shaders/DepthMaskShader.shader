@@ -6,8 +6,9 @@ Shader "Custom/DepthMaskShader"
         {
             "Queue"="Geometry-10"
         }
-        ColorMask 0
+        Cull Off
         ZWrite On
+        ColorMask 0
         Pass {}
     }
 }

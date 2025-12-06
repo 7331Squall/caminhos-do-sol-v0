@@ -22,7 +22,7 @@ public class OrbitalCamera : MonoBehaviour {
 
     [SerializeField]
     public Camera GalacticOverlayCamera;
-    
+
     enum States {
         Idle,
         MovingMainCam,
@@ -49,6 +49,7 @@ public class OrbitalCamera : MonoBehaviour {
         scrollAction.action.Enable();
         clickAction.action.started += _ => DefineState(true);
         clickAction.action.canceled += _ => DefineState(false);
+        scrollAction.action.performed += _ => ZoomCamera(scrollAction.action.ReadValue<Vector2>().y);
     }
 
     void InitTarget() {
@@ -77,7 +78,11 @@ public class OrbitalCamera : MonoBehaviour {
 
     void MoveCamera() {
         transform.localRotation = Utilities.CalcCamLocalRotation(transform, deltaAction, camData);
-        float scroll = scrollAction.action.ReadValue<Vector2>().y * (Utilities.AnyDropdownOpen() ? 0 : 1);
+
+    }
+
+    void ZoomCamera(float zoom) {
+        float scroll = zoom * (Utilities.AnyDropdownOpen() ? 0 : 1);
         TouchControl[] touches = Touchscreen.current.touches.Where(t => t.press.isPressed).ToArray();
         if (touches.Length >= 2) {
             TouchState t1 = touches[0].ReadValue();

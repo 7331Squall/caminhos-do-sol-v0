@@ -8,6 +8,8 @@ public class OptionsConstellationsMenu : MonoBehaviour {
     public SquackSceneManager sSceneManager;
     [Header("Settings")]
     public SquackConstellationSettings geoSettings;
+    [Tooltip("Should expose the \"Celestial Sphere\" Option in the menu?")]
+    public bool shouldExposeCelestialSphereOption = true;
 
     [Header("Objects")]
     public GameObject celestialSphere;
@@ -22,6 +24,7 @@ public class OptionsConstellationsMenu : MonoBehaviour {
     public CustomToggle imagesToggle;
     public CustomToggle milkyWayToggle;
     public CustomToggle equatorialGridToggle;
+    public CustomToggle showCelestialSphereToggle;
     public CustomToggle showAtmosphereToggle;
     public CustomToggle sunTrailsToggle;
 
@@ -29,6 +32,7 @@ public class OptionsConstellationsMenu : MonoBehaviour {
         _anim8R = GetComponent<Animator>();
         AssignEvents();
         ResetChecks();
+        showCelestialSphereToggle.gameObject.SetActive(shouldExposeCelestialSphereOption);
         return;
 
         void AssignEvents() {
@@ -39,6 +43,7 @@ public class OptionsConstellationsMenu : MonoBehaviour {
             milkyWayToggle.onValueChanged.AddListener(ToggleMilkyWay);
             equatorialGridToggle.onValueChanged.AddListener(ToggleGrid);
             showAtmosphereToggle.onValueChanged.AddListener(ToggleShowAtmosphere);
+            showCelestialSphereToggle.onValueChanged.AddListener(ToggleShowCelestialSphere);
             sunTrailsToggle.onValueChanged.AddListener(ToggleSunTrails);
             starsSlider.onValueChanged.AddListener(ChangeStarSlider);
         }
@@ -50,10 +55,12 @@ public class OptionsConstellationsMenu : MonoBehaviour {
             ToggleImages(imagesToggle.Value);
             ToggleMilkyWay(milkyWayToggle.Value);
             ToggleGrid(equatorialGridToggle.Value);
+            ToggleShowCelestialSphere(showCelestialSphereToggle.Value);
             ToggleShowAtmosphere(showAtmosphereToggle.Value);
             ToggleSunTrails(sunTrailsToggle.Value);
         }
     }
+
 
     void ChangeStarSlider(float val) => ChangeStarSlider((int) val);
 
@@ -98,9 +105,12 @@ public class OptionsConstellationsMenu : MonoBehaviour {
         equatorialGrid.SetActive(arg0);
     }
 
+    void ToggleShowCelestialSphere(bool arg0) {
+        occluderObject.SetActive(!arg0);
+    }
+
     void ToggleShowAtmosphere(bool arg0) {
         celestialSphere.SetActive(arg0);
-        occluderObject.SetActive(!arg0);
     }
 
     void ToggleSunTrails(bool arg0) {
