@@ -4,6 +4,7 @@ using UnityEngine;
 public class OptionsConstellationsMenu : MonoBehaviour {
     static readonly int IsWindowOn = Animator.StringToHash("IsWindowOn");
     Animator _anim8R;
+
     [Header("SceneManager")]
     public SquackSceneManager sSceneManager;
     [Header("Settings")]
@@ -12,8 +13,9 @@ public class OptionsConstellationsMenu : MonoBehaviour {
     public bool shouldExposeCelestialSphereOption = true;
 
     [Header("Objects")]
-    public GameObject celestialSphere;
-    public GameObject equatorialGrid;
+    public GameObject atmoSphere;
+    public GameObject gridSphere;
+    public GameObject backSphere;
     public GameObject occluderObject;
 
     [Header("Options")]
@@ -94,7 +96,7 @@ public class OptionsConstellationsMenu : MonoBehaviour {
     }
 
     void ToggleMilkyWay(bool milkyWayToggleValue) {
-        geoSettings.m_milkyway = milkyWayToggleValue;
+        backSphere.SetActive(milkyWayToggleValue);
     }
 
     void ToggleVirgo(bool virgoValue) {
@@ -102,15 +104,17 @@ public class OptionsConstellationsMenu : MonoBehaviour {
     }
 
     void ToggleGrid(bool arg0) {
-        equatorialGrid.SetActive(arg0);
+        gridSphere.SetActive(arg0);
     }
 
     void ToggleShowCelestialSphere(bool arg0) {
-        occluderObject.SetActive(!arg0);
+        if (occluderObject != null) {
+            occluderObject.SetActive(!arg0);
+        }
     }
 
     void ToggleShowAtmosphere(bool arg0) {
-        celestialSphere.SetActive(arg0);
+        atmoSphere.SetActive(arg0);
     }
 
     void ToggleSunTrails(bool arg0) {

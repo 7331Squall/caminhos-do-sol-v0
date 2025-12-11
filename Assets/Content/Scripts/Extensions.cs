@@ -9,6 +9,10 @@ public static class Extensions {
         dropdown.AddOptions(options);
         dropdown.value = Mathf.Clamp(value, 0, options.Count - 1);
     }
+    
+    public static void SetMaterialBoolParameter(this Material material, int parameterName, bool arg0) {
+        material.SetInt(parameterName, arg0 ? 1 : 0);
+    }
 
     public static bool IsFinite(this Vector3 v) => float.IsFinite(v.x) && float.IsFinite(v.y) && float.IsFinite(v.z);
 }

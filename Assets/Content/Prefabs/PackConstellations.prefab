@@ -4915,11 +4915,9 @@ MonoBehaviour:
   m_names: 1
   m_images: 1
   m_milkyway: 1
-  m_lookat: 1
   m_languageType: 0
   m_sunAffect: 0
   m_milkywayObj: {fileID: 0}
-  m_lookAtConstellations: {fileID: 0}
 --- !u!1 &2244282788471101389
 GameObject:
   m_ObjectHideFlags: 0
@@ -4964,6 +4962,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba72b845bbae4245a848654d52a14c52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Constellation.SquackConstellationNames
+  fontSizeMultiplier: 0.12
   hipparcosScr: {fileID: 0}
   posNameFile: {fileID: 4900000, guid: 1d73867e998fc4d78872e9014117c8dc, type: 3}
   textPrefab: {fileID: 1584602269187196, guid: fabc010857d844a92a4a6641bfa25108, type: 3}

@@ -21,16 +21,15 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: MI_Skybox
-  m_Shader: {fileID: -6465566751694194690, guid: 4e1b90b47b9d00e4e9b77a10d6d5f022, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 33d747f06b5fcc94da315da71707d0e3, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
-  m_InvalidKeywords:
-  - _EMISSION
+  m_InvalidKeywords: []
   m_LightmapFlags: 3
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2500
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses:
   - MOTIONVECTORS
@@ -98,6 +97,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_1411664e5d5649d98c169f6b9c9b61af_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: a0aa00f7335fc8a44835cd8e37adbf7d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_26a20113ed644449a25857b571210400_Texture_1_Texture2D:
         m_Texture: {fileID: 2800000, guid: a0aa00f7335fc8a44835cd8e37adbf7d, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -148,8 +151,12 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
-    - _QueueOffset: 50
+    - _QueueOffset: 0
     - _ReceiveShadows: 1
+    - _ShowAtmosphere: 1
+    - _ShowBackground: 1
+    - _ShowConstBounds: 1
+    - _ShowEquatorialGrid: 1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -163,10 +170,13 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BoundsColor: {r: 0.19999996, g: 0.5, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _GroundColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Offset: {r: 0, g: 1, b: 0, a: 0}
     - _SkyTint: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - _WireColor: {r: 1, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

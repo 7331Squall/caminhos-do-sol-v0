@@ -45,7 +45,6 @@ public class OptionsMenu : MonoBehaviour {
             _sunTrailToggle.onValueChanged.AddListener(ToggleSunTrail);
             _equatorialGridToggle.onValueChanged.AddListener(ToggleEquatorialGrid);
         }
-
     }
 
     void Start() {
