@@ -58,6 +58,7 @@ public class SquackSceneManager : MonoBehaviour {
     public float sphereRadius = 10f;
     OrbitalCamera _camera;
     ParticleSystem _lightParticle;
+    public Quaternion earthTilt = new(0, 0, -0.203641683f, 0.97904551f);
 #endregion
 
     void Awake() {
@@ -118,8 +119,8 @@ public class SquackSceneManager : MonoBehaviour {
         lightsGameObject.transform.rotation = calc.rotation;
         if (earthGameObject) {
             calc = GPTSolarCalc.GetEarthTransform(CurrentTime);
-            earthGameObject.transform.position = calc.position * sphereRadius;
-            earthGameObject.transform.rotation = calc.rotation;
+            earthGameObject.transform.position = new Vector3(calc.position.x, calc.position.y, -calc.position.z) * sphereRadius;
+            earthGameObject.transform.rotation = earthTilt * calc.rotation; // earthPivot?
         }
         constellationGameObject.transform.rotation = GPTSolarCalc.OrientationForCelestialPole(Latitude, CurrentTime);
     }

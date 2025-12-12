@@ -703,15 +703,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6131297423678469685, guid: 8e84d610eb201f74595483a0f176bd67, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.84034
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6131297423678469685, guid: 8e84d610eb201f74595483a0f176bd67, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.78035
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6131297423678469685, guid: 8e84d610eb201f74595483a0f176bd67, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.33038
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6131297423678469685, guid: 8e84d610eb201f74595483a0f176bd67, type: 3}
       propertyPath: m_LocalRotation.w
@@ -810,6 +810,7 @@ MonoBehaviour:
   constellationGameObject: {fileID: 664208580}
   earthGameObject: {fileID: 0}
   sphereRadius: 10
+  earthPivot: {x: 0, y: 0, z: 0, w: 0}
 --- !u!4 &789087414
 Transform:
   m_ObjectHideFlags: 0
