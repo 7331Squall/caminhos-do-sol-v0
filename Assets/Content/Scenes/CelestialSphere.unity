@@ -1556,6 +1556,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: SolarSystemDiagramBG
       objectReference: {fileID: 0}
+    - target: {fileID: 8404299387079529620, guid: 490842eaf990ea542b48aa42433daf74, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2942589229649717187}
+    - target: {fileID: 8404299387079529620, guid: 490842eaf990ea542b48aa42433daf74, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleMaximize
+      objectReference: {fileID: 0}
+    - target: {fileID: 8404299387079529620, guid: 490842eaf990ea542b48aa42433daf74, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: OverlayMaximizer, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8404299387079529620, guid: 490842eaf990ea542b48aa42433daf74, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8431513928299167531, guid: 490842eaf990ea542b48aa42433daf74, type: 3}
       propertyPath: m_Pivot.x
       value: 1
@@ -1582,7 +1598,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8431513928299167531, guid: 490842eaf990ea542b48aa42433daf74, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 140
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8431513928299167531, guid: 490842eaf990ea542b48aa42433daf74, type: 3}
       propertyPath: m_SizeDelta.y
@@ -1641,6 +1657,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 490842eaf990ea542b48aa42433daf74, type: 3}
+--- !u!114 &2942589229649717187 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1261593297731066116, guid: 490842eaf990ea542b48aa42433daf74, type: 3}
+  m_PrefabInstance: {fileID: 2942589229649717186}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb85149534f8a1146a39d8f3db30b540, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!4 &6584419578709758625
 Transform:
   m_ObjectHideFlags: 0
