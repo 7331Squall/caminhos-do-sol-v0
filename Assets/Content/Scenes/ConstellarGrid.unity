@@ -203,7 +203,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26.85
+  m_fontSize: 24.3
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -701,6 +701,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 789087414}
     m_Modifications:
+    - target: {fileID: 1581273831104881944, guid: 8e84d610eb201f74595483a0f176bd67, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 1fe8f5755f67bc9478ee33bd4c942872, type: 2}
     - target: {fileID: 6131297423678469685, guid: 8e84d610eb201f74595483a0f176bd67, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -810,7 +814,7 @@ MonoBehaviour:
   constellationGameObject: {fileID: 664208580}
   earthGameObject: {fileID: 0}
   sphereRadius: 10
-  earthPivot: {x: 0, y: 0, z: 0, w: 0}
+  earthTilt: {x: 0, y: 0, z: -0.20364168, w: 0.9790455}
 --- !u!4 &789087414
 Transform:
   m_ObjectHideFlags: 0

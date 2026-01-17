@@ -684,7 +684,7 @@ PrefabInstance:
     - target: {fileID: 4931548061384000103, guid: 8e84d610eb201f74595483a0f176bd67, type: 3}
       propertyPath: targetCamera
       value: 
-      objectReference: {fileID: 9211673728483314537}
+      objectReference: {fileID: 6968253357732807347}
     - target: {fileID: 6131297423678469685, guid: 8e84d610eb201f74595483a0f176bd67, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1478,7 +1478,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 476c2367015e49bc8291efeeb1f7bfca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Constellation.SquackConstellationSettings
---- !u!4 &1082343938368460600 stripped
+--- !u!4 &1805037515201510581 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4233740765962885717, guid: 665e39b531ba2ce46bedfe5fd159af87, type: 3}
   m_PrefabInstance: {fileID: 2579872943074453216}
@@ -1531,6 +1531,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4862120989683508307, guid: 665e39b531ba2ce46bedfe5fd159af87, type: 3}
+      propertyPath: m_ClearFlags
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6216490519647048974, guid: 665e39b531ba2ce46bedfe5fd159af87, type: 3}
       propertyPath: m_Name
       value: OrthographicCameras
@@ -1539,8 +1543,21 @@ PrefabInstance:
       propertyPath: GalacticOverlayCamera
       value: 
       objectReference: {fileID: 383122734}
+    - target: {fileID: 7618682585582174587, guid: 665e39b531ba2ce46bedfe5fd159af87, type: 3}
+      propertyPath: m_ClearDepth
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7938991902262820968, guid: 665e39b531ba2ce46bedfe5fd159af87, type: 3}
+      propertyPath: m_CameraType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7938991902262820968, guid: 665e39b531ba2ce46bedfe5fd159af87, type: 3}
+      propertyPath: m_ClearDepth
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2177544077549495839, guid: 665e39b531ba2ce46bedfe5fd159af87, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 665e39b531ba2ce46bedfe5fd159af87, type: 3}
@@ -1681,11 +1698,16 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1082343938368460600}
+  - {fileID: 1805037515201510581}
   - {fileID: 650608969}
   - {fileID: 506839794}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!20 &6968253357732807347 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 4862120989683508307, guid: 665e39b531ba2ce46bedfe5fd159af87, type: 3}
+  m_PrefabInstance: {fileID: 2579872943074453216}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7306974224958249174
 GameObject:
   m_ObjectHideFlags: 0
@@ -1721,11 +1743,6 @@ MonoBehaviour:
   earthGameObject: {fileID: 269580017}
   sphereRadius: 10
   earthTilt: {x: 0, y: 0, z: 0.20364176, w: 0.97904545}
---- !u!20 &9211673728483314537 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 4862120989683508307, guid: 665e39b531ba2ce46bedfe5fd159af87, type: 3}
-  m_PrefabInstance: {fileID: 2579872943074453216}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
