@@ -56,6 +56,8 @@ public class SquackSceneManager : MonoBehaviour {
     [CanBeNull]
     public GameObject earthGameObject;
     public float sphereRadius = 10f;
+    [Tooltip("Visual Multiplier where 1 Unity unit = 1e-9 meters")]
+    public float orbitScaleEMinus9 = 1f;
     OrbitalCamera _camera;
     ParticleSystem _lightParticle;
     public Quaternion earthTilt = new(0, 0, -0.203641683f, 0.97904551f);
@@ -91,10 +93,10 @@ public class SquackSceneManager : MonoBehaviour {
             double simValue = simSecondsPerSecond * Time.deltaTime;
             _simulationDateTime = _simulationDateTime.AddSeconds(simValue);
             if (_simIntervalField.Value > (int) Continuous) {
-                if (TimeBetween(_simStartTime, CurrentTime, _simulationDateTime) && DoSunTrail) {
-                    _lightParticle.Pause(true);
+                if (TimeBetween(_simStartTime, CurrentTime, _simulationDateTime)) {
+                    if (DoSunTrail) _lightParticle.Pause(true);
                     _simulationDateTime = _simulationDateTime.AddDays(IntervalInDays(_simIntervalField.Value));
-                    PlayParticle();
+                    if (DoSunTrail) PlayParticle();
                 }
             }
             CurrentTime = _simulationDateTime;
@@ -118,9 +120,11 @@ public class SquackSceneManager : MonoBehaviour {
         lightsGameObject.transform.position = calc.position * sphereRadius;
         lightsGameObject.transform.rotation = calc.rotation;
         if (earthGameObject) {
-            calc = GPTSolarCalc.GetEarthTransform(CurrentTime);
-            earthGameObject.transform.position = new Vector3(calc.position.x, calc.position.y, -calc.position.z) * sphereRadius;
-            earthGameObject.transform.rotation = earthTilt * calc.rotation; // earthPivot?
+            // calc = GPTSolarCalc.GetEarthTransform(CurrentTime);
+            // earthGameObject.transform.position = new Vector3(calc.position.x, calc.position.y, -calc.position.z) * sphereRadius;
+            // earthGameObject.transform.rotation = earthTilt * calc.rotation; // earthPivot?
+            earthGameObject.transform.position = GPTEarthCalc.CalculateEarthPosition(CurrentTime, orbitScaleEMinus9);
+            earthGameObject.transform.rotation = GPTEarthCalc.CalculateEarthRotation(CurrentTime);
         }
         constellationGameObject.transform.rotation = GPTSolarCalc.OrientationForCelestialPole(Latitude, CurrentTime);
     }
