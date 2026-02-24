@@ -1,4 +1,4 @@
-# 🇬🇧 🇺🇸 Sun simulations
+# 🇬🇧 🇺🇸 Caminhos do Sol (Paths of the Sun)
 A Sun Motion Simulator, built (almost) from the ground up.
 
 This project relies HEAVILY on data from [CCNMTL Astro Simulation](https://github.com/ccnmtl/astro-simulations).
@@ -12,7 +12,7 @@ Assets used:
 * ["3D Modern Menu UI" from SlimUI in Unity Store](https://assetstore.unity.com/packages/tools/gui/3d-modern-menu-ui-116144) (Free)
 * ["88 Constellations procedural Sky" from Elix Inc. in Unity Store](https://assetstore.unity.com/packages/vfx/shaders/88-constellations-procedural-sky-314028) (Paid)
 ---
-# 🇵🇹 🇧🇷 Simulador Solar
+# 🇵🇹 🇧🇷 Caminhos do Sol
 Um Simulador de Movimentação Solar, feito (quase que) do zero.
 
 Este projeto depende MUITO de dados dos [Simuladores Astronômicos da CCNMTL](https://github.com/ccnmtl/astro-simulations).
