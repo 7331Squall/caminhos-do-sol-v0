@@ -65,18 +65,22 @@
         ]
       }
     ],
-    "rewrites": [
+    "redirects": [
       {
         "source": "/[R|r]odrigo",
-        "destination": "/Rodrigo.html"
+        "destination": "/CdS-Test",
+        "type": 301
       },
       {
         "source": "/[R|r]odrigo[C|c]lassic",
-        "destination": "/RodrigoClassic.html"
-      },
+        "destination": "/CdS-Test",
+        "type": 301
+      }
+    ],
+    "rewrites": [
       {
-        "source": "/[F|f]elipe",
-        "destination": "/Felipe.html"
+        "source": "/[C|c]d[S|s]-[T|t]est",
+        "destination": "/CaminhosDoSol/index.html"
       },
       {
         "source": "/",

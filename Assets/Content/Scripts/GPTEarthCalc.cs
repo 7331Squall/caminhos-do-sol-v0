@@ -81,13 +81,13 @@ public static class GPTEarthCalc {
 
         double rotations = secondsSinceJ2000 / SiderealDay;
 
-        return NormalizeAngle(rotations * 2.0 * Math.PI);
+        return NormalizeAngle(-rotations * 2.0 * Math.PI);
     }
 
     public static Quaternion CalculateEarthRotation(DateTime date) {
         double spinAngle = GetEarthSpinAngle(date);
 
-        Quaternion axialTilt = Quaternion.Euler((float) (AxialTilt * Mathf.Rad2Deg), 0f, 0f);
+        Quaternion axialTilt = Quaternion.Euler(0f, 0f, (float) (AxialTilt * Mathf.Rad2Deg));
 
         Quaternion spin = Quaternion.AngleAxis((float) (spinAngle * Mathf.Rad2Deg), axialTilt * Vector3.up);
 
