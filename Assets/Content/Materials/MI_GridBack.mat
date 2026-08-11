@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: MI_GridBack
-  m_Shader: {fileID: 4800000, guid: 4319af07714c49cfbe54f742fbf267bb, type: 3}
+  m_Shader: {fileID: 4800000, guid: bb74ecb4277149f40ab7c24a8edb67be, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -97,7 +97,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 8f566912164140d40bf359f49c2c51a2, type: 3}
+        m_Texture: {fileID: 2800000, guid: af621bb8ad4c51f42bdc783398f867db, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -187,6 +187,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
+    - _LineBoost: 10
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
@@ -215,7 +216,7 @@ Material:
     - _BoundsColor: {r: 1, g: 0.19999999, b: 0.19999999, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _GridColor: {r: 0, g: 1, b: 0, a: 1}
+    - _GridColor: {r: 1, g: 1, b: 1, a: 1}
     - _Offset: {r: 1, g: 1, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _TextureOffset: {r: 0, g: 0, b: 0, a: 0}
