@@ -4964,7 +4964,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Constellation.SquackConstellationNames
   fontSizeMultiplier: 0.12
   hipparcosScr: {fileID: 0}
-  posNameFile: {fileID: 4900000, guid: 1d73867e998fc4d78872e9014117c8dc, type: 3}
+  posNameFile: {fileID: 4900000, guid: 892e1c5c2b108734c9271eca223026d5, type: 3}
   textPrefab: {fileID: 1584602269187196, guid: fabc010857d844a92a4a6641bfa25108, type: 3}
   targetCamera: {fileID: 0}
   distance: 380
@@ -5247,9 +5247,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7e549d7444e141c3b4048deb22156ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightFile: {fileID: 4900000, guid: 1eb518550456648a08985578d612a28e, type: 3}
-  appendLightFile: {fileID: 4900000, guid: dba8b22618d5d45ba967bab6305f6f59, type: 3}
-  lineFile: {fileID: 4900000, guid: 20c987857243e47b88fb78a26b065e73, type: 3}
+  lightFile: {fileID: 4900000, guid: 7810f19c43c61e94682e00bce242b966, type: 3}
+  appendLightFile: {fileID: 4900000, guid: a976b38d4c6a57d408d64eb4959854bd, type: 3}
+  lineFile: {fileID: 4900000, guid: dcc974e370a43a14faf68ea031ee8de3, type: 3}
   m_distance: 390
 --- !u!1 &8377896058658804254
 GameObject:
