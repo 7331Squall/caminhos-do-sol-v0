@@ -151,7 +151,8 @@ namespace Constellation {
             int id = 1;
             while (sr.Peek() > -1) {
                 string lineStr = sr.ReadLine();
-                if (lineStr != null && lineStr.StartsWith("//")) { continue; }
+                // Ignora linhas vazias e comentários
+                if (string.IsNullOrWhiteSpace(lineStr) || lineStr.TrimStart().StartsWith("//")) { continue; }
                 if (lineStr != null) {
                     string[] dataArr = lineStr.Split(',');
                     //            int id = int.Parse(dataArr[0]);

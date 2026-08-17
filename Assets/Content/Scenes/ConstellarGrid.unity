@@ -203,7 +203,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24.3
+  m_fontSize: 20.6
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -810,10 +810,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HUD: {fileID: 279044163}
+  equinoxPanel: {fileID: 1734752900}
   lightsGameObject: {fileID: 1721066521}
   constellationGameObject: {fileID: 664208580}
   earthGameObject: {fileID: 0}
   sphereRadius: 10
+  orbitScaleEMinus9: 1
   earthTilt: {x: 0, y: 0, z: -0.20364168, w: 0.9790455}
 --- !u!4 &789087414
 Transform:
@@ -1658,6 +1660,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7081487869976605969, guid: 83145519ecb049d4181c1bc1dbee727a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 45
+      objectReference: {fileID: 0}
     - target: {fileID: 7729425230691451012, guid: 83145519ecb049d4181c1bc1dbee727a, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1753,6 +1759,11 @@ PrefabInstance:
       addedObject: {fileID: 1372624618}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83145519ecb049d4181c1bc1dbee727a, type: 3}
+--- !u!1 &1734752900 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4069867424308879703, guid: 83145519ecb049d4181c1bc1dbee727a, type: 3}
+  m_PrefabInstance: {fileID: 1734752899}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1793599820
 GameObject:
   m_ObjectHideFlags: 0

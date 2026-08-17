@@ -1449,6 +1449,11 @@ Light:
   m_LightUnit: 1
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
+--- !u!1 &1197655045 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4069867424308879703, guid: 83145519ecb049d4181c1bc1dbee727a, type: 3}
+  m_PrefabInstance: {fileID: 1266315082}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1266315082
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1465,9 +1470,21 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 743998740543159877, guid: 83145519ecb049d4181c1bc1dbee727a, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 743998740543159877, guid: 83145519ecb049d4181c1bc1dbee727a, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 963825991500348225, guid: 83145519ecb049d4181c1bc1dbee727a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2696385644585961958, guid: 83145519ecb049d4181c1bc1dbee727a, type: 3}
+      propertyPath: m_fontSize
+      value: 16.8
       objectReference: {fileID: 0}
     - target: {fileID: 5155360824735389188, guid: 83145519ecb049d4181c1bc1dbee727a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -2076,6 +2093,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HUD: {fileID: 248058349}
+  equinoxPanel: {fileID: 1197655045}
   lightsGameObject: {fileID: 413287896}
   constellationGameObject: {fileID: 1761832641}
   earthGameObject: {fileID: 269580017}

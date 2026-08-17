@@ -12,9 +12,10 @@ using static UnityEngine.ParticleSystem;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 
-public class SquackSceneManager : MonoBehaviour {
+public class SquackSceneManager : MonoBehaviour
+{
+    #region HUD
 
-#region HUD
     // ReSharper disable once InconsistentNaming
     public Canvas HUD;
     NewDateTimeField _datetimeField;
@@ -23,58 +24,85 @@ public class SquackSceneManager : MonoBehaviour {
     SimSliderField _simIntervalField;
     Button _simButton;
     Button _optButton;
-#endregion
+    [SerializeField]
+    GameObject equinoxPanel;
+    TMP_Text _equinoxText;
 
-#region ExternalVariables
-    DateTime CurrentTime {
+    #endregion
+
+    #region ExternalVariables
+
+    DateTime CurrentTime
+    {
         get => _datetimeField.Value;
         set => _datetimeField.Value = value;
     }
-    float Latitude {
+
+    float Latitude
+    {
         get => _latitudeField.Value;
         set => _latitudeField.Value = value;
     }
-#endregion
 
-#region SimulationVariables
+    #endregion
+
+    #region SimulationVariables
+
     bool _isSimulating;
     bool _doSunTrail;
-    public bool DoSunTrail {
+
+    public bool DoSunTrail
+    {
         get => _doSunTrail;
-        set {
+        set
+        {
             _doSunTrail = value;
             TryAndResetParticle();
         }
     }
+
     DateTime _simulationDateTime;
     DateTime _simStartTime;
-#endregion
 
-#region Others
+    #endregion
+
+    #region Others
+
     public GameObject lightsGameObject;
     public GameObject constellationGameObject;
-    [CanBeNull]
-    public GameObject earthGameObject;
+    [CanBeNull] public GameObject earthGameObject;
     public float sphereRadius = 10f;
+
     [Tooltip("Visual Multiplier where 1 Unity unit = 1e-9 meters")]
     public float orbitScaleEMinus9 = 1f;
+
     OrbitalCamera _camera;
     ParticleSystem _lightParticle;
     public Quaternion earthTilt = new(0, 0, -0.203641683f, 0.97904551f);
-#endregion
+    private static readonly (int day, int month)[] SNAutumnEquinox = { (20, 03), (22, 09) };
+    private static readonly (int day, int month)[] SNWinterSolstice = { (21, 06), (23, 12) };
 
-    void Awake() {
+    #endregion
+
+    void Awake()
+    {
         _datetimeField = HUD.GetComponentInChildren<NewDateTimeField>();
         _latitudeField = HUD.GetComponentInChildren<NewLatitudeField>();
         _simButton = HUD.GetComponentsInChildren<Button>().ToList().Find(x => x.name.Contains("SimButton"));
         _optButton = HUD.GetComponentsInChildren<Button>().ToList().Find(x => x.name.Contains("OptButton"));
-        _simSpeedField = HUD.GetComponentsInChildren<SimSliderField>().ToList().Find(x => x.name.Contains("SimSpeedField"));
-        _simIntervalField = HUD.GetComponentsInChildren<SimSliderField>().ToList().Find(x => x.name.Contains("SimIntervalField"));
+        _simSpeedField = HUD.GetComponentsInChildren<SimSliderField>().ToList()
+            .Find(x => x.name.Contains("SimSpeedField"));
+        _simIntervalField = HUD.GetComponentsInChildren<SimSliderField>().ToList()
+            .Find(x => x.name.Contains("SimIntervalField"));
+        //_equinoxPanel = HUD.GetComponentsInChildren<GameObject>().ToList().Find(x => x.name.Contains("EquinoxPanel"));
+        _equinoxText = equinoxPanel.GetComponentsInChildren<TMP_Text>().ToList()
+            .Find(x => x.name.Contains("EquinoxText"));
         _lightParticle = lightsGameObject.GetComponent<ParticleSystem>();
         _camera = GetComponentInChildren<OrbitalCamera>();
     }
 
-    void Start() {
+    void Start()
+    {
         CurrentTime = new DateTime(2000, 12, 23, 12, 00, 0);
         Latitude = -23f;
         _simButton.onClick.AddListener(ToggleSimulation);
@@ -85,28 +113,36 @@ public class SquackSceneManager : MonoBehaviour {
         DataUpdated();
     }
 
-    void Update() {
-        if (_isSimulating) {
+    void Update()
+    {
+        if (_isSimulating)
+        {
             if (_simulationDateTime.Year == 1999)
                 _simulationDateTime = CurrentTime;
             int simSecondsPerSecond = SpeedInSeconds(_simSpeedField.Value);
             double simValue = simSecondsPerSecond * Time.deltaTime;
             _simulationDateTime = _simulationDateTime.AddSeconds(simValue);
-            if (_simIntervalField.Value > (int) Continuous) {
-                if (TimeBetween(_simStartTime, CurrentTime, _simulationDateTime)) {
+            if (_simIntervalField.Value > (int)Continuous)
+            {
+                if (TimeBetween(_simStartTime, CurrentTime, _simulationDateTime))
+                {
                     if (DoSunTrail) _lightParticle.Pause(true);
                     _simulationDateTime = _simulationDateTime.AddDays(IntervalInDays(_simIntervalField.Value));
                     if (DoSunTrail) PlayParticle();
                 }
             }
+
             CurrentTime = _simulationDateTime;
             DataUpdated();
-        } else if (_simulationDateTime.Year != 1999) {
+        }
+        else if (_simulationDateTime.Year != 1999)
+        {
             _simulationDateTime = new DateTime(1999, 1, 1, 12, 0, 0);
         }
     }
 
-    static bool TimeBetween(DateTime evalTime, DateTime startTime, DateTime endTime) {
+    static bool TimeBetween(DateTime evalTime, DateTime startTime, DateTime endTime)
+    {
         TimeSpan eval = evalTime.TimeOfDay;
         TimeSpan start = startTime.TimeOfDay;
         TimeSpan end = endTime.TimeOfDay;
@@ -114,54 +150,92 @@ public class SquackSceneManager : MonoBehaviour {
         return (!differentDays && start < eval && end >= eval) || (differentDays && (start < eval || end >= eval));
     }
 
-    void DataUpdated() {
+    void DataUpdated()
+    {
         TryAndResetParticle();
         (Vector3 position, Quaternion rotation) calc = GPTSolarCalc.GetPositionNOAA(Latitude, CurrentTime);
         lightsGameObject.transform.position = calc.position * sphereRadius;
         lightsGameObject.transform.rotation = calc.rotation;
-        if (earthGameObject) {
+        if (earthGameObject)
+        {
             // calc = GPTSolarCalc.GetEarthTransform(CurrentTime);
             // earthGameObject.transform.position = new Vector3(calc.position.x, calc.position.y, -calc.position.z) * sphereRadius;
             // earthGameObject.transform.rotation = earthTilt * calc.rotation; // earthPivot?
             earthGameObject.transform.position = GPTEarthCalc.CalculateEarthPosition(CurrentTime, orbitScaleEMinus9);
             earthGameObject.transform.rotation = GPTEarthCalc.CalculateEarthRotation(CurrentTime);
         }
+
         constellationGameObject.transform.rotation = GPTSolarCalc.OrientationForCelestialPole(Latitude, CurrentTime);
+        UpdateEquinoxText();
     }
 
-    void TryAndResetParticle() {
+    private void UpdateEquinoxText()
+    {
+        string equinoxType = "";
+        bool panelVisible = false;
+        if (SNAutumnEquinox.Contains((CurrentTime.Day, CurrentTime.Month)))
+        {
+            if ((CurrentTime.Month == 9 && Latitude > 0) || (CurrentTime.Month == 3 && Latitude <= 0))
+                equinoxType = "<color=#E8B999>Equinócio de Outono</color>";
+            else 
+                equinoxType = "<color=#D4E899>Equinócio de Primavera</color>";
+            panelVisible = true;
+        } else if (SNWinterSolstice.Contains((CurrentTime.Day, CurrentTime.Month)))
+        {
+            if ((CurrentTime.Month == 6 && Latitude > 0) || (CurrentTime.Month == 12 && Latitude <= 0))
+                equinoxType = "<color=#99D9E9>Solstício de Inverno</color>";
+            else 
+                equinoxType = "<color=#E89999>Solstício de Verão</color>";
+            panelVisible = true;
+        }
+        _equinoxText.text = equinoxType;
+        equinoxPanel.gameObject.SetActive(panelVisible);
+    }
+
+    void TryAndResetParticle()
+    {
         if (!_isSimulating)
             _lightParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
     }
 
-    public void UpdateProps(OrbitalCameraData props) {
+    public void UpdateProps(OrbitalCameraData props)
+    {
         _camera.camData = props ?? new OrbitalCameraData();
         sphereRadius = _camera.camData.sunDistance;
         lightsGameObject.transform.localScale = Vector3.one * sphereRadius / 10f;
         DataUpdated();
     }
 
-    void ToggleSimulation() {
-        if (!_isSimulating) {
+    void ToggleSimulation()
+    {
+        if (!_isSimulating)
+        {
         }
+
         AdjustHudForSim();
         MainModule main = _lightParticle.main;
         _simStartTime = CurrentTime;
-        if (_simIntervalField.Value == (int) Continuous) {
+        if (_simIntervalField.Value == (int)Continuous)
+        {
             main.startLifetime = SpeedInSeconds(OneDay) / SpeedInSeconds(_simSpeedField.Value);
-        } else {
+        }
+        else
+        {
             main.startLifetime = float.MaxValue;
         }
+
         if (_isSimulating && DoSunTrail)
             PlayParticle();
     }
 
-    void PlayParticle() {
+    void PlayParticle()
+    {
         if (!DoSunTrail) return;
         _lightParticle.Play(true);
     }
 
-    void AdjustHudForSim() {
+    void AdjustHudForSim()
+    {
         _isSimulating = !_isSimulating;
         _latitudeField.Interactable = !_isSimulating;
         _datetimeField.Interactable = !_isSimulating;
