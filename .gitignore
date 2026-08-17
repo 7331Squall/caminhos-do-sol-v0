@@ -94,5 +94,7 @@ crashlytics-build.properties
 
 
 /[Aa]ssets/[Pp]ackages/*
+#CSV
+!/[Aa]ssets/[Pp]ackages/Constellation/Csv/*
 
 /_OUTPUT/*

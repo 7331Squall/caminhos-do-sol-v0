@@ -1,0 +1,90 @@
+// id,IH,IM,sD,code,name _la,name_en,なまえ,이름
+1,0,40,38,And,Andromeda,Chained Maiden,アンドロメダ,안드로메다
+2,10,0,-35,Ant,Antlia,Air Pump,ポンプ,공기펌프
+3,16,0,-76,Aps,Apus,Bird of Paradise,ふうちょう,극락조
+4,19,30,2,Aql,Aquila,Eagle,わし,독수리
+5,22,20,-13,Aqr,Aquarius,Water Bearer,みずがめ,물병
+6,17,10,-55,Ara,Ara,Altar,さいだん,제단
+7,2,30,20,Ari,Aries,Ram,おひつじ,양
+8,6,0,42,Aur,Auriga,Charioteer,ぎょしゃ,마차부
+9,14,35,30,Boo,Bootes,Herdsman,うしかい,목동
+10,4,50,-38,Cae,Caelum,Engraving Tool,ちょうこくぐ,조각도
+11,5,40,70,Cam,Camelopardalis,Giraffe ,きりん,기린
+12,20,50,-20,Cap,Capricornus,Goat,やぎ,바다염소
+13,8,40,-62,Car,Carina,Keel ,りゅうこつ,용골
+14,1,0,60,Cas,Cassiopeia,Queen,カシオペヤ,카시오페이아
+15,13,20,-47,Cen,Centaurus,Centaur,ケンタウルス,켄타우루스
+16,22,0,70,Cep,Cepheus,King,ケフェウス,케페우스
+17,1,45,-12,Cet,Cetus,Whale,くじら,고래
+18,10,40,-78,Cha,Chamaeleon,Chameleon ,カメレオン,카멜레온
+19,14,50,-63,Cir,Circinus,Compass,コンパス,컴퍼스
+20,6,40,-24,CMa,Canis Major,Great Dog,おおいぬ,큰개
+21,7,30,6,CMi,Canis Minor,Lesser Dog,こいぬ,작은개
+22,8,30,20,Cnc,Cancer,Crab ,かに,게
+23,5,40,-34,Col,Columba,Dove ,はと,비둘기
+24,12,40,23,Com,Coma Berenices,Berenice’s Hair,かみのけ,머리털
+25,18,30,-41,CrA,Corona Australis,Southern Crown,みなみのかんむり,남쪽왕관
+26,15,40,30,CrB,Corona Borealis,Northern Crown,かんむり,북쪽왕관
+27,11,20,-15,Crt,Crater,Cup,コップ,컵
+28,12,20,-60,Cru,Crux,Southern Cross,みなみじゅうじ,남십자
+29,12,20,-18,Crv,Corvus,Crow ,からす,까마귀
+30,13,0,40,CVn,Canes Venatici,Hunting Dogs,りょうけん,사냥개
+31,20,30,43,Cyg,Cygnus,Swan ,はくちょう,백조
+32,20,40,12,Del,Delphinus,Dolphin,いるか,돌고래
+33,5,0,-60,Dor,Dorado,Swordfish,かじき,황새치
+34,17,0,60,Dra,Draco,Dragon,りゅう,용
+35,21,10,6,Equ,Equuleus,Little Horse,こうま,조랑말
+36,3,50,-30,Eri,Eridanus,River,エリダヌス,에리다누스
+37,2,30,-33,For,Fornax,Furnace,ろ,화학로
+38,7,0,22,Gem,Gemini,Twins ,ふたご,쌍둥이
+39,22,20,-47,Gru,Grus,Crane,つる,두루미
+40,17,10,27,Her,Hercules,Hercules ,ヘルクレス,헤라클레스
+41,3,20,-52,Hor,Horologium,Clock,とけい,시계
+42,10,30,-20,Hya,Hydra,Water Sneak,うみへび,물뱀
+43,2,40,-70,Hyi,Hydrus,Male Water Snake,みずへび,바다뱀
+44,21,20,-58,Ind,Indus,Indian ,インディアン,인도인
+45,22,25,43,Lac,Lacerta,Lizard,とかげ,도마뱀
+46,10,30,15,Leo,Leo,Lion ,しし,사자
+47,5,25,-20,Lep,Lepus,Hare ,うさぎ,토끼
+48,15,10,-14,Lib,Libra,Scales,てんびん,천칭
+49,10,20,33,LMi,Leo Minor,Lesser Lion,こじし,작은사자
+50,15,0,-40,Lup,Lupus,Wolf,おおかみ,이리
+51,7,50,45,Lyn,Lynx,Lynx,やまねこ,살쾡이
+52,18,45,36,Lyr,Lyra,Lyra ,こと,거문고
+53,5,40,-77,Men,Mensa,Table  Mountain,テーブルさん,테이블산
+54,20,50,-37,Mic,Microscopium,Microscope ,けんびきょう,현미경
+55,7,0,-3,Mon,Monoceros,Unicorn ,いっかくじゅう,외뿔소
+56,12,30,-70,Mus,Musca,Fly,はえ,파리
+57,16,0,-50,Nor,Norma,Square,じょうぎ,수준기
+58,21,0,-87,Oct,Octans,Octant,はちぶんぎ,팔분의
+59,17,10,-5,Oph,Ophiuchus,Serpent Bearer,へびつかい,뱀주인
+60,5,20,3,Ori,Orion,Hunter ,オリオン,오리온
+61,19,10,-65,Pav,Pavo,Peacock ,くじゃく,공작
+62,22,30,17,Peg,Pegasus,Winged Horse,ペガスス,페가수스
+63,3,20,42,Per,Perseus,Hero ,ペルセウス,페르세우스
+64,1,0,-48,Phe,Phoenix,Fire Bird,ほうおう,봉황새
+65,5,30,-52,Pic,Pictor,Painter’s Easel,がか,조각실
+66,22,10,-32,PsA,Piscis Austrinus,Southern Fish,みなみのうお,남쪽물고기
+67,0,20,10,Psc,Pisces,Fishes ,うお,물고기
+68,7,40,-32,Pup,Puppis,Stern,とも,고물
+69,8,50,-28,Pyx,Pyxis,Compass ,らしんばん,나침반
+70,3,50,-63,Ret,Reticulum,Reticle,レチクル,그물
+71,0,30,-35,Scl,Sculptor,Sculptor,ちょうこくしつ,조각실
+72,16,30,-26,Sco,Scorpius,Scorpion,さそり,전갈
+73,18,35,-10,Sct,Scutum,Shield ,たて,방패
+74,15,35,10,SeA,Serpens(Caput),Serpent (head),へび (頭),뱀 (head)
+75,18,0,-5,SeB,Serpens(Cauda),Serpent (tail),へび (尾),뱀 (tail)
+76,10,10,-1,Sex,Sextans,Sextant,ろくぶんぎ,육분의
+77,19,40,18,Sge,Sagitta,Arrow ,や,화살
+78,19,0,-25,Sgr,Sagittarius,Archer,いて,궁수
+79,4,30,18,Tau,Taurus,Bull,おうし,황소
+80,19,0,-52,Tel,Telescopium,Telescope,ぼうえんきょう,망원경
+81,15,40,-65,TrA,Triangulum Australe,Southern Triangle,みなみのさんかく,남쪽삼각형
+82,2,0,32,Tri,Triangulum,Triangle,さんかく,삼각형
+83,23,45,-68,Tuc,Tucana,Toucan,きょしちょう,큰부리새
+84,11,0,58,UMa,Ursa Major,Great Bear,おおぐま,큰곰
+85,15,40,78,UMi,Ursa Minor,Little Bear,こぐま,작은곰
+86,9,30,-45,Vel,Vela,Sails,ほ,돛
+87,13,20,-2,Vir,Virgo,Maiden,おとめ,처녀
+88,7,40,-69,Vol,Volans,Flying Fish,とびうお,날치
+89,20,10,25,Vul,Vulpecula,Little Fox,こぎつね,여우

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: dba8b22618d5d45ba967bab6305f6f59
+timeCreated: 1519707982
+licenseType: Store
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 314028
+  packageName: 88 Constellations procedural Sky
+  packageVersion: 1.05
+  assetPath: Assets/Constellation/Csv/hip_lite_vmag4.csv
+  uploadId: 758062
