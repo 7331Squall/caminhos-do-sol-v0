@@ -12,5 +12,5 @@ AssetOrigin:
   productId: 314028
   packageName: 88 Constellations procedural Sky
   packageVersion: 1.05
-  assetPath: Assets/Constellation/Csv/constellation_posName_utf8.csv
+  assetPath: Assets/Packages/Constellation/Csv/constellation_posName_utf8.csv
   uploadId: 758062

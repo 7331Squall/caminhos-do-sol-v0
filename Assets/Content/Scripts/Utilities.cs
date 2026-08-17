@@ -15,7 +15,7 @@ public static class Utilities {
 
     // ✅ Verifica se qualquer TMP_Dropdown está expandido
     public static bool AnyDropdownOpen() {
-        TMP_Dropdown[] dropdowns = Object.FindObjectsByType<TMP_Dropdown>(FindObjectsSortMode.None); // FindObjectsOfType<TMP_Dropdown>();
+        TMP_Dropdown[] dropdowns = Object.FindObjectsByType<TMP_Dropdown>(); // FindObjectsOfType<TMP_Dropdown>();
         return dropdowns.Any(dd => dd.IsExpanded);
     }
 

@@ -12,5 +12,5 @@ AssetOrigin:
   productId: 314028
   packageName: 88 Constellations procedural Sky
   packageVersion: 1.05
-  assetPath: Assets/Constellation/Csv/hip_lite_vmag4.csv
+  assetPath: Assets/Packages/Constellation/Csv/hip_lite_vmag4.csv
   uploadId: 758062

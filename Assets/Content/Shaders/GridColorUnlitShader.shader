@@ -2,7 +2,7 @@ Shader "Custom/GridColorUnlitShader"
 {
     Properties
     {
-        [Enum(UnityEngine.Rendering.Cull)]
+        [Enum(Cull)]
         _Cull ("Cull Mode", Float) = 2
         _Offset ("Texture Offset", Vector) = (0,0,0,0)
         _GridColor ("Grid Color", Color) = (1,0,0,1)

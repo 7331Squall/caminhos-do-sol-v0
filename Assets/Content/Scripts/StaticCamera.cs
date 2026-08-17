@@ -35,7 +35,7 @@ public class StaticCamera : MonoBehaviour {
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
-        GameObject panel = FindObjectsByType<GameObject>(FindObjectsSortMode.None).First(x => x.name == "CameraPanel");
+        GameObject panel = FindObjectsByType<GameObject>().First(x => x.name == "CameraPanel");
         _prevButton = panel.GetComponentsInChildren<Button>().First(x => x.name == "PrevButton");
         _prevButton.onClick.AddListener(PrevCam);
         _nextButton = panel.GetComponentsInChildren<Button>().First(x => x.name == "NextButton");

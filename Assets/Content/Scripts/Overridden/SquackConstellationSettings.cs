@@ -57,7 +57,7 @@ namespace Constellation {
             // if (m_lookAtConstellations == null)
             //     m_lookAtConstellations = FindAnyObjectByType<LookAtConstellations>();
 
-            Light[] lightArr = FindObjectsByType<Light>(FindObjectsSortMode.None);
+            Light[] lightArr = FindObjectsByType<Light>();
             if (lightArr != null) {
                 m_sunLight = lightArr.FirstOrDefault(l => l.type == LightType.Directional);
             }

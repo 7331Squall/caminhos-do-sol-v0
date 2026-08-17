@@ -25,7 +25,7 @@ public class FindURPLitShaders : EditorWindow
         int count = 0;
         List<string> results = new List<string>();
 
-        Renderer[] renderers = FindObjectsByType<Renderer>(FindObjectsSortMode.None);
+        Renderer[] renderers = FindObjectsByType<Renderer>();
 
         foreach (var renderer in renderers)
         {
