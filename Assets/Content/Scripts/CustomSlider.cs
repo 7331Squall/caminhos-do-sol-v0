@@ -10,6 +10,9 @@ public class CustomSlider : MonoBehaviour {
     Slider customSlider;
     [SerializeField, HideInInspector]
     TMP_Text customSliderLabel;
+    
+    [SerializeField, Tooltip("If -1, assume last option. Will clamp to (-1, labels.Count)")]
+    int defaultValue = -1;
 
     [SerializeField]
     public List<string> labels;
@@ -39,9 +42,10 @@ public class CustomSlider : MonoBehaviour {
         customSliderLabel = GetComponentInChildren<TMP_Text>();
 
         customSlider.maxValue = labels.Count - 1;
+        defaultValue = Math.Clamp(defaultValue, -1, labels.Count - 1);
         customSlider.wholeNumbers = true;
         customSlider.onValueChanged.AddListener(UpdateConfig);
-        UpdateConfig(labels.Count - 1);
+        UpdateConfig(defaultValue > -1 ? defaultValue : labels.Count - 1);
     }
 
     void UpdateConfig(float value) {

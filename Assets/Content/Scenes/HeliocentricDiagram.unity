@@ -840,6 +840,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2010663030164314129, guid: 962bce6aede2fb74b8e703b4f520b3d0, type: 3}
+      propertyPath: defaultValue
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2160947051481060419, guid: 962bce6aede2fb74b8e703b4f520b3d0, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1760,6 +1764,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HUD: {fileID: 248058349}
   equinoxPanel: {fileID: 1197655045}
+  isInSpace: 1
+  solarTrailMeshObject: {fileID: 8475448657269363779}
   lightsGameObject: {fileID: 413287896}
   constellationGameObject: {fileID: 9185106749413741008}
   earthGameObject: {fileID: 5649609324029085114}

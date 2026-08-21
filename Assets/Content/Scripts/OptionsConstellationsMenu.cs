@@ -54,6 +54,7 @@ public class OptionsConstellationsMenu : MonoBehaviour {
         }
 
         void ResetChecks() {
+            ChangeStarSlider(starsSlider.Value);
             ToggleStars(starsToggle.Value);
             ToggleLines(linesToggle.Value);
             ToggleNames(namesToggle.Value);
@@ -82,7 +83,7 @@ public class OptionsConstellationsMenu : MonoBehaviour {
         ToggleNames(!shallDisable && namesToggle.Value);
         imagesToggle.Interactable = !shallDisable;
         ToggleImages(!shallDisable && imagesToggle.Value);
-        ToggleVirgo(val == 1);
+        ChangeStarsDrawMode(val);
     }
 
     void ToggleStars(bool starsToggleValue) {
@@ -105,8 +106,8 @@ public class OptionsConstellationsMenu : MonoBehaviour {
         backSphere?.SetActive(milkyWayToggleValue);
     }
 
-    void ToggleVirgo(bool virgoValue) {
-        geoSettings.m_virgo = virgoValue;
+    void ChangeStarsDrawMode(int starsDrawMode) {
+        geoSettings.m_starsDrawMode = starsDrawMode;
     }
 
     void ToggleGrid(bool arg0) {

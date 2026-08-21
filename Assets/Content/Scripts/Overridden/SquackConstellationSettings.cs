@@ -1,44 +1,56 @@
 ﻿using System.Linq;
 using UnityEngine;
 using static Constellation.SquackConstellationNames;
+
 // ReSharper disable InconsistentNaming
 
-namespace Constellation {
-    public class SquackConstellationSettings : MonoBehaviour {
+namespace Constellation
+{
+    public class SquackConstellationSettings : MonoBehaviour
+    {
         static readonly int SunAffect = Shader.PropertyToID("_SunAffect");
-        bool m_virgo_old;
-        [SerializeField, Tooltip("Should draw only Virgo")]
-        internal bool m_virgo;
+        int m_starsDrawMode_old;
+        [SerializeField, Tooltip("Draw Mode")] internal int m_starsDrawMode;
+
         [SerializeField, Tooltip("Show starts")]
         public bool m_stars = true;
+
         [SerializeField, Tooltip("Show lines")]
         public bool m_lines = true;
+
         [SerializeField, Tooltip("Show names")]
         public bool m_names = true;
+
         [SerializeField, Tooltip("Show images")]
         public bool m_images = true;
+
         [SerializeField, Tooltip("Show milkyway")]
         public bool m_milkyway = true;
+
         // [SerializeField, Tooltip("Enable lookAt")]
         // bool m_lookat = true;
         [SerializeField, Tooltip("Name locale")]
         LanguageType m_languageType = LanguageType.Latin;
+
         [SerializeField, Range(0, 1), Tooltip("Fade out when the sun rises.")]
         float m_sunAffect = 1f;
+
         SquackConstellationStars m_constellationStars;
         SquackConstellationLines m_constellationLines;
         SquackConstellationNames m_constellationNames;
         SquackConstellationImages constellationImages;
-        [SerializeField, HideInInspector]
-        GameObject m_milkywayObj;
+
+        [SerializeField, HideInInspector] GameObject m_milkywayObj;
+
         // [SerializeField, HideInInspector]
         // LookAtConstellations m_lookAtConstellations;
         float m_prevousSunAffect = -1f;
         Light m_sunLight;
 
         // Start is called before the first frame update
-        void Start() {
-            m_virgo_old = m_virgo;
+        void Start()
+        {
+            Debug.Log("Start Settings");
             if (m_constellationStars == null)
                 m_constellationStars = FindAnyObjectByType<SquackConstellationStars>();
 
@@ -58,17 +70,21 @@ namespace Constellation {
             //     m_lookAtConstellations = FindAnyObjectByType<LookAtConstellations>();
 
             Light[] lightArr = FindObjectsByType<Light>();
-            if (lightArr != null) {
+            if (lightArr != null)
+            {
                 m_sunLight = lightArr.FirstOrDefault(l => l.type == LightType.Directional);
             }
+            ChangeStarsDrawMode();
         }
 
         // Update is called once per frame
-        void Update() {
-            if (m_virgo_old != m_virgo) {
-                m_virgo_old = m_virgo;
-                DoDrawVirgo();
+        void Update()
+        {
+            if (m_starsDrawMode_old != m_starsDrawMode)
+            {
+                ChangeStarsDrawMode();
             }
+
             if (m_constellationStars?.gameObject.activeSelf != m_stars)
                 m_constellationStars?.gameObject.SetActive(m_stars);
 
@@ -90,50 +106,73 @@ namespace Constellation {
             if (m_constellationNames?.languageType != m_languageType)
                 m_constellationNames.languageType = m_languageType;
 
-            if (!Mathf.Approximately(m_prevousSunAffect, m_sunAffect)) {
+            if (!Mathf.Approximately(m_prevousSunAffect, m_sunAffect))
+            {
                 updateSunAffect(m_sunAffect);
             }
+
             updateTextSunAffect();
         }
-        
-        void DoDrawVirgo() {
-            m_constellationNames.ShouldDrawOnlyVirgo = m_virgo;
-            m_constellationLines.ShouldDrawOnlyVirgo = m_virgo;
-            m_constellationStars.ShouldDrawOnlyVirgo = m_virgo;
-            constellationImages.ShouldDrawOnlyVirgo = m_virgo;
+
+        void ChangeStarsDrawMode()
+        {
+            Debug.Log($"ChangeStarsDrawMode Settings - {m_starsDrawMode}");
+            m_constellationNames.StarsDrawMode = m_starsDrawMode;
+            m_constellationLines.StarsDrawMode = m_starsDrawMode;
+            m_constellationStars.StarsDrawMode = m_starsDrawMode;
+            constellationImages.StarsDrawMode = m_starsDrawMode;
+            m_starsDrawMode_old = m_starsDrawMode;
         }
 
-        void updateSunAffect(float _sunAffect) {
-            if (m_constellationStars != null) {
+        void updateSunAffect(float _sunAffect)
+        {
+            if (m_constellationStars != null)
+            {
                 ParticleSystem ps = m_constellationStars.gameObject.GetComponent<ParticleSystem>();
-                if (ps != null) {
+                if (ps != null)
+                {
                     ParticleSystemRenderer psr = ps.GetComponent<ParticleSystemRenderer>();
-                    if (psr != null) {
-                        if (psr.material != null) {
-                            if (psr.material.HasProperty(SunAffect)) {
+                    if (psr != null)
+                    {
+                        if (psr.material != null)
+                        {
+                            if (psr.material.HasProperty(SunAffect))
+                            {
                                 psr.material.SetFloat(SunAffect, _sunAffect);
                             }
                         }
                     }
                 }
             }
-            if (m_constellationLines != null) {
+
+            if (m_constellationLines != null)
+            {
                 MeshRenderer mr = m_constellationLines.gameObject.GetComponent<MeshRenderer>();
-                if (mr != null) {
-                    if (mr.material != null) {
-                        if (mr.material.HasProperty(SunAffect)) {
+                if (mr != null)
+                {
+                    if (mr.material != null)
+                    {
+                        if (mr.material.HasProperty(SunAffect))
+                        {
                             mr.material.SetFloat(SunAffect, _sunAffect);
                         }
                     }
                 }
             }
-            if (constellationImages != null) {
+
+            if (constellationImages != null)
+            {
                 SpriteRenderer[] srArr = constellationImages.gameObject.GetComponentsInChildren<SpriteRenderer>();
-                if (srArr != null) {
-                    foreach (SpriteRenderer sr in srArr) {
-                        if (sr != null) {
-                            if (sr.material != null) {
-                                if (sr.material.HasProperty(SunAffect)) {
+                if (srArr != null)
+                {
+                    foreach (SpriteRenderer sr in srArr)
+                    {
+                        if (sr != null)
+                        {
+                            if (sr.material != null)
+                            {
+                                if (sr.material.HasProperty(SunAffect))
+                                {
                                     sr.material.SetFloat(SunAffect, _sunAffect);
                                 }
                             }
@@ -145,15 +184,22 @@ namespace Constellation {
             m_prevousSunAffect = _sunAffect;
         }
 
-        void updateTextSunAffect() {
-            if (m_sunLight != null) {
-                if (m_constellationNames != null) {
+        void updateTextSunAffect()
+        {
+            if (m_sunLight != null)
+            {
+                if (m_constellationNames != null)
+                {
                     float lightAffect = Mathf.Clamp01(Vector3.Dot(m_sunLight.transform.forward, Vector3.up));
                     TextMesh[] tmArr = m_constellationNames.gameObject.GetComponentsInChildren<TextMesh>();
-                    if (tmArr != null) {
-                        foreach (TextMesh tm in tmArr) {
-                            if (tm != null) {
-                                tm.color = new Color(tm.color.r, tm.color.g, tm.color.b, Mathf.Lerp(1f, lightAffect, m_sunAffect) * 0.5f);
+                    if (tmArr != null)
+                    {
+                        foreach (TextMesh tm in tmArr)
+                        {
+                            if (tm != null)
+                            {
+                                tm.color = new Color(tm.color.r, tm.color.g, tm.color.b,
+                                    Mathf.Lerp(1f, lightAffect, m_sunAffect) * 0.5f);
                             }
                         }
                     }
