@@ -2440,7 +2440,7 @@ GameObject:
   - component: {fileID: 9083153837465056729}
   - component: {fileID: 7215047028355520110}
   m_Layer: 5
-  m_Name: NewOptions
+  m_Name: EarthOptions
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

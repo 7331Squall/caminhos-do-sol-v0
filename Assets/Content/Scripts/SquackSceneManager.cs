@@ -63,6 +63,8 @@ public class SquackSceneManager : MonoBehaviour
 
     DateTime _simulationDateTime;
     DateTime _simStartTime;
+    [SerializeField] private bool isInSpace;
+    [SerializeField] private GameObject solarTrailMeshObject;
 
     #endregion
 
@@ -79,6 +81,8 @@ public class SquackSceneManager : MonoBehaviour
     OrbitalCamera _camera;
     ParticleSystem _lightParticle;
     public Quaternion earthTilt = new(0, 0, -0.203641683f, 0.97904551f);
+
+
     private static readonly (int day, int month)[] SNAutumnEquinox = { (20, 03), (22, 09) };
     private static readonly (int day, int month)[] SNWinterSolstice = { (21, 06), (23, 12) };
 
@@ -110,6 +114,7 @@ public class SquackSceneManager : MonoBehaviour
         _simSpeedField.OnValueChanged.AddListener(_ => TryAndResetParticle());
         _simIntervalField.OnValueChanged.AddListener(_ => TryAndResetParticle());
         _latitudeField.OnValueChanged.AddListener(_ => DataUpdated());
+       
         DataUpdated();
     }
 
@@ -165,7 +170,8 @@ public class SquackSceneManager : MonoBehaviour
             earthGameObject.transform.rotation = GPTEarthCalc.CalculateEarthRotation(CurrentTime);
         }
 
-        constellationGameObject.transform.rotation = GPTSolarCalc.OrientationForCelestialPole(Latitude, CurrentTime);
+        if (!isInSpace)
+            constellationGameObject.transform.rotation = GPTSolarCalc.OrientationForCelestialPole(Latitude, CurrentTime);
         UpdateEquinoxText();
     }
 
@@ -196,6 +202,8 @@ public class SquackSceneManager : MonoBehaviour
     {
         if (!_isSimulating)
             _lightParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        if (isInSpace)
+            solarTrailMeshObject.SetActive(DoSunTrail);
     }
 
     public void UpdateProps(OrbitalCameraData props)

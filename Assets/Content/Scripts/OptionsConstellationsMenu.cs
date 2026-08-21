@@ -1,4 +1,5 @@
 using Constellation;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class OptionsConstellationsMenu : MonoBehaviour {
@@ -13,10 +14,10 @@ public class OptionsConstellationsMenu : MonoBehaviour {
     public bool shouldExposeCelestialSphereOption = true;
 
     [Header("Objects")]
-    public GameObject atmoSphere;
-    public GameObject gridSphere;
-    public GameObject backSphere;
-    public GameObject occluderObject;
+    [CanBeNull] public GameObject atmoSphere;
+    [CanBeNull] public GameObject gridSphere;
+    [CanBeNull] public GameObject backSphere;
+    [CanBeNull] public GameObject occluderObject;
 
     [Header("Options")]
     public CustomSlider starsSlider;
@@ -25,16 +26,18 @@ public class OptionsConstellationsMenu : MonoBehaviour {
     public CustomToggle namesToggle;
     public CustomToggle imagesToggle;
     public CustomToggle milkyWayToggle;
-    public CustomToggle equatorialGridToggle;
-    public CustomToggle showCelestialSphereToggle;
-    public CustomToggle showAtmosphereToggle;
     public CustomToggle sunTrailsToggle;
+    
+    [Header("Optional Options")]
+    [CanBeNull] public CustomToggle equatorialGridToggle;
+    [CanBeNull] public CustomToggle showCelestialSphereToggle;
+    [CanBeNull] public CustomToggle showAtmosphereToggle;
 
     void Start() {
         _anim8R = GetComponent<Animator>();
         AssignEvents();
         ResetChecks();
-        showCelestialSphereToggle.gameObject.SetActive(shouldExposeCelestialSphereOption);
+        showCelestialSphereToggle?.gameObject.SetActive(shouldExposeCelestialSphereOption);
         return;
 
         void AssignEvents() {
@@ -43,9 +46,9 @@ public class OptionsConstellationsMenu : MonoBehaviour {
             namesToggle.onValueChanged.AddListener(ToggleNames);
             imagesToggle.onValueChanged.AddListener(ToggleImages);
             milkyWayToggle.onValueChanged.AddListener(ToggleMilkyWay);
-            equatorialGridToggle.onValueChanged.AddListener(ToggleGrid);
-            showAtmosphereToggle.onValueChanged.AddListener(ToggleShowAtmosphere);
-            showCelestialSphereToggle.onValueChanged.AddListener(ToggleShowCelestialSphere);
+            equatorialGridToggle?.onValueChanged.AddListener(ToggleGrid);
+            showAtmosphereToggle?.onValueChanged.AddListener(ToggleShowAtmosphere);
+            showCelestialSphereToggle?.onValueChanged.AddListener(ToggleShowCelestialSphere);
             sunTrailsToggle.onValueChanged.AddListener(ToggleSunTrails);
             starsSlider.onValueChanged.AddListener(ChangeStarSlider);
         }
@@ -56,9 +59,12 @@ public class OptionsConstellationsMenu : MonoBehaviour {
             ToggleNames(namesToggle.Value);
             ToggleImages(imagesToggle.Value);
             ToggleMilkyWay(milkyWayToggle.Value);
-            ToggleGrid(equatorialGridToggle.Value);
-            ToggleShowCelestialSphere(showCelestialSphereToggle.Value);
-            ToggleShowAtmosphere(showAtmosphereToggle.Value);
+            if (equatorialGridToggle is not null)
+                ToggleGrid(equatorialGridToggle.Value);
+            if (showCelestialSphereToggle is not null)
+                ToggleShowCelestialSphere(showCelestialSphereToggle.Value);
+            if  (showAtmosphereToggle is not null)
+                ToggleShowAtmosphere(showAtmosphereToggle.Value);
             ToggleSunTrails(sunTrailsToggle.Value);
         }
     }
@@ -96,7 +102,7 @@ public class OptionsConstellationsMenu : MonoBehaviour {
     }
 
     void ToggleMilkyWay(bool milkyWayToggleValue) {
-        backSphere.SetActive(milkyWayToggleValue);
+        backSphere?.SetActive(milkyWayToggleValue);
     }
 
     void ToggleVirgo(bool virgoValue) {
@@ -104,7 +110,7 @@ public class OptionsConstellationsMenu : MonoBehaviour {
     }
 
     void ToggleGrid(bool arg0) {
-        gridSphere.SetActive(arg0);
+        gridSphere?.SetActive(arg0);
     }
 
     void ToggleShowCelestialSphere(bool arg0) {
@@ -114,7 +120,7 @@ public class OptionsConstellationsMenu : MonoBehaviour {
     }
 
     void ToggleShowAtmosphere(bool arg0) {
-        atmoSphere.SetActive(arg0);
+        atmoSphere?.SetActive(arg0);
     }
 
     void ToggleSunTrails(bool arg0) {
