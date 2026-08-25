@@ -23,13 +23,13 @@ public static class Utilities
     {
         "Aquarius",
         "Aries",
-        "Capricorn",
+        "Capricornus",
         "Cancer",
         "Gemini",
         "Leo",
         "Libra",
         "Pisces",
-        "Scorpio",
+        "Scorpius",
         "Sagittarius",
         "Taurus",
         "Virgo"
