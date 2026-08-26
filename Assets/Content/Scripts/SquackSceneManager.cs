@@ -189,9 +189,9 @@ public class SquackSceneManager : MonoBehaviour
         } else if (SNWinterSolstice.Contains((CurrentTime.Day, CurrentTime.Month)))
         {
             if ((CurrentTime.Month == 6 && Latitude > 0) || (CurrentTime.Month == 12 && Latitude <= 0))
-                equinoxType = "<color=#99D9E9>Solstício de Inverno</color>";
-            else 
                 equinoxType = "<color=#E89999>Solstício de Verão</color>";
+            else 
+                equinoxType = "<color=#99D9E9>Solstício de Inverno</color>";
             panelVisible = true;
         }
         _equinoxText.text = equinoxType;
