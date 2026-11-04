@@ -23,6 +23,26 @@ public class CameraData {
     /// </summary>
     [SerializeField]
     public float yMaxLimit = 90f;
+    /// <summary>
+    /// Lower Lateral Translation Limit
+    /// </summary>
+    [SerializeField]
+    public float xMoveMinLimit = -10f;
+    /// <summary>
+    /// Upper Lateral Translation Limit
+    /// </summary>
+    [SerializeField]
+    public float xMoveMaxLimit = 10f;
+    /// <summary>
+    /// Lower Vertical Translation Limit
+    /// </summary>
+    [SerializeField]
+    public float yMoveMinLimit = -90f;
+    /// <summary>
+    /// Upper Vertical Translation Limit
+    /// </summary>
+    [SerializeField]
+    public float yMoveMaxLimit = 90f;
 }
 
 

@@ -17,6 +17,7 @@ public class OptionsConstellationsMenu : MonoBehaviour {
     [CanBeNull] public GameObject atmoSphere;
     [CanBeNull] public GameObject gridSphere;
     [CanBeNull] public GameObject backSphere;
+    [CanBeNull] public GameObject zenith;
     [CanBeNull] public GameObject occluderObject;
 
     [Header("Options")]
@@ -32,6 +33,7 @@ public class OptionsConstellationsMenu : MonoBehaviour {
     [CanBeNull] public CustomToggle equatorialGridToggle;
     [CanBeNull] public CustomToggle showCelestialSphereToggle;
     [CanBeNull] public CustomToggle showAtmosphereToggle;
+    [CanBeNull] public CustomToggle showZenithToggle;
 
     void Start() {
         _anim8R = GetComponent<Animator>();
@@ -49,6 +51,7 @@ public class OptionsConstellationsMenu : MonoBehaviour {
             equatorialGridToggle?.onValueChanged.AddListener(ToggleGrid);
             showAtmosphereToggle?.onValueChanged.AddListener(ToggleShowAtmosphere);
             showCelestialSphereToggle?.onValueChanged.AddListener(ToggleShowCelestialSphere);
+            showZenithToggle?.onValueChanged.AddListener(ToggleShowZenith);
             sunTrailsToggle.onValueChanged.AddListener(ToggleSunTrails);
             starsSlider.onValueChanged.AddListener(ChangeStarSlider);
         }
@@ -66,6 +69,8 @@ public class OptionsConstellationsMenu : MonoBehaviour {
                 ToggleShowCelestialSphere(showCelestialSphereToggle.Value);
             if  (showAtmosphereToggle is not null)
                 ToggleShowAtmosphere(showAtmosphereToggle.Value);
+            if  (showZenithToggle is not null)
+                ToggleShowZenith(showZenithToggle.Value);
             ToggleSunTrails(sunTrailsToggle.Value);
         }
     }
@@ -122,6 +127,10 @@ public class OptionsConstellationsMenu : MonoBehaviour {
 
     void ToggleShowAtmosphere(bool arg0) {
         atmoSphere?.SetActive(arg0);
+    }
+    
+    void ToggleShowZenith(bool arg0) {
+        zenith?.SetActive(arg0);
     }
 
     void ToggleSunTrails(bool arg0) {

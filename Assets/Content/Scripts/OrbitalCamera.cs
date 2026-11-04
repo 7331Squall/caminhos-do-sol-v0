@@ -13,6 +13,10 @@ public class OrbitalCamera : MonoBehaviour {
     [SerializeField]
     InputActionReference clickAction;
     [SerializeField]
+    InputActionReference rightClickAction;
+    [SerializeField]
+    InputActionReference middleClickAction;
+    [SerializeField]
     InputActionReference deltaAction;
     [SerializeField]
     InputActionReference scrollAction;
@@ -25,8 +29,9 @@ public class OrbitalCamera : MonoBehaviour {
 
     enum States {
         Idle,
-        MovingMainCam,
-        MovingOverlay
+        MoveMainCam,
+        OrbitMainCam,
+        OrbitOverlay
     }
 
     States state = States.Idle;
@@ -39,16 +44,21 @@ public class OrbitalCamera : MonoBehaviour {
     void Start() {
         InitTarget();
         InitMouse();
-        MoveCamera();
+        OrbitCamera();
     }
 
     void InitMouse() {
         // habilita todas as actions ligadas a esta câmera
         clickAction.action.Enable();
+        rightClickAction.action.Enable();
+        middleClickAction.action.Enable();
         deltaAction.action.Enable();
         scrollAction.action.Enable();
-        clickAction.action.started += _ => DefineState(true);
-        clickAction.action.canceled += _ => DefineState(false);
+        clickAction.action.started += _ => DefineState(true, false);
+        clickAction.action.canceled += _ => DefineState(false, false);
+        rightClickAction.action.started += _ => DefineState(true, true);
+        rightClickAction.action.canceled += _ => DefineState(false, true);
+        middleClickAction.action.canceled += _ => ResetCameraPosition();
         scrollAction.action.performed += _ => ZoomCamera(scrollAction.action.ReadValue<Vector2>().y);
     }
 
@@ -61,24 +71,36 @@ public class OrbitalCamera : MonoBehaviour {
     void LateUpdate() {
         switch (state) {
             case States.Idle: return;
-            case States.MovingMainCam:
+            case States.MoveMainCam:
                 MoveCamera();
                 return;
-            case States.MovingOverlay:
-                MoveOverlay();
+            case States.OrbitMainCam:
+                OrbitCamera();
+                return;
+            case States.OrbitOverlay:
+                OrbitOverlay();
                 return;
         }
     }
 
-    void MoveOverlay() {
+    void OrbitOverlay() {
         if (GalacticOverlayCamera == null) return;
         GalacticOverlayCamera.transform.localRotation = Utilities.CalcCamLocalRotation(GalacticOverlayCamera.transform, deltaAction, camData);
         // cam.transform.position = cam.transform.localRotation + target.position;
     }
 
-    void MoveCamera() {
+    void OrbitCamera() {
         transform.localRotation = Utilities.CalcCamLocalRotation(transform, deltaAction, camData);
+    }
 
+    void MoveCamera()
+    {
+        transform.localPosition = Utilities.CalcCamLocalPosition(transform, deltaAction, camData);
+    }
+
+    void ResetCameraPosition()
+    {
+        transform.localPosition = Vector3.zero;
     }
 
     void ZoomCamera(float zoom) {
@@ -110,18 +132,18 @@ public class OrbitalCamera : MonoBehaviour {
         }
     }
 
-    void DefineState(bool mouseDown) {
-        state = NewState(mouseDown);
+    void DefineState(bool mouseDown, bool isRight) {
+        state = NewState(mouseDown, isRight);
         return;
 
-        States NewState(bool mouseDown) {
+        States NewState(bool mouseDown, bool isRight) {
             if (!mouseDown || Utilities.AnyDropdownOpen())
                 return States.Idle;
             List<GameObject> overUI = Utilities.GetObjectsUnderPointer();
             if (overUI.Any(x => x.name == "SolarSystemDiagram"))
-                return States.MovingOverlay;
+                return States.OrbitOverlay;
             if (overUI.Count <= 0)
-                return States.MovingMainCam;
+                return isRight ? States.MoveMainCam : States.OrbitMainCam;
             return States.Idle;
         }
     }

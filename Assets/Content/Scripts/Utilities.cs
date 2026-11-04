@@ -118,4 +118,14 @@ public static class Utilities
         // Aplica a rotação final
         return Quaternion.Euler(newRotX, newRotY, 0f);
     }
+
+    public static Vector3 CalcCamLocalPosition(Transform transform, InputActionReference deltaAction, OrbitalCameraData camData)
+    {
+        Vector2 mv = GetCameraMovementValues(deltaAction, new(camData.xSpeed / 2 , -camData.ySpeed / 2));
+        // Pega a posição atual
+        Vector3 pos = transform.localPosition;
+        float newPosX = Mathf.Clamp(pos.x + mv.x, camData.xMoveMinLimit, camData.xMoveMaxLimit);
+        float newPosY = Mathf.Clamp(pos.y + mv.y, camData.yMoveMinLimit, camData.yMoveMaxLimit);
+        return new Vector3(newPosX, newPosY, 0f);
+    }
 }

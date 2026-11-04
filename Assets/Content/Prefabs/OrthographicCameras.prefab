@@ -343,6 +343,10 @@ MonoBehaviour:
     ySpeed: 30
     yMinLimit: 0
     yMaxLimit: 90
+    xMoveMinLimit: 0
+    xMoveMaxLimit: 0
+    yMoveMinLimit: -10
+    yMoveMaxLimit: 10
     isOrthographic: 1
     distance: 20
     zoomSpeed: 2
@@ -350,6 +354,8 @@ MonoBehaviour:
     maxDistance: 20
     sunDistance: 10
   clickAction: {fileID: 3001919216989983466, guid: 9749edb63aa0d994699a833ea8cf84c7, type: 3}
+  rightClickAction: {fileID: -4090225696740746782, guid: 9749edb63aa0d994699a833ea8cf84c7, type: 3}
+  middleClickAction: {fileID: -2185481485913320682, guid: 9749edb63aa0d994699a833ea8cf84c7, type: 3}
   deltaAction: {fileID: -8470145138100021554, guid: 9749edb63aa0d994699a833ea8cf84c7, type: 3}
   scrollAction: {fileID: 6240969308177333660, guid: 9749edb63aa0d994699a833ea8cf84c7, type: 3}
   cameras: []
