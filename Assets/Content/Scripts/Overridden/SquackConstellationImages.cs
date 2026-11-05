@@ -32,7 +32,7 @@ namespace Constellation
                 bool shouldDraw = StarsDrawMode switch
                 {
                     1 => go.name.Contains("Virgo"),
-                    2 =>Utilities.ConstLongNames.Any(constName => go.name == $"local_{constName}") ,
+                    2 =>Constants.ConstLongNames.Any(constName => go.name == $"local_{constName}") ,
                     _ => StarsDrawMode != 0
                 };
                 go.SetActive(shouldDraw);

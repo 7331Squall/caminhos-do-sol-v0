@@ -24,8 +24,7 @@ public class SquackSceneManager : MonoBehaviour
     SimSliderField _simIntervalField;
     Button _simButton;
     Button _optButton;
-    [SerializeField]
-    GameObject equinoxPanel;
+    [SerializeField] GameObject equinoxPanel;
     TMP_Text _equinoxText;
 
     #endregion
@@ -82,10 +81,6 @@ public class SquackSceneManager : MonoBehaviour
     ParticleSystem _lightParticle;
     public Quaternion earthTilt = new(0, 0, -0.203641683f, 0.97904551f);
 
-
-    private static readonly (int day, int month)[] SNAutumnEquinox = { (20, 03), (22, 09) };
-    private static readonly (int day, int month)[] SNWinterSolstice = { (21, 06), (23, 12) };
-
     #endregion
 
     void Awake()
@@ -107,14 +102,14 @@ public class SquackSceneManager : MonoBehaviour
 
     void Start()
     {
-        CurrentTime = new DateTime(2000, 12, 23, 12, 00, 0);
-        Latitude = -23f;
+        CurrentTime = new DateTime(2000, DateTime.Now.Month, DateTime.Now.Day, 12, 00, 0);
+        Latitude = -23.5f;
         _simButton.onClick.AddListener(ToggleSimulation);
         _datetimeField.OnValueChanged.AddListener(_ => DataUpdated());
         _simSpeedField.OnValueChanged.AddListener(_ => TryAndResetParticle());
         _simIntervalField.OnValueChanged.AddListener(_ => TryAndResetParticle());
         _latitudeField.OnValueChanged.AddListener(_ => DataUpdated());
-       
+
         DataUpdated();
     }
 
@@ -171,31 +166,33 @@ public class SquackSceneManager : MonoBehaviour
         }
 
         if (!isInSpace)
-            constellationGameObject.transform.rotation = GPTSolarCalc.OrientationForCelestialPole(Latitude, CurrentTime);
+            constellationGameObject.transform.rotation =
+                GPTSolarCalc.OrientationForCelestialPole(Latitude, CurrentTime);
         UpdateEquinoxText();
     }
 
     private void UpdateEquinoxText()
     {
-        string equinoxType = "";
-        bool panelVisible = false;
-        if (SNAutumnEquinox.Contains((CurrentTime.Day, CurrentTime.Month)))
-        {
-            if ((CurrentTime.Month == 9 && Latitude > 0) || (CurrentTime.Month == 3 && Latitude <= 0))
-                equinoxType = "<color=#E8B999>Equinócio de Outono</color>";
-            else 
-                equinoxType = "<color=#D4E899>Equinócio de Primavera</color>";
-            panelVisible = true;
-        } else if (SNWinterSolstice.Contains((CurrentTime.Day, CurrentTime.Month)))
-        {
-            if ((CurrentTime.Month == 6 && Latitude > 0) || (CurrentTime.Month == 12 && Latitude <= 0))
-                equinoxType = "<color=#E89999>Solstício de Verão</color>";
-            else 
-                equinoxType = "<color=#99D9E9>Solstício de Inverno</color>";
-            panelVisible = true;
-        }
-        _equinoxText.text = equinoxType;
-        equinoxPanel.gameObject.SetActive(panelVisible);
+        // Cria uma data de referência usando o dia e mês atuais.
+        DateTime currentDate = new DateTime(2000, CurrentTime.Month, CurrentTime.Day);
+
+        // Identifica a estação no hemisfério atual.
+        var season = Utilities.GetSeason(currentDate, Latitude);
+
+        // Obtém nome, cor e classificação do evento.
+        var seasonData = Constants.SeasonDefinition[season];
+
+        // Verifica se hoje ocorre algum equinócio ou solstício.
+        bool isSeasonStart = Constants.SeasonDates.Values
+            .Any(x => x.month == currentDate.Month && x.day == currentDate.Day);
+
+        // Monta o prefixo do evento, se houver.
+        string eventType = isSeasonStart
+            ? $"{(season == Constants.Seasons.Summer || season == Constants.Seasons.Winter ? "<b>Solstício</b>" : "<b>Equinócio</b>")} de "
+            : "";
+
+        // Atualiza o texto com a cor e o nome da estação.
+        _equinoxText.text = $"<color={seasonData.color}>{eventType}{seasonData.name}</color>";
     }
 
     void TryAndResetParticle()

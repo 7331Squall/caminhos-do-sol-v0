@@ -69,7 +69,7 @@ namespace Constellation
                 {
                     0 => false,
                     1 => line.constellationNameShort == "Vir",
-                    2 => Utilities.ConstShortNames.Contains(line.constellationNameShort),
+                    2 => Constants.ConstShortNames.Contains(line.constellationNameShort),
                     _ => true
                 };
                 if (shouldDraw)

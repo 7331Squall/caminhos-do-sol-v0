@@ -62,8 +62,8 @@ namespace Constellation
 
                 m_hipList = StarsDrawMode switch
                 {
-                    1 => m_hipList.Where(x => Utilities.VirgoStars.Contains(x.hipId)).ToList(),
-                    2 => m_hipList.Where(x => Utilities.ZodiacStars.Contains(x.hipId)).ToList(),
+                    1 => m_hipList.Where(x => Constants.VirgoStars.Contains(x.hipId)).ToList(),
+                    2 => m_hipList.Where(x => Constants.ZodiacStars.Contains(x.hipId)).ToList(),
                     _ => m_hipList
                 };
                 m_ps = SetEfcStars(m_hipList, transform, m_scale, hipparcosScr.distance, m_starTex, useParallax,
@@ -151,8 +151,8 @@ namespace Constellation
         {
             _hipList = starsDrawMode switch
             {
-                1 => _hipList.Where(h => Utilities.VirgoStars.Contains(h.hipId)).ToList(),
-                2 => _hipList.Where(h => Utilities.ZodiacStars.Contains(h.hipId)).ToList(),
+                1 => _hipList.Where(h => Constants.VirgoStars.Contains(h.hipId)).ToList(),
+                2 => _hipList.Where(h => Constants.ZodiacStars.Contains(h.hipId)).ToList(),
                 _ => _hipList
             };
 

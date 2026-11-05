@@ -174,7 +174,7 @@ namespace Constellation
                 {
                     0 => false,
                     1 => go.name.Contains("Virgo"),
-                    2 => Utilities.ConstLongNames.Contains(go.name),
+                    2 => Constants.ConstLongNames.Contains(go.name),
                     _ => true
                 });
             }
