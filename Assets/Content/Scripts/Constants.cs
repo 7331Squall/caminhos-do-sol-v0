@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 public static class Constants
@@ -81,4 +80,11 @@ public static class Constants
         { Seasons.Spring, (9, 22) },
         { Seasons.Summer, (12, 21) }
     };
+    
+    public enum OverlayState
+    {
+        Minimized,
+        Maximized1,
+        Maximized2
+    }
 }

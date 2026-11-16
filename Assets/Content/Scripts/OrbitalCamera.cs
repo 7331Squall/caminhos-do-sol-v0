@@ -5,29 +5,23 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.InputSystem.LowLevel;
 
-public class OrbitalCamera : MonoBehaviour {
+public class OrbitalCamera : MonoBehaviour
+{
     public Transform target; // Alvo (pode ser vazio no (0,0,0))
-    [SerializeField]
-    public OrbitalCameraData camData;
+    [SerializeField] public OrbitalCameraData camData;
 
-    [SerializeField]
-    InputActionReference clickAction;
-    [SerializeField]
-    InputActionReference rightClickAction;
-    [SerializeField]
-    InputActionReference middleClickAction;
-    [SerializeField]
-    InputActionReference deltaAction;
-    [SerializeField]
-    InputActionReference scrollAction;
+    [SerializeField] InputActionReference clickAction;
+    [SerializeField] InputActionReference rightClickAction;
+    [SerializeField] InputActionReference middleClickAction;
+    [SerializeField] InputActionReference deltaAction;
+    [SerializeField] InputActionReference scrollAction;
 
-    [SerializeField]
-    public Camera[] cameras;
+    [SerializeField] public List<Camera> cameras;
 
-    [SerializeField]
-    public Camera GalacticOverlayCamera;
+    [SerializeField] public Camera GalacticOverlayCamera;
 
-    enum States {
+    enum States
+    {
         Idle,
         MoveMainCam,
         OrbitMainCam,
@@ -36,40 +30,91 @@ public class OrbitalCamera : MonoBehaviour {
 
     States state = States.Idle;
 
-    void Awake() {
+    void Awake()
+    {
         camData ??= new OrbitalCameraData();
-        cameras = GetComponentsInChildren<Camera>();
+        ResetCameraArray();
     }
 
-    void Start() {
+    private void ResetCameraArray()
+    {
+        cameras = GetComponentsInChildren<Camera>().ToList();
+    }
+
+    void Start()
+    {
         InitTarget();
         InitMouse();
         OrbitCamera();
     }
 
-    void InitMouse() {
-        // habilita todas as actions ligadas a esta câmera
+    // void InitMouse()
+    // {
+    //     // habilita todas as actions ligadas a esta câmera
+    //     clickAction.action.Enable();
+    //     rightClickAction.action.Enable();
+    //     middleClickAction.action.Enable();
+    //     deltaAction.action.Enable();
+    //     scrollAction.action.Enable();
+    //     clickAction.action.started += _ => DefineState(true, false);
+    //     clickAction.action.canceled += _ => DefineState(false, false);
+    //     rightClickAction.action.started += _ => DefineState(true, true);
+    //     rightClickAction.action.canceled += _ => DefineState(false, true);
+    //     middleClickAction.action.canceled += _ => ResetCameraPosition();
+    //     scrollAction.action.performed += OnScroll;
+    // }
+
+    void InitMouse()
+    {
         clickAction.action.Enable();
         rightClickAction.action.Enable();
         middleClickAction.action.Enable();
         deltaAction.action.Enable();
         scrollAction.action.Enable();
-        clickAction.action.started += _ => DefineState(true, false);
-        clickAction.action.canceled += _ => DefineState(false, false);
-        rightClickAction.action.started += _ => DefineState(true, true);
-        rightClickAction.action.canceled += _ => DefineState(false, true);
-        middleClickAction.action.canceled += _ => ResetCameraPosition();
-        scrollAction.action.performed += _ => ZoomCamera(scrollAction.action.ReadValue<Vector2>().y);
+        clickAction.action.started += OnClickStarted;
+        clickAction.action.canceled += OnClickCanceled;
+        rightClickAction.action.started += OnRightClickStarted;
+        rightClickAction.action.canceled += OnRightClickCanceled;
+        middleClickAction.action.canceled += OnMiddleClickCanceled;
+        scrollAction.action.performed += OnScroll;
     }
 
-    void InitTarget() {
+    void OnClickStarted(InputAction.CallbackContext context)
+    {
+        DefineState(true, false);
+    }
+
+    void OnClickCanceled(InputAction.CallbackContext context)
+    {
+        DefineState(false, false);
+    }
+
+    void OnRightClickStarted(InputAction.CallbackContext context)
+    {
+        DefineState(true, true);
+    }
+
+    void OnRightClickCanceled(InputAction.CallbackContext context)
+    {
+        DefineState(false, true);
+    }
+
+    void OnMiddleClickCanceled(InputAction.CallbackContext context)
+    {
+        ResetCameraPosition();
+    }
+
+    void InitTarget()
+    {
         if (target) return;
         GameObject go = new("Camera Target") { transform = { position = Vector3.zero } };
         target = go.transform;
     }
 
-    void LateUpdate() {
-        switch (state) {
+    void LateUpdate()
+    {
+        switch (state)
+        {
             case States.Idle: return;
             case States.MoveMainCam:
                 MoveCamera();
@@ -83,13 +128,16 @@ public class OrbitalCamera : MonoBehaviour {
         }
     }
 
-    void OrbitOverlay() {
+    void OrbitOverlay()
+    {
         if (GalacticOverlayCamera == null) return;
-        GalacticOverlayCamera.transform.localRotation = Utilities.CalcCamLocalRotation(GalacticOverlayCamera.transform, deltaAction, camData);
+        GalacticOverlayCamera.transform.localRotation =
+            Utilities.CalcCamLocalRotation(GalacticOverlayCamera.transform, deltaAction, camData);
         // cam.transform.position = cam.transform.localRotation + target.position;
     }
 
-    void OrbitCamera() {
+    void OrbitCamera()
+    {
         transform.localRotation = Utilities.CalcCamLocalRotation(transform, deltaAction, camData);
     }
 
@@ -103,10 +151,17 @@ public class OrbitalCamera : MonoBehaviour {
         transform.localPosition = Vector3.zero;
     }
 
-    void ZoomCamera(float zoom) {
+    void OnScroll(InputAction.CallbackContext context)
+    {
+        ZoomCamera(context.ReadValue<Vector2>().y);
+    }
+
+    void ZoomCamera(float zoom)
+    {
         float scroll = zoom * (Utilities.AnyDropdownOpen() ? 0 : 1);
         TouchControl[] touches = Touchscreen.current.touches.Where(t => t.press.isPressed).ToArray();
-        if (touches.Length >= 2) {
+        if (touches.Length >= 2)
+        {
             TouchState t1 = touches[0].ReadValue();
             TouchState t2 = touches[1].ReadValue();
             Vector2 prevT1 = t1.startPosition + (t1.position - t1.delta);
@@ -118,34 +173,71 @@ public class OrbitalCamera : MonoBehaviour {
             scroll = (prevMag - currMag) * 0.01f;
             // usar scroll aqui
         }
-        camData.distance = Mathf.Clamp(camData.distance - scroll * camData.zoomSpeed, camData.minDistance, camData.maxDistance);
+
+        camData.distance = Mathf.Clamp(camData.distance - scroll * camData.zoomSpeed, camData.minDistance,
+            camData.maxDistance);
         Vector3 negDistance = new(0, 0, -camData.distance);
-        if (camData.isOrthographic) {
-            foreach (Camera cam in cameras) {
-                if (cam.name != "GalacticOverlayCamera") {
-                    cam.orthographicSize = camData.distance; // zoom = tamanho ortográfico
+        if (camData.isOrthographic)
+        {
+            for (int i = cameras.Count - 1; i >= 0; i--)
+            {
+                Camera cam = cameras[i];
+
+                if (cam == null)
+                {
+                    cameras.RemoveAt(i);
+                    continue;
                 }
+
+                if (cam == GalacticOverlayCamera)
+                    continue;
+
+                cam.orthographicSize = camData.distance;
             }
+
+            // foreach (Camera cam in cameras)
+            // {
+            //     if (cam == null || cam == GalacticOverlayCamera)
+            //         continue;
+            //     cam.orthographicSize = camData.distance; // zoom = tamanho ortográfico
+            // }
+
             transform.position = Vector3.zero;
-        } else {
+        }
+        else
+        {
             transform.position = transform.localRotation * negDistance + target.position;
         }
     }
 
-    void DefineState(bool mouseDown, bool isRight) {
-        state = NewState(mouseDown, isRight);
+    void OnDisable()
+    {
+        clickAction.action.started -= OnClickStarted;
+        clickAction.action.canceled -= OnClickCanceled;
+
+        rightClickAction.action.started -= OnRightClickStarted;
+        rightClickAction.action.canceled -= OnRightClickCanceled;
+
+        middleClickAction.action.canceled -= OnMiddleClickCanceled;
+
+        scrollAction.action.performed -= OnScroll;
+    }
+
+    void DefineState(bool isMouseDown, bool isRight)
+    {
+        state = NewState(isMouseDown, isRight);
         return;
 
-        States NewState(bool mouseDown, bool isRight) {
+        States NewState(bool mouseDown, bool rightM)
+        {
             if (!mouseDown || Utilities.AnyDropdownOpen())
                 return States.Idle;
             List<GameObject> overUI = Utilities.GetObjectsUnderPointer();
             if (overUI.Any(x => x.name == "SolarSystemDiagram"))
                 return States.OrbitOverlay;
             if (overUI.Count <= 0)
-                return isRight ? States.MoveMainCam : States.OrbitMainCam;
+                return rightM ? States.MoveMainCam : States.OrbitMainCam;
             return States.Idle;
         }
     }
-
 }

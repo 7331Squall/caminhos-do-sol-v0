@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class GPTEarthCalc {
-
+public static class GPTEarthCalc
+{
     //public static float ScaleTimesENeg9 = 1; // 1 = metros reais, 1e-9 recomendado
 
     // Constantes orbitais
@@ -16,13 +16,15 @@ public static class GPTEarthCalc {
     const double OrbitalPeriod = 365.256363004; // dias
 
     const double AxialTilt = 23.439281 * Mathf.Deg2Rad;
+
     // Duração do dia sideral (segundos)
     const double SiderealDay = 86164.0905;
 
 
     static readonly DateTime J2000 = new DateTime(2000, 1, 1, 12, 0, 0, DateTimeKind.Utc);
 
-    public static Vector3 CalculateEarthPosition(DateTime date, float scaleTimesENeg9) {
+    public static Vector3 CalculateEarthPosition(DateTime date, float scaleTimesENeg9)
+    {
         double daysSinceJ2000 = (date.ToUniversalTime() - J2000).TotalDays;
 
         // Anomalia média
@@ -32,7 +34,8 @@ public static class GPTEarthCalc {
         double E = SolveKepler(M);
 
         // Anomalia verdadeira
-        double v = 2.0 * Math.Atan2(Math.Sqrt(1 + Eccentricity) * Math.Sin(E / 2), Math.Sqrt(1 - Eccentricity) * Math.Cos(E / 2));
+        double v = 2.0 * Math.Atan2(Math.Sqrt(1 + Eccentricity) * Math.Sin(E / 2),
+            Math.Sqrt(1 - Eccentricity) * Math.Cos(E / 2));
 
         // Distância ao Sol
         double r = BiggerSemiAxis * (1 - Eccentricity * Math.Cos(E));
@@ -55,20 +58,24 @@ public static class GPTEarthCalc {
 
         double z = (sinw * sini) * xOrb + (cosw * sini) * yOrb;
 
-        return new Vector3((float) x, (float) z, (float) y) * (scaleTimesENeg9 * 1e-9f);
+        return new Vector3((float)x, (float)z, (float)y) * (scaleTimesENeg9 * 1e-9f);
         // eixo Y da Unity = "up"
     }
 
-    static double SolveKepler(double M) {
+    static double SolveKepler(double M)
+    {
         double normalM = NormalizeAngle(M);
         double E = normalM;
-        for (int x = 0; x < 6; x++) {
+        for (int x = 0; x < 6; x++)
+        {
             E -= (E - Eccentricity * Math.Sin(E) - normalM) / (1 - Eccentricity * Math.Cos(E));
         }
+
         return E;
     }
 
-    static double NormalizeAngle(double angle) {
+    static double NormalizeAngle(double angle)
+    {
         angle %= 2.0 * Math.PI;
         if (angle < 0)
             angle += 2.0 * Math.PI;
@@ -76,7 +83,8 @@ public static class GPTEarthCalc {
     }
 
 
-    static double GetEarthSpinAngle(DateTime date) {
+    static double GetEarthSpinAngle(DateTime date)
+    {
         double secondsSinceJ2000 = (date.ToUniversalTime() - J2000).TotalSeconds;
 
         double rotations = secondsSinceJ2000 / SiderealDay;
@@ -84,23 +92,28 @@ public static class GPTEarthCalc {
         return NormalizeAngle(-rotations * 2.0 * Math.PI);
     }
 
-    public static Quaternion CalculateEarthRotation(DateTime date) {
+    public static (Quaternion earthRotation, Quaternion spin, Quaternion axialTilt) CalculateEarthRotation(
+        DateTime date)
+    {
         double spinAngle = GetEarthSpinAngle(date);
 
-        Quaternion axialTilt = Quaternion.Euler(0f, 0f, (float) (AxialTilt * Mathf.Rad2Deg));
+        Quaternion axialTilt = Quaternion.Euler(0f, 0f, (float)(AxialTilt * Mathf.Rad2Deg));
 
-        Quaternion spin = Quaternion.AngleAxis((float) (spinAngle * Mathf.Rad2Deg), axialTilt * Vector3.up);
+        Quaternion spin = Quaternion.AngleAxis((float)(spinAngle * Mathf.Rad2Deg), axialTilt * Vector3.up);
 
-        return spin * axialTilt;
+        return (spin * axialTilt, spin, axialTilt);
     }
 
 
-    public static Mesh GenerateOrbitMesh(int segments = 512, int radialSegments = 8, float tubeRadius = 0.001f, float scaleTimesENeg9 = 1f) {
+    public static Mesh GenerateOrbitMesh(int segments = 512, int radialSegments = 8, float tubeRadius = 0.001f,
+        float scaleTimesENeg9 = 1f)
+    {
         List<Vector3> centers = new();
 
         // 1️⃣ Gerar pontos da órbita
-        for (int i = 0; i <= segments; i++) {
-            double t = (double) i / segments;
+        for (int i = 0; i <= segments; i++)
+        {
+            double t = (double)i / segments;
             double meanAnomaly = t * 2.0 * Mathf.PI;
 
             Vector3 pos = GPTEarthCalc.CalculateEarthPosition(
@@ -114,14 +127,18 @@ public static class GPTEarthCalc {
         List<Vector3> vertices = new();
         List<int> triangles = new();
 
-        for (int i = 0; i < centers.Count; i++) {
-            Vector3 forward = i < centers.Count - 1 ? (centers[i + 1] - centers[i]).normalized : (centers[i] - centers[i - 1]).normalized;
+        for (int i = 0; i < centers.Count; i++)
+        {
+            Vector3 forward = i < centers.Count - 1
+                ? (centers[i + 1] - centers[i]).normalized
+                : (centers[i] - centers[i - 1]).normalized;
 
             Vector3 right = Vector3.Cross(forward, Vector3.up).normalized;
             Vector3 up = Vector3.Cross(right, forward).normalized;
 
-            for (int j = 0; j < radialSegments; j++) {
-                float angle = j / (float) radialSegments * Mathf.PI * 2f;
+            for (int j = 0; j < radialSegments; j++)
+            {
+                float angle = j / (float)radialSegments * Mathf.PI * 2f;
                 Vector3 offset = Mathf.Cos(angle) * right * tubeRadius + Mathf.Sin(angle) * up * tubeRadius;
 
                 vertices.Add(centers[i] + offset);
@@ -129,11 +146,13 @@ public static class GPTEarthCalc {
         }
 
         // 3️⃣ Triângulos
-        for (int i = 0; i < centers.Count - 1; i++) {
+        for (int i = 0; i < centers.Count - 1; i++)
+        {
             int baseIndex = i * radialSegments;
             int nextBase = (i + 1) * radialSegments;
 
-            for (int j = 0; j < radialSegments; j++) {
+            for (int j = 0; j < radialSegments; j++)
+            {
                 int a = baseIndex + j;
                 int b = baseIndex + (j + 1) % radialSegments;
                 int c = nextBase + j;

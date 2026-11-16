@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using TMPro;
@@ -71,7 +72,10 @@ public class SquackSceneManager : MonoBehaviour
 
     public GameObject lightsGameObject;
     public GameObject constellationGameObject;
-    [CanBeNull] public GameObject earthGameObject;
+    [CanBeNull] public GameObject xyzEarth;
+    [CanBeNull] GameObject _earthModel;
+    [CanBeNull] GameObject _earthCam;
+
     public float sphereRadius = 10f;
 
     [Tooltip("Visual Multiplier where 1 Unity unit = 1e-9 meters")]
@@ -98,6 +102,17 @@ public class SquackSceneManager : MonoBehaviour
             .Find(x => x.name.Contains("EquinoxText"));
         _lightParticle = lightsGameObject.GetComponent<ParticleSystem>();
         _camera = GetComponentInChildren<OrbitalCamera>();
+        if (xyzEarth != null)
+        {
+            for (var i = 0; i < xyzEarth.transform.childCount; i++)
+            {
+                var comp = xyzEarth.transform.GetChild(i);
+                if (comp.name.Contains("EarthModel"))
+                    _earthModel = comp.gameObject;
+                else if (comp.name.Contains("EarthCameraPivot"))
+                    _earthCam = comp.gameObject;
+            }
+        }
     }
 
     void Start()
@@ -109,7 +124,6 @@ public class SquackSceneManager : MonoBehaviour
         _simSpeedField.OnValueChanged.AddListener(_ => TryAndResetParticle());
         _simIntervalField.OnValueChanged.AddListener(_ => TryAndResetParticle());
         _latitudeField.OnValueChanged.AddListener(_ => DataUpdated());
-
         DataUpdated();
     }
 
@@ -156,13 +170,30 @@ public class SquackSceneManager : MonoBehaviour
         (Vector3 position, Quaternion rotation) calc = GPTSolarCalc.GetPositionNOAA(Latitude, CurrentTime);
         lightsGameObject.transform.position = calc.position * sphereRadius;
         lightsGameObject.transform.rotation = calc.rotation;
-        if (earthGameObject)
+        if (xyzEarth)
         {
-            // calc = GPTSolarCalc.GetEarthTransform(CurrentTime);
-            // earthGameObject.transform.position = new Vector3(calc.position.x, calc.position.y, -calc.position.z) * sphereRadius;
-            // earthGameObject.transform.rotation = earthTilt * calc.rotation; // earthPivot?
-            earthGameObject.transform.position = GPTEarthCalc.CalculateEarthPosition(CurrentTime, orbitScaleEMinus9);
-            earthGameObject.transform.rotation = GPTEarthCalc.CalculateEarthRotation(CurrentTime);
+            Vector3 earthPos = GPTEarthCalc.CalculateEarthPosition(CurrentTime, orbitScaleEMinus9);
+            var earthRotations = GPTEarthCalc.CalculateEarthRotation(CurrentTime);
+
+            xyzEarth.transform.position = earthPos;
+
+            if (_earthCam && _earthModel)
+            {
+                _earthModel.transform.rotation = earthRotations.earthRotation;
+                
+                Vector3 axis  = earthRotations.axialTilt * Vector3.up;   // eixo norte, em mundo
+                Vector3 toSun = -earthPos.normalized;                    // Sol na origem
+
+                Vector3 up    = axis;
+                Vector3 right = Vector3.ProjectOnPlane(toSun, up).normalized;
+                Vector3 fwd   = Vector3.Cross(right, up);
+
+                _earthCam.transform.rotation = Quaternion.LookRotation(fwd, up);
+            }
+            else
+            {
+                xyzEarth.transform.rotation = earthRotations.earthRotation;
+            }
         }
 
         if (!isInSpace)
@@ -188,7 +219,7 @@ public class SquackSceneManager : MonoBehaviour
 
         // Monta o prefixo do evento, se houver.
         string eventType = isSeasonStart
-            ? $"{(season == Constants.Seasons.Summer || season == Constants.Seasons.Winter ? "<b>Solstício</b>" : "<b>Equinócio</b>")} de "
+            ? $"{(season == Constants.Seasons.Summer || season == Constants.Seasons.Winter ? "Solstício" : "Equinócio")} de "
             : "";
 
         // Atualiza o texto com a cor e o nome da estação.
@@ -213,10 +244,6 @@ public class SquackSceneManager : MonoBehaviour
 
     void ToggleSimulation()
     {
-        if (!_isSimulating)
-        {
-        }
-
         AdjustHudForSim();
         MainModule main = _lightParticle.main;
         _simStartTime = CurrentTime;

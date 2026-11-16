@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 6157973489940627116}
   - component: {fileID: 1261593297731066116}
   m_Layer: 5
-  m_Name: SolarSystemDiagramBG
+  m_Name: GeocentricOverlay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
