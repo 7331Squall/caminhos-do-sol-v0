@@ -50,7 +50,6 @@ namespace Constellation
         // Start is called before the first frame update
         void Start()
         {
-            Debug.Log("Start Settings");
             if (m_constellationStars == null)
                 m_constellationStars = FindAnyObjectByType<SquackConstellationStars>();
 
@@ -116,7 +115,6 @@ namespace Constellation
 
         void ChangeStarsDrawMode()
         {
-            Debug.Log($"ChangeStarsDrawMode Settings - {m_starsDrawMode}");
             m_constellationNames.StarsDrawMode = m_starsDrawMode;
             m_constellationLines.StarsDrawMode = m_starsDrawMode;
             m_constellationStars.StarsDrawMode = m_starsDrawMode;

@@ -80,8 +80,6 @@ namespace Constellation
         // Use this for initialization
         void Start()
         {
-            Debug.Log($"Start Names - {StarsDrawMode}");
-
             m_nameObjList = new List<GameObject>();
             m_namePosList = CreateNamePosList(posNameFile);
             m_prevLangType = m_languageType;

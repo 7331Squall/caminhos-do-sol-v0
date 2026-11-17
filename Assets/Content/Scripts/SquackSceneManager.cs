@@ -12,6 +12,7 @@ using static UnityEngine.ParticleSystem;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 
+[DisallowMultipleComponent]
 public class SquackSceneManager : MonoBehaviour
 {
     #region HUD

@@ -39,8 +39,6 @@ namespace Constellation
 
         void Start()
         {
-            Debug.Log($"Start Lines - {StarsDrawMode}");
-
             if (hipparcosScr == null)
                 hipparcosScr = FindAnyObjectByType<Hipparcos>();
 

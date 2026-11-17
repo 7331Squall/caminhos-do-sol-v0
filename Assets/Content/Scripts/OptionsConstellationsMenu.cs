@@ -2,6 +2,7 @@ using Constellation;
 using JetBrains.Annotations;
 using UnityEngine;
 
+[DisallowMultipleComponent]
 public class OptionsConstellationsMenu : MonoBehaviour
 {
     static readonly int IsWindowOn = Animator.StringToHash("IsWindowOn");
