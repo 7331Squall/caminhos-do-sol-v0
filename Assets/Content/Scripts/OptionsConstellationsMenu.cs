@@ -116,7 +116,8 @@ public class OptionsConstellationsMenu : MonoBehaviour
 
     void ToggleMilkyWay(bool milkyWayToggleValue)
     {
-        backSphere?.SetActive(milkyWayToggleValue);
+        if (!backSphere) return;
+        backSphere.SetActive(milkyWayToggleValue);
     }
 
     void ChangeStarsDrawMode(int starsDrawMode)
@@ -126,7 +127,8 @@ public class OptionsConstellationsMenu : MonoBehaviour
 
     void ToggleGrid(bool arg0)
     {
-        gridSphere?.SetActive(arg0);
+        if (!gridSphere) return;
+        gridSphere.SetActive(arg0);
     }
 
     void ToggleShowCelestialSphere(bool arg0)
@@ -139,12 +141,14 @@ public class OptionsConstellationsMenu : MonoBehaviour
 
     void ToggleShowAtmosphere(bool arg0)
     {
-        atmoSphere?.SetActive(arg0);
+        if (!atmoSphere) return;
+        atmoSphere.SetActive(arg0);
     }
 
     void ToggleShowZenith(bool arg0)
     {
-        zenith?.SetActive(arg0);
+        if (!zenith) return;
+        zenith.SetActive(arg0);
     }
 
     void ToggleSunTrails(bool arg0)

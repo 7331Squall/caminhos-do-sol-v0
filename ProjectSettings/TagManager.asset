@@ -11,8 +11,8 @@ TagManager:
   - Particle
   - Water
   - UI
-  - Earth
-  - 
+  - EarthOverlay
+  - LandOverlay
   - SkySphere
   - ConstellationSphere
   - Main Menu

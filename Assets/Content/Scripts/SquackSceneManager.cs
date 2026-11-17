@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using TMPro;
@@ -82,7 +81,7 @@ public class SquackSceneManager : MonoBehaviour
     public float orbitScaleEMinus9 = 1f;
 
     OrbitalCamera _camera;
-    ParticleSystem _lightParticle;
+    [CanBeNull] ParticleSystem _lightParticle;
     public Quaternion earthTilt = new(0, 0, -0.203641683f, 0.97904551f);
 
     #endregion
@@ -97,7 +96,6 @@ public class SquackSceneManager : MonoBehaviour
             .Find(x => x.name.Contains("SimSpeedField"));
         _simIntervalField = HUD.GetComponentsInChildren<SimSliderField>().ToList()
             .Find(x => x.name.Contains("SimIntervalField"));
-        //_equinoxPanel = HUD.GetComponentsInChildren<GameObject>().ToList().Find(x => x.name.Contains("EquinoxPanel"));
         _equinoxText = equinoxPanel.GetComponentsInChildren<TMP_Text>().ToList()
             .Find(x => x.name.Contains("EquinoxText"));
         _lightParticle = lightsGameObject.GetComponent<ParticleSystem>();
@@ -140,9 +138,9 @@ public class SquackSceneManager : MonoBehaviour
             {
                 if (TimeBetween(_simStartTime, CurrentTime, _simulationDateTime))
                 {
-                    if (DoSunTrail) _lightParticle.Pause(true);
+                    if (DoSunTrail && _lightParticle) _lightParticle.Pause(true);
                     _simulationDateTime = _simulationDateTime.AddDays(IntervalInDays(_simIntervalField.Value));
-                    if (DoSunTrail) PlayParticle();
+                    if (DoSunTrail&& _lightParticle) PlayParticle();
                 }
             }
 
@@ -180,13 +178,13 @@ public class SquackSceneManager : MonoBehaviour
             if (_earthCam && _earthModel)
             {
                 _earthModel.transform.rotation = earthRotations.earthRotation;
-                
-                Vector3 axis  = earthRotations.axialTilt * Vector3.up;   // eixo norte, em mundo
-                Vector3 toSun = -earthPos.normalized;                    // Sol na origem
 
-                Vector3 up    = axis;
+                Vector3 axis = earthRotations.axialTilt * Vector3.up; // eixo norte, em mundo
+                Vector3 toSun = -earthPos.normalized; // Sol na origem
+
+                Vector3 up = axis;
                 Vector3 right = Vector3.ProjectOnPlane(toSun, up).normalized;
-                Vector3 fwd   = Vector3.Cross(right, up);
+                Vector3 fwd = Vector3.Cross(right, up);
 
                 _earthCam.transform.rotation = Quaternion.LookRotation(fwd, up);
             }
@@ -195,7 +193,6 @@ public class SquackSceneManager : MonoBehaviour
                 xyzEarth.transform.rotation = earthRotations.earthRotation;
             }
         }
-
         if (!isInSpace)
             constellationGameObject.transform.rotation =
                 GPTSolarCalc.OrientationForCelestialPole(Latitude, CurrentTime);
@@ -228,7 +225,7 @@ public class SquackSceneManager : MonoBehaviour
 
     void TryAndResetParticle()
     {
-        if (!_isSimulating)
+        if (!_isSimulating && _lightParticle)
             _lightParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         if (isInSpace)
             solarTrailMeshObject.SetActive(DoSunTrail);
@@ -245,24 +242,27 @@ public class SquackSceneManager : MonoBehaviour
     void ToggleSimulation()
     {
         AdjustHudForSim();
-        MainModule main = _lightParticle.main;
-        _simStartTime = CurrentTime;
-        if (_simIntervalField.Value == (int)Continuous)
+        if (_lightParticle)
         {
-            main.startLifetime = SpeedInSeconds(OneDay) / SpeedInSeconds(_simSpeedField.Value);
-        }
-        else
-        {
-            main.startLifetime = float.MaxValue;
-        }
+            MainModule main = _lightParticle.main;
+            _simStartTime = CurrentTime;
+            if (_simIntervalField.Value == (int)Continuous)
+            {
+                main.startLifetime = SpeedInSeconds(OneDay) / SpeedInSeconds(_simSpeedField.Value);
+            }
+            else
+            {
+                main.startLifetime = float.MaxValue;
+            }
 
-        if (_isSimulating && DoSunTrail)
-            PlayParticle();
+            if (_isSimulating && DoSunTrail)
+                PlayParticle();
+        }
     }
 
     void PlayParticle()
     {
-        if (!DoSunTrail) return;
+        if (!DoSunTrail || !_lightParticle) return;
         _lightParticle.Play(true);
     }
 
